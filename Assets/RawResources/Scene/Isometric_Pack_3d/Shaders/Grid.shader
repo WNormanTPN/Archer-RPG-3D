@@ -82,5 +82,5 @@ Shader "MK4/Grid" {
             ENDCG
         }
     }
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

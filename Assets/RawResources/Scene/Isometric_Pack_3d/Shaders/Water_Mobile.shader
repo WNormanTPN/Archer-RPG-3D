@@ -232,5 +232,5 @@ Shader "MK4/Mobile/Water" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

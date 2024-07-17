@@ -217,5 +217,5 @@ Shader "MK4/Mobile/Mobile_Tiles" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

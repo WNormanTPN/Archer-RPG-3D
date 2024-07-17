@@ -572,5 +572,5 @@ Shader "MK4/Water_Deferred" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

@@ -144,5 +144,5 @@ Shader "MK4/MK4_Magic_Orb" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

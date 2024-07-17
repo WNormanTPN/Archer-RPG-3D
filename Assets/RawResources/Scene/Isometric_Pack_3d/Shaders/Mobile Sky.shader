@@ -83,5 +83,5 @@ Shader "MK4/Mobile/Sky" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

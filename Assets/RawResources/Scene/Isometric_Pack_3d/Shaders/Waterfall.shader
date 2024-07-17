@@ -408,5 +408,5 @@ Shader "Shader Forge/Waterfall" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

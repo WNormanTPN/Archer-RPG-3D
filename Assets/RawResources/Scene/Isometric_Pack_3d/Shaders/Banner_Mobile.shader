@@ -318,5 +318,5 @@ Shader "MK4/Mobile/Banner" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

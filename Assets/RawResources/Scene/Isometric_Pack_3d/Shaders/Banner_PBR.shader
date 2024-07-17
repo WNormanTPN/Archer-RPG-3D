@@ -509,5 +509,5 @@ Shader "MK4/Banner_PBR" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

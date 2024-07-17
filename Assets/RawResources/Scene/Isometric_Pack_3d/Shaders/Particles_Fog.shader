@@ -84,5 +84,5 @@ Shader "MK4/Particles_Fog" {
             ENDCG
         }
     }
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

@@ -534,5 +534,5 @@ Shader "MK4/Tiels_PBL" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

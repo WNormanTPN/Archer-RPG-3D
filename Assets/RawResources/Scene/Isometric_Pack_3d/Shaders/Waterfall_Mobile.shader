@@ -296,5 +296,5 @@ Shader "MK4/Mobile/Waterfall" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

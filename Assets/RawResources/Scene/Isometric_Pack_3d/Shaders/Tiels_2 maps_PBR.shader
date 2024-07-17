@@ -550,5 +550,5 @@ Shader "MK4/Tiels_2Maps_PBR" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

@@ -261,5 +261,5 @@ Shader "MK4/Tiles_Water" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

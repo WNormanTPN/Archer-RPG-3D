@@ -84,5 +84,5 @@ Shader "MK4/Mobile/Grid" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

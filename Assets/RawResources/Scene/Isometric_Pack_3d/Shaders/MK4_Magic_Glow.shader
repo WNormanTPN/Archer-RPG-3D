@@ -400,5 +400,5 @@ Shader "MK4/MK4_Magic_Glow" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

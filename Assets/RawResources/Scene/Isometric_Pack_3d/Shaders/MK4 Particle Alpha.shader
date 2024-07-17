@@ -114,5 +114,5 @@ Shader "MK4/Particle Alpha Clip" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

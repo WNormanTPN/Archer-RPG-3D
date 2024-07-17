@@ -654,5 +654,5 @@ Shader "MK4/MK4_Building_Toon" {
         }
     }
     FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

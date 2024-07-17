@@ -84,5 +84,5 @@ Shader "MK4/MK4 Sky" {
             ENDCG
         }
     }
-    CustomEditor "ShaderForgeMaterialInspector"
+
 }

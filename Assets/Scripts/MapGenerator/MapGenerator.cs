@@ -26,10 +26,12 @@ public class MapGenerator : MonoBehaviour
     public ObstacleType[] obstacleTypes;
     public ObjectPool objectPool;
     public Transform player;
+    public GameObject fencePrefab;
     public int viewDistance = 5;
     public int unloadDistance = 10;
     public int tileSpacing = 1;
     [Range(0, 1)] public float obstacleSpawnRatio = 0.1f;
+    public bool isLimitMap = false;
 
     private Vector2Int playerPos;
     private Dictionary<Vector2Int, GameObject> activeTiles;
@@ -49,6 +51,7 @@ public class MapGenerator : MonoBehaviour
 
     void Update()
     {
+        if (isLimitMap) return;
         UpdatePlayerPosition();
     }
 
@@ -65,6 +68,11 @@ public class MapGenerator : MonoBehaviour
             totalObstacleRatio = CalculateTotalRatio(obstacleTypes);
         }
         InitObstaclesSize();
+
+        if (isLimitMap)
+        {
+            CreateFenceAroundMap();
+        }
     }
 
     void InitObstaclesSize()
@@ -100,7 +108,10 @@ public class MapGenerator : MonoBehaviour
         if (newPlayerPos != playerPos)
         {
             playerPos = newPlayerPos;
-            UpdateTilesAndObstacles();
+            if (!isLimitMap)
+            {
+                UpdateTilesAndObstacles();
+            }
         }
     }
 
@@ -123,9 +134,22 @@ public class MapGenerator : MonoBehaviour
 
     void GenerateInitialTilesAndObstacles()
     {
-        for (int x = -viewDistance; x <= viewDistance; x++)
+        int startX = -viewDistance;
+        int endX = viewDistance;
+        int startY = -viewDistance;
+        int endY = viewDistance;
+        if (isLimitMap)
         {
-            for (int y = -viewDistance; y <= viewDistance; y++)
+            startX /= 2;
+            endX = Mathf.CeilToInt(endX / 2.0f);
+            startY /= 2;
+            endY = Mathf.CeilToInt(endY / 2.0f);
+        }
+        
+        int offset = unloadDistance - viewDistance;
+        for (int x = startX-offset; x < endX+offset; x++)
+        {
+            for (int y = startY-offset; y < endY+offset; y++)
             {
                 Vector2Int tilePos = new Vector2Int(playerPos.x + x, playerPos.y + y);
                 CreateTileAndObstacleAtPosition(tilePos);
@@ -135,6 +159,8 @@ public class MapGenerator : MonoBehaviour
 
     void UpdateTilesAndObstacles()
     {
+        if (isLimitMap) return;
+
         RemoveDistantTiles();
         RemoveDistantObstacles();
         CreateTilesAndObstaclesInViewRange();
@@ -357,4 +383,48 @@ public class MapGenerator : MonoBehaviour
         }
         return -1;
     }
+
+    void CreateFenceAroundMap()
+    {
+        int fenceDiameter = viewDistance + 1;
+        int startX = -fenceDiameter / 2;
+        int startY = -fenceDiameter / 2;
+        int endX = Mathf.CeilToInt(fenceDiameter / 2.0f);
+        int endY = Mathf.CeilToInt(fenceDiameter / 2.0f);
+        for (int x = startX; x <= endX; x++)
+        {
+            for (int y = startY; y <= endY; y++)
+            {
+                if (x == startX || x == endX || y == startY || y == endY)
+                {
+                    Vector3 fencePos = new Vector3(x * tileSpacing, 0, y * tileSpacing);
+                    GameObject fence = objectPool.GetObject(fencePrefab);
+
+                    // Determine rotation based on position
+                    Quaternion rotation = Quaternion.identity;
+                    if (x == startX || x == endX) // Vertical fences
+                    {
+                        rotation = Quaternion.Euler(0, 90, 0);
+                    }
+                    else if (y == startY || y == endY) // Horizontal fences
+                    {
+                        rotation = Quaternion.Euler(0, 0, 0);
+                    }
+
+                    fence.transform.position = fencePos;
+                    fence.transform.rotation = rotation;
+
+                    // Create an additional fence for the corner points
+                    if ((x == startX || x == endX) && (y == startY || y == endY))
+                    {
+                        // Create a fence for the other axis at the same position
+                        GameObject cornerFence = objectPool.GetObject(fencePrefab);
+                        cornerFence.transform.position = fencePos;
+                        cornerFence.transform.rotation = (rotation == Quaternion.Euler(0, 90, 0)) ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 90, 0);
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -291,10 +291,12 @@ MonoBehaviour:
     canConnect: 1
   objectPool: {fileID: 521052218}
   player: {fileID: 1126433099}
-  viewDistance: 10
-  unloadDistance: 10
+  fencePrefab: {fileID: 127910, guid: 6620194db5440334aa6b83b896865f5f, type: 3}
+  viewDistance: 7
+  unloadDistance: 20
   tileSpacing: 2
-  obstacleSpawnRatio: 0.1
+  obstacleSpawnRatio: 0.2
+  isLimitMap: 0
 --- !u!4 &521052217
 Transform:
   m_ObjectHideFlags: 0
@@ -332,6 +334,8 @@ MonoBehaviour:
   - prefab: {fileID: 148192, guid: 4bec1eb3193ed614090bf83dcb1f065c, type: 3}
     initialPoolSize: 0
   - prefab: {fileID: 9174681701356550645, guid: ace68eecc2be01d40bd95b69212db37b, type: 3}
+    initialPoolSize: 0
+  - prefab: {fileID: 127910, guid: 6620194db5440334aa6b83b896865f5f, type: 3}
     initialPoolSize: 0
   parent: {fileID: 335849291}
 --- !u!1 &687374657

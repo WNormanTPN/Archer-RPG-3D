@@ -11,7 +11,7 @@ public class ExtractAndReplaceAnimations : EditorWindow
 {
     private string extractionPath = "Assets/ExtractedAnimations/";
 
-    [MenuItem("Tools/Extract and Replace Animations from FBX")]
+    [MenuItem("Tools/Editor Extensions/Extract and Replace Animations from FBX")]
     public static void ShowWindow()
     {
         GetWindow<ExtractAndReplaceAnimations>("Extract and Replace Animations from FBX");

@@ -32,13 +32,49 @@ public static class RemoveMissingScriptsEditor
         string[] allPrefabGuids = AssetDatabase.FindAssets("t:Prefab");
         IEnumerable<string> allPrefabsPath = allPrefabGuids.Select(AssetDatabase.GUIDToAssetPath);
         IEnumerable<GameObject> allPrefabsObjects = allPrefabsPath.Select(AssetDatabase.LoadAssetAtPath<GameObject>);
-        RemoveMissingScriptsFrom(allPrefabsObjects.ToArray());
+        
+        List<GameObject> prefabsToSave = new List<GameObject>();
+        
+        foreach (var prefab in allPrefabsObjects)
+        {
+            if (prefab != null)
+            {
+                ProcessPrefab(prefab);
+                prefabsToSave.Add(prefab);
+            }
+        }
+        
+        // Save prefabs after processing
+        foreach (var prefab in prefabsToSave)
+        {
+            if (prefab != null)
+            {
+                PrefabUtility.SavePrefabAsset(prefab);
+            }
+        }
+        
         Debug.Log($"Removed All Missing Scripts from Prefabs");
+    }
+
+    private static void ProcessPrefab(GameObject prefab)
+    {
+        if (prefab == null) return;
+
+        // Process children first
+        RemoveMissingScriptsFrom(prefab.transform.GetComponentsInChildren<Transform>(true)
+            .Select(t => t.gameObject)
+            .ToArray());
+
+        // Save prefab after processing children
+        PrefabUtility.SavePrefabAsset(prefab);
+
+        // Process parent
+        RemoveMissingScriptsFrom(prefab);
     }
 
     private static int RemoveMissingScriptsFrom(params GameObject[] objects)
     {
-        List<GameObject> forceSave = new();
+        List<GameObject> forceSave = new List<GameObject>();
         int removedCounter = 0;
         foreach (GameObject current in objects)
         {
@@ -50,26 +86,26 @@ public static class RemoveMissingScriptsEditor
             GameObjectUtility.RemoveMonoBehavioursWithMissingScript(current);
             EditorUtility.SetDirty(current);
 
-            if (EditorUtility.IsPersistent(current) && PrefabUtility.IsAnyPrefabInstanceRoot(current)) forceSave.Add(current);
+            if (EditorUtility.IsPersistent(current) && PrefabUtility.IsAnyPrefabInstanceRoot(current))
+                forceSave.Add(current);
 
-            Debug.Log($"Removed {missingCount} Missing Scripts from {current.gameObject.name}", current);
+            Debug.Log($"Removed {missingCount} Missing Scripts from {current.name}", current);
             removedCounter += missingCount;
         }
 
-        foreach (GameObject o in forceSave) PrefabUtility.SavePrefabAsset(o);
-
+        // Return the count of removed missing scripts
         return removedCounter;
     }
 
     private static GameObject[] GetAllChildren(GameObject[] selection)
     {
-        List<Transform> t = new();
+        List<Transform> transforms = new List<Transform>();
 
         foreach (GameObject o in selection)
         {
-            t.AddRange(o.GetComponentsInChildren<Transform>(true));
+            transforms.AddRange(o.GetComponentsInChildren<Transform>(true));
         }
 
-        return t.Distinct().Select(x => x.gameObject).ToArray();
+        return transforms.Distinct().Select(t => t.gameObject).ToArray();
     }
 }

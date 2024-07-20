@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 224000013088828620}
   - component: {fileID: 222000013496928472}
-  - component: {fileID: 8059981461320127374}
   - component: {fileID: 1812135265552528374}
   m_Layer: 5
   m_Name: CriticalText
@@ -29,10 +28,10 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3636450580253975006}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -47,19 +46,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000011406348878}
   m_CullTransparentMesh: 0
---- !u!114 &8059981461320127374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000011406348878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b6974105910e44948b7a541b808092a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  assetBundleName: effect/criticaltext.u3d
 --- !u!225 &1812135265552528374
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -84,7 +70,6 @@ GameObject:
   - component: {fileID: 222000011786735308}
   - component: {fileID: 114000013739610790}
   - component: {fileID: 114000013940029126}
-  - component: {fileID: 8002651070344252340}
   - component: {fileID: 8602938774761048130}
   m_Layer: 5
   m_Name: TextA
@@ -103,10 +88,10 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 55302225160003908}
   m_Father: {fileID: 3636450580253975006}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -136,6 +121,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.9019608, g: 0.19607843, b: 0.16078432, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -168,21 +155,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!114 &8002651070344252340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000013323712784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48de692b2e7550946ae9c93f80932005, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_text: {fileID: 114000013739610790}
-  m_key: 300000
-  m_zhText: "\u66B4\u51FB"
 --- !u!225 &8602938774761048130
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -221,11 +193,11 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7673131836827437274}
   - {fileID: 224000013576345134}
   m_Father: {fileID: 224000013088828620}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -261,9 +233,9 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 224000013576345134}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -293,6 +265,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -337,7 +311,6 @@ GameObject:
   - component: {fileID: 4830843727431643290}
   - component: {fileID: 8903392666185523718}
   - component: {fileID: 4360910588208619129}
-  - component: {fileID: 3009719558153056913}
   - component: {fileID: 7235955427507622240}
   m_Layer: 5
   m_Name: TextB
@@ -356,9 +329,9 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3636450580253975006}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -388,6 +361,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.9019608, g: 0.19607843, b: 0.16078432, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -420,21 +395,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!114 &3009719558153056913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7492179914430166344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48de692b2e7550946ae9c93f80932005, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_text: {fileID: 8903392666185523718}
-  m_key: 300000
-  m_zhText: "\u66B4\u51FB"
 --- !u!225 &7235955427507622240
 CanvasGroup:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 479730}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 432986}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 489830}
   - component: {fileID: 9547104}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: thief_bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400184}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 464832}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 438242}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 470718}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_LeftForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 447206}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 404396}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_LeftUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,7 +324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 420992}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 483362}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +387,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 477870}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: transform70
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,7 +418,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 406556}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_RightUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +450,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 495004}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -482,7 +482,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 470862}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_LeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,7 +517,8 @@ GameObject:
   - component: {fileID: 9588438}
   - component: {fileID: 5464972}
   - component: {fileID: 266234990605727068}
-  m_Layer: 10
+  - component: {fileID: 3704331994001688902}
+  m_Layer: 6
   m_Name: thief
   m_TagString: MainPlayer
   m_Icon: {fileID: 0}
@@ -587,10 +588,10 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &266234990605727068
 BoxCollider:
@@ -602,7 +603,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -613,6 +614,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.41, y: 0.7, z: 0.42}
   m_Center: {x: 0, y: 0.38, z: 0}
+--- !u!114 &3704331994001688902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 152658430aac2cf488fe5d988e360cc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  rotationSpeed: 720
+  animator: {fileID: 9588438}
+  arrowPrefab: {fileID: 1538924604248878, guid: 74669aeed2e6dbc428c925f537f612eb, type: 3}
+  arrowSpeed: 10
+  arrowLifeTime: 5
+  shootingAngle: 15
 --- !u!1 &162646
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,7 +642,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 458414}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -654,7 +674,7 @@ GameObject:
   m_Component:
   - component: {fileID: 403680}
   - component: {fileID: 13709768}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: thief_bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,7 +690,7 @@ Transform:
   m_GameObject: {fileID: 164304}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.35636824, y: 0.27067104, z: 0}
+  m_LocalPosition: {x: 0.333, y: 0.271, z: 0}
   m_LocalScale: {x: 1.2606815, y: 1.2606815, z: 1.2606815}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -739,7 +759,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 448494}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_RightForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -771,7 +791,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 414268}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: mesh1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -803,7 +823,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 478054}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -835,7 +855,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 466970}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -867,7 +887,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 446722}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: t_bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -898,7 +918,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 446152}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_RightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -931,7 +951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 438972}
   - component: {fileID: 13747648}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: thief
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1034,7 +1054,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 498474}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Character1_LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1065,7 +1085,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8227067831097381751}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: BulletPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1096,7 +1116,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7714650285867339205}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: EffectPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1127,7 +1147,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2327287902268067840}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: TopPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

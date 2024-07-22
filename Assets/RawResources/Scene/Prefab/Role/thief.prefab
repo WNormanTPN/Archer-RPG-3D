@@ -520,7 +520,7 @@ GameObject:
   - component: {fileID: 3704331994001688902}
   m_Layer: 6
   m_Name: thief
-  m_TagString: MainPlayer
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -626,13 +626,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152658430aac2cf488fe5d988e360cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  rotationSpeed: 720
-  animator: {fileID: 9588438}
+  moveSpeed: 3
+  rotationSpeed: 360
+  attackSpeed: 1
   arrowPrefab: {fileID: 1538924604248878, guid: 74669aeed2e6dbc428c925f537f612eb, type: 3}
-  arrowSpeed: 10
+  arrowSpeed: 15
   arrowLifeTime: 5
-  shootingAngle: 15
+  shootingOffset: 0.3
+  shootingAngle: 10
 --- !u!1 &162646
 GameObject:
   m_ObjectHideFlags: 0

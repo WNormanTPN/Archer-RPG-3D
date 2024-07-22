@@ -282,6 +282,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3080620819367477841, guid: 9c749916ea37807468429b3e8fb63bf0, type: 3}
+      propertyPath: attackRange
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -588,26 +592,6 @@ PrefabInstance:
     - target: {fileID: 458692, guid: bce05bf4d50c2ad4883af7e4826a5331, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3704331994001688902, guid: bce05bf4d50c2ad4883af7e4826a5331, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3704331994001688902, guid: bce05bf4d50c2ad4883af7e4826a5331, type: 3}
-      propertyPath: moveSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3704331994001688902, guid: bce05bf4d50c2ad4883af7e4826a5331, type: 3}
-      propertyPath: arrowSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3704331994001688902, guid: bce05bf4d50c2ad4883af7e4826a5331, type: 3}
-      propertyPath: rotationSpeed
-      value: 360
-      objectReference: {fileID: 0}
-    - target: {fileID: 3704331994001688902, guid: bce05bf4d50c2ad4883af7e4826a5331, type: 3}
-      propertyPath: shootingAngle
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

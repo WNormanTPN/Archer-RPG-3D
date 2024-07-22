@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Entity.Player
 {
-    public class ArcherBehavior : PlayerController
+    public class ArcherBehavior : PlayerController, IRangedAttack
     {
         [Header("Archer Settings")]
         public GameObject arrowPrefab;
@@ -12,7 +12,7 @@ namespace Entity.Player
         public float shootingOffset = 0.3f;
         public float shootingAngle = 10f;
 
-        public void ShootArrow()
+        public void ShootProjectile()
         {
             Vector3 shootingDirection = Quaternion.AngleAxis(-shootingAngle, transform.right) * transform.forward;
             
@@ -25,12 +25,11 @@ namespace Entity.Player
             Rigidbody rb = arrow.GetComponent<Rigidbody>();
             rb.velocity = shootingDirection * arrowSpeed;
 
-            // Get the ArrowBehavior component and start the rotation correction coroutine
-            ArrowBehavior arrowBehavior = arrow.GetComponent<ArrowBehavior>();
-            arrowBehavior.StartRotationCorrection();
-
-            // Destroy the arrow after the specified lifetime
-            Destroy(arrow, arrowLifeTime);
+            // Set the arrow behavior
+            ProjectileBehavior arrowBehavior = arrow.GetComponent<ProjectileBehavior>();
+            arrowBehavior.lifeTime = arrowLifeTime;
+            arrowBehavior.destroyOnCollision = false;
+            arrowBehavior.rotateBasedOnVelocity = true;
         }
     }
 }

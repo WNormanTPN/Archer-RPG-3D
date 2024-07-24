@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Evironment.MapGenerator
+namespace Generic
 {
     public class ObjectPool : MonoBehaviour
     {
@@ -41,6 +41,11 @@ namespace Evironment.MapGenerator
 
         public GameObject GetObject(GameObject prefab)
         {
+            if (!poolDictionary.TryGetValue(prefab, out _))
+            {
+                poolDictionary.Add(prefab, new Queue<GameObject>());
+            }
+        
             var objectPool = poolDictionary[prefab];
             if (objectPool.Count > 0)
             {

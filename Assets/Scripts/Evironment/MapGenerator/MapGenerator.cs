@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Generic;
 using UnityEngine;
 
 namespace Evironment.MapGenerator

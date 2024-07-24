@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Entity.Player
@@ -47,7 +48,7 @@ namespace Entity.Player
         public void Attack()
         {
             animator.SetBool("Attack_bow", true);
-            animator.SetFloat("AttackSpeed", attackSpeed);
+            StartCoroutine(SetAnimationAttackSpeed());
         }
 
         public void StopAttack()
@@ -78,6 +79,15 @@ namespace Entity.Player
             velocity = 0f;
             // Update animator parameter to transition to idle
             animator.SetFloat("Speed", 0f);
+        }
+        
+        IEnumerator SetAnimationAttackSpeed()
+        {
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Attack_bow"));
+            
+            float animationLength = animator.GetCurrentAnimatorClipInfo(0).Length;
+            float animationMultiplier = attackSpeed * animationLength;
+            animator.SetFloat("AttackSpeed", animationMultiplier);
         }
     
         void OnDisable()

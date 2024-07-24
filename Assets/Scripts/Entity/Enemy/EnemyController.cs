@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -5,18 +6,23 @@ namespace Entity.Enemy
 {
     public abstract class EnemyController : MonoBehaviour, ICharacter
     {
-        public Transform player;                // Reference to the player
-        [Range(0, 10)] public float moveSpeed = 2f;            // Speed of the enemy movement
+        [Header("Movement Settings")]
+        public Transform player;                                // Reference to the player
+        [Range(0, 10)] public float moveSpeed = 2f;             // Speed of the enemy movement
         [Range(0, 5)] public float moveDuration = 1.5f;         // Duration for moving forward before re-evaluating
         [Range(0, 5)] public float rotateDuration = 1f;         // Duration for rotating towards the player
-        [Range(0, 100)]public float attackRange = 2f;          // Range at which the enemy starts attacking
-        [Range(0, 10)] public float attackDelay = 1f;  // Delay between attacks
+        [Header("Attack Settings")]
+        public string attackAnimation;                          // Name of the attack animation
+        [Range(0, 100)] public float attackRange = 2f;          // Range at which the enemy starts attacking
+        [Range(0, 10)] public float attackSpeed = 1f;           // Speed of the enemy attack per second
+        public float attackCooldown = 1f;                       // Cooldown time between attacks
 
-        private float moveTimer;                // Timer to track movement duration
+        private float moveTimer;                  // Timer to track movement duration
         protected bool isMovingForward;           // Flag to check if enemy is moving forward
-        private float rotateTimer;               // Timer to track rotation duration
+        private float rotateTimer;                // Timer to track rotation duration
         protected bool isRotating;                // Flag to check if enemy is rotating
         protected bool isAttacking;               // Flag to check if the enemy is attacking
+        private float attackTimer;                // Timer for attack cooldown
         protected Rigidbody rb;                   // Reference to the Rigidbody component
         protected Animator animator;              // Reference to the Animator component
 
@@ -26,6 +32,7 @@ namespace Entity.Enemy
             isMovingForward = true;
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
+            attackTimer = attackCooldown; // Initialize attack timer
         }
 
         void FixedUpdate()
@@ -39,9 +46,9 @@ namespace Entity.Enemy
                     // Within attack range, stop moving and attack
                     StopMove();
                     LockOnPlayer();
-                    if (!isAttacking)
+                    if (!isAttacking && attackTimer >= attackCooldown)
                     {
-                        Attack();
+                        StartCoroutine(PerformAttack());
                     }
                 }
                 else
@@ -80,6 +87,12 @@ namespace Entity.Enemy
                         }
                     }
                 }
+
+                // Update attack timer
+                if (attackTimer < attackCooldown)
+                {
+                    attackTimer += Time.fixedDeltaTime;
+                }
             }
             else
             {
@@ -93,7 +106,7 @@ namespace Entity.Enemy
             animator.SetFloat("Speed", moveSpeed);
         }
 
-        public void Rotate(Vector3 direction) // Rotate towards the player base on the duration
+        public void Rotate(Vector3 direction) // Rotate towards the player based on the duration
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateTimer / rotateDuration);
@@ -115,14 +128,33 @@ namespace Entity.Enemy
         public void Attack()
         {
             isAttacking = true;
-            animator.SetBool("Attack_bow", true);
-            animator.SetFloat("AttackSpeed", 1 / attackDelay);
+            animator.SetBool(attackAnimation, true);
         }
         
         public void StopAttack()
         {
             isAttacking = false;
-            animator.SetBool("Attack_bow", false);
+            animator.SetBool(attackAnimation, false);
+        }
+        
+        void SetAnimationAttackSpeed()
+        {
+            float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+            float animationMultiplier = attackSpeed * animationLength;
+            animator.SetFloat("AttackSpeed", animationMultiplier);
+        }
+
+        private IEnumerator PerformAttack()
+        {
+            Attack();
+            attackTimer = 0f; // Reset attack timer
+
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation));
+            SetAnimationAttackSpeed();
+            
+            yield return new WaitForSeconds(1 / attackSpeed);
+
+            StopAttack();
         }
     }
 }

@@ -11,9 +11,10 @@ namespace Entity.Enemy
         [Range(0, 10)] public float moveSpeed = 2f;             // Speed of the enemy movement
         [Range(0, 5)] public float moveDuration = 1.5f;         // Duration for moving forward before re-evaluating
         [Range(0, 5)] public float rotateDuration = 1f;         // Duration for rotating towards the player
+        [Range(0, 100)] public float keepMovingDistance = 10f;   // Distance to keep moving towards the player
         [Header("Attack Settings")]
         public string attackAnimation;                          // Name of the attack animation
-        [Range(0, 100)] public float attackRange = 2f;          // Range at which the enemy starts attacking
+        [Range(0, 100)] public float rangeForAttack = 2f;       // Range at which the enemy starts attacking
         [Range(0, 10)] public float attackSpeed = 1f;           // Speed of the enemy attack per second
         public float attackCooldown = 1f;                       // Cooldown time between attacks
 
@@ -41,7 +42,7 @@ namespace Entity.Enemy
             {
                 float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-                if (distanceToPlayer <= attackRange)
+                if (distanceToPlayer <= rangeForAttack)
                 {
                     // Within attack range, stop moving and attack
                     StopMove();
@@ -50,6 +51,15 @@ namespace Entity.Enemy
                     {
                         StartCoroutine(PerformAttack());
                     }
+                }
+                else if (distanceToPlayer >= keepMovingDistance)
+                {
+                    isMovingForward = true;
+                    isRotating = true;
+                            
+                    Vector3 directionToPlayer = player.position - transform.position;
+                    Move(directionToPlayer);
+                    Rotate(directionToPlayer);
                 }
                 else
                 {
@@ -60,6 +70,7 @@ namespace Entity.Enemy
                     // Handle movement and rotation
                     if (isMovingForward)
                     {
+                        // Move forward towards the player
                         Move(transform.forward);
                         moveTimer -= Time.fixedDeltaTime;
 
@@ -74,8 +85,9 @@ namespace Entity.Enemy
                     else if (isRotating)
                     {
                         StopMove();
+                        
                         rotateTimer += Time.fixedDeltaTime;
-                        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+                        Vector3 directionToPlayer = player.position - transform.position;
                         Rotate(directionToPlayer);
                         
                         if (rotateTimer >= rotateDuration)
@@ -102,19 +114,24 @@ namespace Entity.Enemy
 
         public void Move(Vector3 direction) // Move forward towards the player
         {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation)) return;
             rb.position += moveSpeed * Time.fixedDeltaTime * transform.forward;
             animator.SetFloat("Speed", moveSpeed);
         }
 
         public void Rotate(Vector3 direction) // Rotate towards the player based on the duration
         {
+            direction.y = 0; // Ignore y-axis
+            direction = direction.normalized;
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateTimer / rotateDuration);
         }
         
         void LockOnPlayer()
         {
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Vector3 directionToPlayer = player.position - transform.position;
+            directionToPlayer.y = 0; // Ignore y-axis
+            directionToPlayer.Normalize();
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
             transform.rotation = targetRotation;
         }
@@ -147,12 +164,10 @@ namespace Entity.Enemy
         private IEnumerator PerformAttack()
         {
             Attack();
-            attackTimer = 0f; // Reset attack timer
+            attackTimer = -1 / attackSpeed; // Reset attack timer
 
             yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation));
             SetAnimationAttackSpeed();
-            
-            yield return new WaitForSeconds(1 / attackSpeed);
 
             StopAttack();
         }

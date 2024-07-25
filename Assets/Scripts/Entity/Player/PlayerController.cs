@@ -39,6 +39,7 @@ namespace Entity.Player
             {
                 StopAttack();
                 Move(movement);
+                Rotate(movement);
             }
 
             // Update animator parameters
@@ -61,10 +62,6 @@ namespace Entity.Player
             // Move the player
             velocity = Mathf.Lerp(velocity, Time.fixedDeltaTime * moveSpeed * direction.magnitude, 0.1f);
             rb.position += velocity * direction;
-
-            // Rotate player towards movement direction
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
         }
 
         public void Rotate(Vector3 direction)

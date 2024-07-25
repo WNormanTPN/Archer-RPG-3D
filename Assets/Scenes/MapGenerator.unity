@@ -296,8 +296,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3080620819367477841, guid: 9c749916ea37807468429b3e8fb63bf0, type: 3}
       propertyPath: attackSpeed
-      value: 0.7
+      value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3080620819367477841, guid: 9c749916ea37807468429b3e8fb63bf0, type: 3}
+      propertyPath: lineRenderer
+      value: 
+      objectReference: {fileID: 1596139180802800107, guid: 7a28303471512ba4993ebdc0c78500d4, type: 3}
     - target: {fileID: 3080620819367477841, guid: 9c749916ea37807468429b3e8fb63bf0, type: 3}
       propertyPath: attackCooldown
       value: 2
@@ -305,6 +309,10 @@ PrefabInstance:
     - target: {fileID: 3080620819367477841, guid: 9c749916ea37807468429b3e8fb63bf0, type: 3}
       propertyPath: attackAnimation
       value: Attack_bow
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080620819367477841, guid: 9c749916ea37807468429b3e8fb63bf0, type: 3}
+      propertyPath: lineRendererWidth
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3080620819367477841, guid: 9c749916ea37807468429b3e8fb63bf0, type: 3}
       propertyPath: keepMovingDistance

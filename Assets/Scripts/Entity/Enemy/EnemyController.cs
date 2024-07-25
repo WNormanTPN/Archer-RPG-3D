@@ -36,7 +36,7 @@ namespace Entity.Enemy
             attackTimer = attackCooldown; // Initialize attack timer
         }
 
-        void FixedUpdate()
+        protected void FixedUpdate()
         {
             if (player)
             {
@@ -63,10 +63,6 @@ namespace Entity.Enemy
                 }
                 else
                 {
-                    if (isAttacking)
-                    {
-                        StopAttack();
-                    }
                     // Handle movement and rotation
                     if (isMovingForward)
                     {
@@ -168,8 +164,6 @@ namespace Entity.Enemy
 
             yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation));
             SetAnimationAttackSpeed();
-
-            StopAttack();
         }
     }
 }

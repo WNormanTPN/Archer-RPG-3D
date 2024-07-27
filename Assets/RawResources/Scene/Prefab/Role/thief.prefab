@@ -591,7 +591,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!65 &266234990605727068
 BoxCollider:
@@ -629,6 +629,8 @@ MonoBehaviour:
   moveSpeed: 3
   rotationSpeed: 360
   attackSpeed: 1
+  _maxHealth: 100
+  attackDamage: 10
   arrowPrefab: {fileID: 1538924604248878, guid: 74669aeed2e6dbc428c925f537f612eb, type: 3}
   arrowSpeed: 15
   arrowLifeTime: 5

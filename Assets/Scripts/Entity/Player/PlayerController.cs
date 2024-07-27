@@ -15,8 +15,11 @@ namespace Entity.Player
         protected Rigidbody rb;                               // Reference to the Rigidbody component
         
         private MyInput input;                                // Reference to the MyInput script
+        private readonly string speedParameter = "Speed";
+        private readonly string attackAnimation = "Attack_bow";
+        private readonly string attackSpeedParameter = "AttackSpeed";
 
-        void Start()
+        protected void Start()
         {
             input = new MyInput();
             input.Enable();
@@ -43,18 +46,19 @@ namespace Entity.Player
             }
 
             // Update animator parameters
-            animator.SetFloat("Speed", movement.magnitude);
+            animator.SetFloat(speedParameter, movement.magnitude);
         }
 
         public void Attack()
         {
-            animator.SetBool("Attack_bow", true);
+            animator.SetBool(attackAnimation, true);
             StartCoroutine(SetAnimationAttackSpeed());
         }
 
         public void StopAttack()
         {
-            animator.SetBool("Attack_bow", false);
+            animator.SetBool(attackAnimation, false);
+            animator.StopPlayback();
         }
 
         public void Move(Vector3 direction)
@@ -75,16 +79,16 @@ namespace Entity.Player
         {
             velocity = 0f;
             // Update animator parameter to transition to idle
-            animator.SetFloat("Speed", 0f);
+            animator.SetFloat(speedParameter, 0f);
         }
         
         IEnumerator SetAnimationAttackSpeed()
         {
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Attack_bow"));
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation));
             
             float animationLength = animator.GetCurrentAnimatorClipInfo(0).Length;
             float animationMultiplier = attackSpeed * animationLength;
-            animator.SetFloat("AttackSpeed", animationMultiplier);
+            animator.SetFloat(attackSpeedParameter, animationMultiplier);
         }
     
         void OnDisable()

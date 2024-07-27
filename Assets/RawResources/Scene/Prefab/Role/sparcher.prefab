@@ -880,8 +880,15 @@ MonoBehaviour:
   moveSpeed: 2
   moveDuration: 1.5
   rotateDuration: 1
-  attackRange: 2
-  attackDelay: 1
+  keepMovingDistance: 10
+  _maxHealth: 20
+  attackAnimation: Attack_bow
+  rangeForAttack: 2
+  attackSpeed: 0.5
+  attackCooldown: 2
+  attackDamage: 10
+  lineRenderer: {fileID: 1596139180802800107, guid: 7a28303471512ba4993ebdc0c78500d4, type: 3}
+  lineRendererWidth: 3
   projectilePrefab: {fileID: 3346771346502628738, guid: 21f3c36a70e8c75468e517fa3441dd97, type: 3}
   projectileSpeed: 10
   projectileLifeTime: 5

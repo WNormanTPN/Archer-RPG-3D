@@ -46,19 +46,28 @@ namespace Evironment.MapGenerator
 
         void Start()
         {
-            objectPool = objectPool ?? GetComponent<ObjectPool>();
+            objectPool = objectPool ?? GameObject.FindGameObjectWithTag("ObjectPool").GetComponent<ObjectPool>();
+            player = player ?? GameObject.FindGameObjectWithTag("Player").transform;
             InitializeMap();
             GenerateInitialTilesAndObstacles();
         }
 
-        void Update()
+        void FixedUpdate()
         {
             if (isLimitMap) return;
-            UpdatePlayerPosition();
+            if (!player)
+            {
+                player = GameObject.FindGameObjectWithTag("Player").transform;
+            }
+            else
+            {
+                UpdatePlayerPosition();
+            }
         }
 
         void InitializeMap()
         {
+            if(!player) player = GameObject.FindGameObjectWithTag("Player").transform;
             playerPos = GetPlayerTilePosition();
             activeTiles = new Dictionary<Vector2Int, GameObject>();
             tilePrefabIndexes = new Dictionary<Vector2Int, int>();

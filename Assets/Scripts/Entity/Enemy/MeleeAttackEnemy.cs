@@ -1,5 +1,6 @@
 ﻿using System;
 using Entity.Attack;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Entity.Enemy
@@ -7,6 +8,7 @@ namespace Entity.Enemy
     public class MeleeAttackEnemy : EnemyController, IMeleeAttack
     {
         [Header("Melee Attack Settings")]
+        [Range(0, 100)] public float attackDamage = 10f;    // Damage dealt by the enemy
         public Transform attackPoint;                       // Reference to the attack point
         [Range(0, 10)] public float attackRange = 0.25f;    // Range of the attack
         public LayerMask playerLayer;                       // Layer mask for the player

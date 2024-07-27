@@ -8,10 +8,11 @@ namespace Entity.Enemy
     public class RangedAttackEnemy : EnemyController, IRangedAttack
     {
         [Header("Ranged Attack Settings")]
-        public GameObject lineRenderer;         // Line renderer for the shooting effect
-        public float lineRendererWidth = 0.5f;  // Width of the line renderer
-        public GameObject projectilePrefab;     // Projectile to shoot
-        public float projectileSpeed = 10f;     // Speed of the projectile
+        [Range(0, 100)] public float attackDamage = 10f;    // Damage dealt by the enemy
+        public GameObject lineRenderer;                     // Line renderer for the shooting effect
+        public float lineRendererWidth = 0.5f;              // Width of the line renderer
+        public GameObject projectilePrefab;                 // Projectile to shoot
+        public float projectileSpeed = 10f;                 // Speed of the projectile
         public float projectileLifeTime = 5f;
         public float shootingOffset = 0.3f;
         
@@ -47,9 +48,15 @@ namespace Entity.Enemy
         {
             Vector3 end = start + direction * 100f;
             Ray ray = new Ray(start, direction);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
+            
+            foreach (var hit in hits)
             {
-                end = hit.point;
+                if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Enemy"))
+                {
+                    end = hit.point;
+                    break;
+                }
             }
             
             lineRenderer.startWidth = lineRendererWidth;

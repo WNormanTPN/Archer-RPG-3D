@@ -1,39 +1,51 @@
 using System;
 using System.Collections;
+using Entity.Attack;
 using UnityEngine;
 
 namespace Entity.Enemy
 {
-    public abstract class EnemyController : MonoBehaviour, ICharacter
+    public abstract class EnemyController : MonoBehaviour, ICharacter, IHealth
     {
         [Header("Movement Settings")]
         public Transform player;                                // Reference to the player
         [Range(0, 10)] public float moveSpeed = 2f;             // Speed of the enemy movement
         [Range(0, 5)] public float moveDuration = 1.5f;         // Duration for moving forward before re-evaluating
         [Range(0, 5)] public float rotateDuration = 1f;         // Duration for rotating towards the player
-        [Range(0, 100)] public float keepMovingDistance = 10f;   // Distance to keep moving towards the player
-        [Header("Attack Settings")]
+        [Range(0, 100)] public float keepMovingDistance = 10f;  // Distance to keep moving towards the player
+
+        [Header("Attack Settings")] 
+        [SerializeField] private float _maxHealth = 20f;        // Health of the enemy
         public string attackAnimation;                          // Name of the attack animation
         [Range(0, 100)] public float rangeForAttack = 2f;       // Range at which the enemy starts attacking
         [Range(0, 10)] public float attackSpeed = 1f;           // Speed of the enemy attack per second
         public float attackCooldown = 1f;                       // Cooldown time between attacks
 
-        private float moveTimer;                  // Timer to track movement duration
         protected bool isMovingForward;           // Flag to check if enemy is moving forward
-        private float rotateTimer;                // Timer to track rotation duration
         protected bool isRotating;                // Flag to check if enemy is rotating
         protected bool isAttacking;               // Flag to check if the enemy is attacking
-        private float attackTimer;                // Timer for attack cooldown
         protected Rigidbody rb;                   // Reference to the Rigidbody component
         protected Animator animator;              // Reference to the Animator component
 
+        private float _curHealth;                 // Current health of the enemy
+        private float moveTimer;                  // Timer to track movement duration
+        private float rotateTimer;                // Timer to track rotation duration
+        private float attackTimer;                // Timer for attack cooldown
+        private readonly string speedParameter = "Speed";
+        private readonly string attackSpeedParameter = "AttackSpeed";
+        
+        
+        public float curHealth { get => _curHealth; set => _curHealth = value; }
+        public float maxHealth { get => _maxHealth; set => _maxHealth = value; }
+        
         void Start()
         {
             moveTimer = moveDuration;
             isMovingForward = true;
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
-            attackTimer = attackCooldown; // Initialize attack timer
+            attackTimer = attackCooldown;
+            curHealth = maxHealth;
         }
 
         protected void FixedUpdate()
@@ -112,7 +124,7 @@ namespace Entity.Enemy
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation)) return;
             rb.position += moveSpeed * Time.fixedDeltaTime * transform.forward;
-            animator.SetFloat("Speed", moveSpeed);
+            animator.SetFloat(speedParameter, moveSpeed);
         }
 
         public void Rotate(Vector3 direction) // Rotate towards the player based on the duration
@@ -135,7 +147,7 @@ namespace Entity.Enemy
         public void StopMove()
         {
             rb.velocity = Vector3.zero; // Stop any existing movement
-            animator.SetFloat("Speed", 0f);
+            animator.SetFloat(speedParameter, 0f);
         }
 
         public void Attack()
@@ -154,7 +166,7 @@ namespace Entity.Enemy
         {
             float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
             float animationMultiplier = attackSpeed * animationLength;
-            animator.SetFloat("AttackSpeed", animationMultiplier);
+            animator.SetFloat(attackSpeedParameter, animationMultiplier);
         }
 
         private IEnumerator PerformAttack()

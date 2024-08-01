@@ -24,16 +24,16 @@ namespace Evironment.MapGenerator
             public bool canConnect;
         }
 
-        public TileType[] tileTypes;
-        public ObstacleType[] obstacleTypes;
-        public ObjectPool objectPool;
         public Transform player;
-        public GameObject fencePrefab;
+        public bool isLimitedMap = false;
         public int viewDistance = 5;
         public int unloadDistance = 10;
         public int tileSpacing = 1;
         [Range(0, 1)] public float obstacleSpawnRatio = 0.1f;
-        public bool isLimitMap = false;
+        public ObjectPool objectPool;
+        public GameObject fencePrefab;
+        public TileType[] tileTypes;
+        public ObstacleType[] obstacleTypes;
 
         private Vector2Int playerPos;
         private Dictionary<Vector2Int, GameObject> activeTiles;
@@ -54,7 +54,7 @@ namespace Evironment.MapGenerator
 
         void FixedUpdate()
         {
-            if (isLimitMap) return;
+            if (isLimitedMap) return;
             if (!player)
             {
                 player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -80,7 +80,7 @@ namespace Evironment.MapGenerator
             }
             InitObstaclesSize();
 
-            if (isLimitMap)
+            if (isLimitedMap)
             {
                 CreateFenceAroundMap();
             }
@@ -119,7 +119,7 @@ namespace Evironment.MapGenerator
             if (newPlayerPos != playerPos)
             {
                 playerPos = newPlayerPos;
-                if (!isLimitMap)
+                if (!isLimitedMap)
                 {
                     UpdateTilesAndObstacles();
                 }
@@ -149,7 +149,7 @@ namespace Evironment.MapGenerator
             int endX = viewDistance;
             int startY = -viewDistance;
             int endY = viewDistance;
-            if (isLimitMap)
+            if (isLimitedMap)
             {
                 startX /= 2;
                 endX = Mathf.CeilToInt(endX / 2.0f);
@@ -170,7 +170,7 @@ namespace Evironment.MapGenerator
 
         void UpdateTilesAndObstacles()
         {
-            if (isLimitMap) return;
+            if (isLimitedMap) return;
 
             RemoveDistantTiles();
             RemoveDistantObstacles();

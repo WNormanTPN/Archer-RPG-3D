@@ -1,0 +1,53 @@
+{
+    "101": [
+        {"waveID": 10101, "waveGroup": 101, "nextTime": 25, "attack": -0.25, "maxHP": 0, "monsters": [[101, 3]]},
+        {"waveID": 10102, "waveGroup": 101, "nextTime": 22, "attack": -0.25, "maxHP": 0, "monsters": [[203, 2]]},
+        {"waveID": 10103, "waveGroup": 101, "nextTime": 20, "attack": -0.25, "maxHP": 0, "monsters": [[201, 1], [203, 2]]},
+        {"waveID": 10104, "waveGroup": 101, "nextTime": 12, "attack": -0.25, "maxHP": 0, "monsters": [[302, 3]]},
+        {"waveID": 10105, "waveGroup": 101, "nextTime": 0, "attack": -0.25, "maxHP": 0, "monsters": [[102, 3]]},
+        {"waveID": 10106, "waveGroup": 101, "nextTime": 25, "attack": -0.25, "maxHP": 0.4, "monsters": [[201, 1], [203, 1], [302, 1], [101, 1]]},
+        {"waveID": 10107, "waveGroup": 101, "nextTime": 22, "attack": -0.25, "maxHP": 0.4, "monsters": [[101, 2], [102, 2]]},
+        {"waveID": 10108, "waveGroup": 101, "nextTime": 20, "attack": -0.25, "maxHP": 0.4, "monsters": [[203, 2], [101, 2]]},
+        {"waveID": 10109, "waveGroup": 101, "nextTime": 12, "attack": -0.25, "maxHP": 0.4, "monsters": [[102, 2], [302, 2]]},
+        {"waveID": 10110, "waveGroup": 101, "nextTime": 0, "attack": -0.25, "maxHP": 0.4, "monsters": [[5102, 1]]}
+    ],
+    "102": [
+        {"waveID": 10201, "waveGroup": 102, "nextTime": 25, "attack": 0.2, "maxHP": 0.8, "monsters": [[101, 3], [319, 1]]},
+        {"waveID": 10202, "waveGroup": 102, "nextTime": 22, "attack": 0.2, "maxHP": 0.8, "monsters": [[319, 4]]},
+        {"waveID": 10203, "waveGroup": 102, "nextTime": 20, "attack": 0.2, "maxHP": 0.8, "monsters": [[309, 2], [101, 3]]},
+        {"waveID": 10204, "waveGroup": 102, "nextTime": 12, "attack": 0.2, "maxHP": 0.8, "monsters": [[310, 3]]},
+        {"waveID": 10205, "waveGroup": 102, "nextTime": 0, "attack": 0.2, "maxHP": 0.8, "monsters": [[102, 4]]},
+        {"waveID": 10206, "waveGroup": 102, "nextTime": 25, "attack": 0.2, "maxHP": 1.6, "monsters": [[305, 6]]},
+        {"waveID": 10207, "waveGroup": 102, "nextTime": 22, "attack": 0.2, "maxHP": 1.6, "monsters": [[101, 3], [102, 2]]},
+        {"waveID": 10208, "waveGroup": 102, "nextTime": 20, "attack": 0.2, "maxHP": 1.6, "monsters": [[310, 2], [101, 2], [102, 1]]},
+        {"waveID": 10209, "waveGroup": 102, "nextTime": 12, "attack": 0.2, "maxHP": 1.6, "monsters": [[305, 3], [310, 3]]},
+        {"waveID": 10210, "waveGroup": 102, "nextTime": 0, "attack": 0.2, "maxHP": 1.6, "monsters": [[5105, 1]]},
+        {"waveID": 10211, "waveGroup": 102, "nextTime": 25, "attack": 0.2, "maxHP": 2.5, "monsters": [[102, 3], [319, 2]]},
+        {"waveID": 10212, "waveGroup": 102, "nextTime": 22, "attack": 0.2, "maxHP": 2.5, "monsters": [[309, 2], [305, 3]]},
+        {"waveID": 10213, "waveGroup": 102, "nextTime": 20, "attack": 0.2, "maxHP": 2.5, "monsters": [[101, 5]]},
+        {"waveID": 10214, "waveGroup": 102, "nextTime": 12, "attack": 0.2, "maxHP": 2.5, "monsters": [[310, 3], [102, 2]]},
+        {"waveID": 10215, "waveGroup": 102, "nextTime": 0, "attack": 0.2, "maxHP": 2.5, "monsters": [[305, 2], [102, 2], [101, 1]]},
+        {"waveID": 10216, "waveGroup": 102, "nextTime": 25, "attack": 0.5, "maxHP": 3.4, "monsters": [[319, 2], [309, 2], [305, 1]]},
+        {"waveID": 10217, "waveGroup": 102, "nextTime": 22, "attack": 0.5, "maxHP": 3.4, "monsters": [[105, 3], [310, 1]]},
+        {"waveID": 10218, "waveGroup": 102, "nextTime": 20, "attack": 0.5, "maxHP": 3.4, "monsters": [[105, 2], [101, 2], [102, 2]]},
+        {"waveID": 10219, "waveGroup": 102, "nextTime": 12, "attack": 0.5, "maxHP": 3.4, "monsters": [[305, 3], [310, 3]]},
+        {"waveID": 10220, "waveGroup": 102, "nextTime": 0, "attack": 0.5, "maxHP": 3.4, "monsters": [[5103, 1]]}
+    ],
+    "103": [
+        {"waveID": 10301, "waveGroup": 103, "nextTime": 25, "attack": 0.6, "maxHP": 1.5, "monsters": [[101, 2], [319, 1]]},
+        {"waveID": 10302, "waveGroup": 103, "nextTime": 22, "attack": 0.6, "maxHP": 1.5, "monsters": [[303, 2], [319, 1]]},
+        {"waveID": 10303, "waveGroup": 103, "nextTime": 20, "attack": 0.6, "maxHP": 1.5, "monsters": [[309, 2], [303, 2], [319, 1]]},
+        {"waveID": 10304, "waveGroup": 103, "nextTime": 12, "attack": 0.6, "maxHP": 1.5, "monsters": [[305, 3], [319, 1]]},
+        {"waveID": 10305, "waveGroup": 103, "nextTime": 0, "attack": 0.6, "maxHP": 1.5, "monsters": [[305, 4]]},
+        {"waveID": 10306, "waveGroup": 103, "nextTime": 25, "attack": 0.6, "maxHP": 3.0, "monsters": [[303, 2], [319, 3]]},
+        {"waveID": 10307, "waveGroup": 103, "nextTime": 22, "attack": 0.6, "maxHP": 3.0, "monsters": [[319, 2], [309, 2], [303, 2]]},
+        {"waveID": 10308, "waveGroup": 103, "nextTime": 20, "attack": 0.6, "maxHP": 3.0, "monsters": [[305, 3], [309, 3]]},
+        {"waveID": 10309, "waveGroup": 103, "nextTime": 12, "attack": 0.6, "maxHP": 3.0, "monsters": [[303, 3], [319, 3]]},
+        {"waveID": 10310, "waveGroup": 103, "nextTime": 0, "attack": 0.6, "maxHP": 3.0, "monsters": [[5104, 1]]},
+        {"waveID": 10311, "waveGroup": 103, "nextTime": 25, "attack": 0.9, "maxHP": 4.5, "monsters": [[319, 2], [303, 3]]},
+        {"waveID": 10312, "waveGroup": 103, "nextTime": 22, "attack": 0.9, "maxHP": 4.5, "monsters": [[305, 2], [303, 2], [309, 2]]},
+        {"waveID": 10313, "waveGroup": 103, "nextTime": 20, "attack": 0.9, "maxHP": 4.5, "monsters": [[305, 2], [319, 2], [309, 1]]},
+        {"waveID": 10314, "waveGroup": 103, "nextTime": 12, "attack": 0.9, "maxHP": 4.5, "monsters": [[305, 3], [303, 2]]},
+        {"waveID": 10315, "waveGroup": 103, "nextTime": 0, "attack": 0.9, "maxHP": 4.5, "monsters": [[5106, 1]]}
+    ]
+}

@@ -1,0 +1,5 @@
+{
+    "1": {"mapId": 1, "mapName": "Level 1: Tutorial", "mapRes": "iso_scene1", "monsterWaveGroup": 101},
+    "2": {"mapId": 2, "mapName": "Level 2", "mapRes": "iso_scene2", "monsterWaveGroup": 102},
+    "3": {"mapId": 3, "mapName": "Level 3", "mapRes": "iso_scene3", "monsterWaveGroup": 103}
+}

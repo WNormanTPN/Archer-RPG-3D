@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace UI
 {
-    public class SmoothScroll : MonoBehaviour
+    public class SmoothScroll : MonoBehaviour, IEndDragHandler
     {
         public ScrollRect scrollRect;        // Reference to the ScrollRect component
         public float snapSpeed = 10f;        // Speed of snapping
@@ -22,6 +23,7 @@ namespace UI
             {
                 items[i] = content.GetChild(i) as RectTransform;
                 itemsPos[i] = -items[i].anchoredPosition;
+                itemsPos[i].y = 0; // Only snap horizontally
             }
         }
 
@@ -31,19 +33,9 @@ namespace UI
             {
                 SnapToNearestItem();
             }
-        
-            if (Input.GetMouseButtonDown(0))
-            {
-                isSnapping = false;
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                OnEndDrag();
-            }
         }
 
-        public void OnEndDrag()
+        public void OnEndDrag(PointerEventData eventData)
         {
             // Begin snapping when dragging ends
             isSnapping = true;
@@ -82,9 +74,22 @@ namespace UI
                     nearestPosition = itemPos;
                 }
             }
-
-            nearestPosition.y = content.anchoredPosition.y;
+            
             return nearestPosition;
+        }
+
+        // New method to set the target index from outside
+        public void SetTargetIndex(int index)
+        {
+            if (index >= 0 && index < itemsPos.Length)
+            {
+                targetPosition = itemsPos[index];
+                isSnapping = true;
+            }
+            else
+            {
+                Debug.LogError("Index out of range");
+            }
         }
     }
 }

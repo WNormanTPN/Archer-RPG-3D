@@ -19,7 +19,7 @@ namespace Entity.Player
         public float curHealth { get => _curHealth; set => _curHealth = value; }
         public float maxHealth { get => _maxHealth; set => _maxHealth = value; }
         
-        void Start()
+        protected override void Start()
         {
             base.Start();
             curHealth = maxHealth;

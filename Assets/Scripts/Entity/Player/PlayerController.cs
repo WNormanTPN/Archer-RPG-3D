@@ -19,7 +19,7 @@ namespace Entity.Player
         private readonly string attackAnimation = "Attack_bow";
         private readonly string attackSpeedParameter = "AttackSpeed";
 
-        protected void Start()
+        protected virtual void Start()
         {
             input = new MyInput();
             input.Enable();
@@ -27,7 +27,7 @@ namespace Entity.Player
             animator = GetComponent<Animator>();
         }
 
-        void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             // Handle input and set animation parameters
             Vector2 inputDirection = input.Player.Move.ReadValue<Vector2>();

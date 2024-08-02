@@ -18,7 +18,7 @@ namespace Entity.Enemy
         
         private GameObject lineRendererInstance;
 
-        private void FixedUpdate()
+        protected override void FixedUpdate()
         {
             base.FixedUpdate();
             if (!lineRenderer) return;

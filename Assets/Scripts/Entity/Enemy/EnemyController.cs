@@ -38,7 +38,7 @@ namespace Entity.Enemy
         public float curHealth { get => _curHealth; set => _curHealth = value; }
         public float maxHealth { get => _maxHealth; set => _maxHealth = value; }
         
-        void Start()
+        protected virtual void Start()
         {
             moveTimer = moveDuration;
             isMovingForward = true;
@@ -48,7 +48,7 @@ namespace Entity.Enemy
             curHealth = maxHealth;
         }
 
-        protected void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             if (player)
             {

@@ -260,7 +260,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pools: []
-  parent: {fileID: 335849291}
 --- !u!4 &192439730
 Transform:
   m_ObjectHideFlags: 0
@@ -462,13 +461,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  isLimitedMap: 0
   viewDistance: 7
   unloadDistance: 20
   tileSpacing: 2
   obstacleSpawnRatio: 0.2
+  isLimitedMap: 0
   objectPool: {fileID: 0}
-  fencePrefab: {fileID: 127910, guid: 6620194db5440334aa6b83b896865f5f, type: 3}
+  fencePrefab: {fileID: 0}
+  fenceParent: {fileID: 0}
   tileTypes:
   - tilePrefab: {fileID: 148192, guid: ce1b1c89cc01b594b97ffd660fb7409e, type: 3}
     ratio: 2
@@ -478,11 +478,13 @@ MonoBehaviour:
     ratio: 0.1
   - tilePrefab: {fileID: 148192, guid: 4bec1eb3193ed614090bf83dcb1f065c, type: 3}
     ratio: 0.1
+  tileParent: {fileID: 335849291}
   obstacleTypes:
   - obstaclePrefab: {fileID: 9174681701356550645, guid: ace68eecc2be01d40bd95b69212db37b, type: 3}
     ratio: 0.1
     size: {x: 0, y: 0}
     canConnect: 1
+  obstacleParent: {fileID: 1450875543}
 --- !u!4 &521052217
 Transform:
   m_ObjectHideFlags: 0
@@ -627,6 +629,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 335849291}
+  - {fileID: 1450875543}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &774949244
@@ -1198,6 +1201,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a947fd3dc713dc40961367bf6f6c954, type: 3}
+--- !u!1 &1450875542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1450875543}
+  m_Layer: 0
+  m_Name: Obstacles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1450875543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450875542}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 751583207}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1507322053 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9129361193720259838, guid: 7e7ca3c6d1453b84e9c4358bd9a15894, type: 3}

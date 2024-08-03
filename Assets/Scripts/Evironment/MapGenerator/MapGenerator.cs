@@ -25,15 +25,18 @@ namespace Evironment.MapGenerator
         }
 
         public Transform player;
-        public bool isLimitedMap = false;
         public int viewDistance = 5;
         public int unloadDistance = 10;
         public int tileSpacing = 1;
         [Range(0, 1)] public float obstacleSpawnRatio = 0.1f;
+        public bool isLimitedMap = false;
         public ObjectPool objectPool;
         public GameObject fencePrefab;
+        public Transform fenceParent;
         public TileType[] tileTypes;
+        public Transform tileParent;
         public ObstacleType[] obstacleTypes;
+        public Transform obstacleParent;
 
         private Vector2Int playerPos;
         private Dictionary<Vector2Int, GameObject> activeTiles;
@@ -255,7 +258,7 @@ namespace Evironment.MapGenerator
             }
 
             GameObject tilePrefab = GetTilePrefab(tilePrefabIndex);
-            GameObject tile = objectPool.GetObject(tilePrefab);
+            GameObject tile = objectPool.GetObject(tilePrefab, tileParent);
             tile.transform.position = new Vector3(tilePos.x * tileSpacing, 0, tilePos.y * tileSpacing);
             activeTiles[tilePos] = tile;
 
@@ -268,7 +271,7 @@ namespace Evironment.MapGenerator
         void CreateObstacleAtPosition(Vector2Int obstaclePos, int obstacleIndex)
         {
             GameObject obstaclePrefab = GetObstaclePrefab(obstacleIndex);
-            GameObject obstacle = objectPool.GetObject(obstaclePrefab);
+            GameObject obstacle = objectPool.GetObject(obstaclePrefab, obstacleParent);
 
             Vector3 obstaclePosition = new Vector3(obstaclePos.x * tileSpacing, 0, obstaclePos.y * tileSpacing);
             Vector2 outSize = Vector2.one;
@@ -408,7 +411,7 @@ namespace Evironment.MapGenerator
                     if (x == startX || x == endX || y == startY || y == endY)
                     {
                         Vector3 fencePos = new Vector3(x * tileSpacing, 0, y * tileSpacing);
-                        GameObject fence = objectPool.GetObject(fencePrefab);
+                        GameObject fence = objectPool.GetObject(fencePrefab, fenceParent);
 
                         // Determine rotation based on position
                         Quaternion rotation = Quaternion.identity;
@@ -428,7 +431,7 @@ namespace Evironment.MapGenerator
                         if ((x == startX || x == endX) && (y == startY || y == endY))
                         {
                             // Create a fence for the other axis at the same position
-                            GameObject cornerFence = objectPool.GetObject(fencePrefab);
+                            GameObject cornerFence = objectPool.GetObject(fencePrefab, fenceParent);
                             cornerFence.transform.position = fencePos;
                             cornerFence.transform.rotation = (rotation == Quaternion.Euler(0, 90, 0)) ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 90, 0);
                         }

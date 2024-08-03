@@ -9,11 +9,11 @@ namespace Generic
         public struct Pool
         {
             public GameObject prefab;
+            public Transform parent;
             public int initialPoolSize;
         }
 
         public Pool[] pools;
-        public Transform parent;
         private Dictionary<GameObject, Queue<GameObject>> poolDictionary;
 
         void Awake()
@@ -31,7 +31,7 @@ namespace Generic
 
                 for (int i = 0; i < pool.initialPoolSize; i++)
                 {
-                    GameObject obj = Instantiate(pool.prefab, parent);
+                    GameObject obj = Instantiate(pool.prefab, pool.parent);
                     obj.SetActive(false);
                     objectPool.Enqueue(obj);
                 }
@@ -40,6 +40,26 @@ namespace Generic
         }
 
         public GameObject GetObject(GameObject prefab)
+        {
+            if (!poolDictionary.TryGetValue(prefab, out _))
+            {
+                poolDictionary.Add(prefab, new Queue<GameObject>());
+            }
+        
+            var objectPool = poolDictionary[prefab];
+            if (objectPool.Count > 0)
+            {
+                var obj = objectPool.Dequeue();
+                obj.SetActive(true);
+                return obj;
+            }
+        
+            var newObj = Instantiate(prefab);
+            newObj.SetActive(true);
+            return newObj;
+        }
+        
+        public GameObject GetObject(GameObject prefab, Transform parent)
         {
             if (!poolDictionary.TryGetValue(prefab, out _))
             {

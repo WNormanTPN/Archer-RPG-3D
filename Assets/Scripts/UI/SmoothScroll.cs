@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace UI
 {
-    public class SmoothScroll : MonoBehaviour, IEndDragHandler
+    public class SmoothScroll : MonoBehaviour, IEndDragHandler, IBeginDragHandler
     {
         public ScrollRect scrollRect;        // Reference to the ScrollRect component
         public float snapSpeed = 10f;        // Speed of snapping
@@ -40,6 +40,11 @@ namespace UI
             // Begin snapping when dragging ends
             isSnapping = true;
             targetPosition = GetNearestItemPosition();
+        }
+        
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            isSnapping = false;
         }
 
         private void SnapToNearestItem()

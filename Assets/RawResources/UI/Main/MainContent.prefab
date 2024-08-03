@@ -875,7 +875,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6155423621738486447}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9129361193720259838}
+        m_TargetAssemblyTypeName: UI.SmoothScroll, Assembly-CSharp
+        m_MethodName: SetTargetIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6155423621738486097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1108,7 +1120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8831835337159897054}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9129361193720259838}
+        m_TargetAssemblyTypeName: UI.SmoothScroll, Assembly-CSharp
+        m_MethodName: SetTargetIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7417912554832281354
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,7 +1282,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8831835337079655406}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9129361193720259838}
+        m_TargetAssemblyTypeName: UI.SmoothScroll, Assembly-CSharp
+        m_MethodName: SetTargetIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7417912555803932802
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,7 +1407,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8831835336591793571}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9129361193720259838}
+        m_TargetAssemblyTypeName: UI.SmoothScroll, Assembly-CSharp
+        m_MethodName: SetTargetIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7711935609022775574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,7 +1532,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8603862978637134613}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9129361193720259838}
+        m_TargetAssemblyTypeName: UI.SmoothScroll, Assembly-CSharp
+        m_MethodName: SetTargetIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8203037506528995644
 GameObject:
   m_ObjectHideFlags: 0

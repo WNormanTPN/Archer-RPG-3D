@@ -45,6 +45,7 @@ namespace UI
                         button.enabled = false;
                     }
                 }
+                scrollRect.verticalNormalizedPosition = 1.2f;
             }
             UpdateItems();
         }

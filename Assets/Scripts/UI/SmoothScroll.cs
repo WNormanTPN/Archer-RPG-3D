@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -8,11 +9,14 @@ namespace UI
     {
         public ScrollRect scrollRect;        // Reference to the ScrollRect component
         public float snapSpeed = 10f;        // Speed of snapping
+        public GameObject imageFlag;         // Reference to the flag image
+        public GameObject buttonList;        // Reference to the button list
 
         private RectTransform content;       // Reference to the content RectTransform
         private Vector2[] itemsPos;          // Array of items in the content
         private Vector2 targetPosition;      // Target position for snapping
         private bool isSnapping = false;     // Flag to check if currently snapping
+        private Transform[] buttonPos;       // Array of button transform in the button list
 
         void Start()
         {
@@ -24,6 +28,11 @@ namespace UI
                 items[i] = content.GetChild(i) as RectTransform;
                 itemsPos[i] = -items[i].anchoredPosition;
                 itemsPos[i].y = 0; // Only snap horizontally
+            }
+            buttonPos = new Transform[buttonList.transform.childCount];
+            for (int i = 0; i < buttonList.transform.childCount; i++)
+            {
+                buttonPos[i] = buttonList.transform.GetChild(i);
             }
         }
 
@@ -40,6 +49,8 @@ namespace UI
             // Begin snapping when dragging ends
             isSnapping = true;
             targetPosition = GetNearestItemPosition();
+            int index = System.Array.IndexOf(itemsPos, targetPosition);
+            imageFlag.transform.DOMoveX(buttonPos[index].position.x, 0.5f);
         }
         
         public void OnBeginDrag(PointerEventData eventData)

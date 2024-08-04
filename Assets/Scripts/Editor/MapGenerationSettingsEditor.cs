@@ -32,6 +32,7 @@ namespace Editor
             }
 
             // Draw the fields for fencePrefab and fenceParent if the limited map is true
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("isLimitedMap"));
             if (mapSettings.isLimitedMap)
             {
                 showFenceSettings = EditorGUILayout.Foldout(showFenceSettings, "Fence Settings", true, EditorStyles.foldout);

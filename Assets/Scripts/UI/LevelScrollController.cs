@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI
 {
-    public class LevelScrollController : MonoBehaviour
+    public class LevelScrollController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         public ScrollRect scrollRect;
+        public RectTransform centerScrollRect;
         public RectTransform content;
         public float centerScale = 1.2f;  // Scale factor for the centered item
         public float sideAlpha = 0.5f;    // Alpha for side items
@@ -18,6 +20,9 @@ namespace UI
         private List<CanvasGroup> canvasGroups;
         private List<Button> buttons;
         private Vector2 defaultItemSize;
+        private IBeginDragHandler centerBeginDragHandler;
+        private IDragHandler centerDragHandler;
+        private IEndDragHandler centerEndDragHandler;
         
 
         void Start()
@@ -25,6 +30,11 @@ namespace UI
             items = new List<RectTransform>();
             canvasGroups = new List<CanvasGroup>();
             buttons = new List<Button>();
+            
+            centerBeginDragHandler = centerScrollRect.GetComponent<IBeginDragHandler>();
+            centerDragHandler = centerScrollRect.GetComponent<IDragHandler>();
+            centerEndDragHandler = centerScrollRect.GetComponent<IEndDragHandler>();
+            
         }
 
         void Update()
@@ -93,6 +103,21 @@ namespace UI
                 items[centerIndex]
                     .SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, defaultItemSize.y * this.centerScale);
             }
+        }
+        
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            centerBeginDragHandler.OnBeginDrag(eventData);
+        }
+        
+        public void OnDrag(PointerEventData eventData)
+        {
+            centerDragHandler.OnDrag(eventData);
+        }
+        
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            centerEndDragHandler.OnEndDrag(eventData);
         }
     }
 }

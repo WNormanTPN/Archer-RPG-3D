@@ -65,8 +65,7 @@ namespace Entity.Attack
             StopAllCoroutines();
         }
 
-        void StartRotationCorrection()
-        {
+        void StartRotationCorrection() {
             StartCoroutine(RotateProjectileBaseOnVelocity());
         }
 

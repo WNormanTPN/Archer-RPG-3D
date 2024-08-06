@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 971f8839ee0cb0e4aa7cbf99dcdedb6f, type: 3}
-  m_Name: Package_1
+  m_Script: {fileID: 11500000, guid: 3a189bb168d8d90478a09ea08c2f3d72, type: 3}
+  m_Name: DefaultObject
   m_EditorClassIdentifier: 
-  tiles: []
-  obstacles: []
-  fencePrefab: {fileID: 0}
+  m_AddressableAssetSettingsGuid: 3679f7d567722af49b516d8cfad9104c

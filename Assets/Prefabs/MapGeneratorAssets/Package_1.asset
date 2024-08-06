@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 971f8839ee0cb0e4aa7cbf99dcdedb6f, type: 3}
+  m_Name: Package_1
+  m_EditorClassIdentifier: 
+  tiles:
+  - tilePrefab: {fileID: 148192, guid: ce1b1c89cc01b594b97ffd660fb7409e, type: 3}
+    ratio: 10
+  - tilePrefab: {fileID: 148192, guid: 34fc11007dd664445839345dabfa32d8, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: a5bf50f8fc223644e9d24bc78b18c3e5, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: 4bec1eb3193ed614090bf83dcb1f065c, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: 17ecdf1bc3647904a91505881b12613d, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: 1f90acf78d6f2e7499410b3b61a07cfc, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: fa5dd789b08e81f4789a775275bdb886, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: 5e4811e72c3dbd24c9acc95d4854d923, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: c3659f78d83530d43986f72601759888, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: ceddf42f20c07fe45b2168e4eb424968, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: ab49b01eef5ab084eb12dada39cbb13b, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: 9eff8432f7e91f747aa26e4ba5da8ec0, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: 67d6488f617ca15468224cad168f7d9d, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: 0ad75599c956f914f898acca06e671a8, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: 6f85cd9c034beb54989925e943767eeb, type: 3}
+    ratio: 0.2
+  - tilePrefab: {fileID: 148192, guid: 0417e0fc1c0de834090cb7efe71bbc43, type: 3}
+    ratio: 0.2
+  obstacles:
+  - obstaclePrefab: {fileID: 138552, guid: 44da82967f52bc246b5bcbbe12626d21, type: 3}
+    ratio: 1
+    size: {x: 0, y: 0}
+    canConnect: 0
+  - obstaclePrefab: {fileID: 117238, guid: ce4829241a93177409b89736b9c70059, type: 3}
+    ratio: 1
+    size: {x: 0, y: 0}
+    canConnect: 0
+  - obstaclePrefab: {fileID: 6674038833064950489, guid: 1d255d49ba0741744b0609bd72e38b5b, type: 3}
+    ratio: 1
+    size: {x: 0, y: 0}
+    canConnect: 1
+  - obstaclePrefab: {fileID: 9174681701356550645, guid: ace68eecc2be01d40bd95b69212db37b, type: 3}
+    ratio: 3
+    size: {x: 0, y: 0}
+    canConnect: 1
+  - obstaclePrefab: {fileID: 183444, guid: f7771b1601a2f574484555ecf6473cce, type: 3}
+    ratio: 1
+    size: {x: 0, y: 0}
+    canConnect: 1
+  fencePrefab: {fileID: 138258, guid: ea34a182692511a4685c4bcd626096bd, type: 3}

@@ -470,10 +470,10 @@ MonoBehaviour:
   unloadDistance: 20
   tileSpacing: 2
   obstacleSpawnRatio: 0.2
-  isLimitedMap: 0
+  isLimitedMap: 1
   objectPool: {fileID: 0}
-  fencePrefab: {fileID: 0}
-  fenceParent: {fileID: 0}
+  fencePrefab: {fileID: 150242, guid: 67216809b530d50449be9a1de5557444, type: 3}
+  fenceParent: {fileID: 1450875543}
   tileTypes:
   - tilePrefab: {fileID: 148192, guid: ce1b1c89cc01b594b97ffd660fb7409e, type: 3}
     ratio: 2

@@ -16,6 +16,7 @@ namespace Entity.Player
         
         private MyInput input;                                // Reference to the MyInput script
         private readonly string speedParameter = "Speed";
+        private readonly string idleAnimation = "Idle";
         private readonly string attackAnimation = "Attack_bow";
         private readonly string attackSpeedParameter = "AttackSpeed";
 
@@ -58,7 +59,8 @@ namespace Entity.Player
         public void StopAttack()
         {
             animator.SetBool(attackAnimation, false);
-            animator.StopPlayback();
+            if(animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation))
+                animator.Play(idleAnimation);
         }
 
         public void Move(Vector3 direction)

@@ -57,6 +57,9 @@ namespace Entity.Attack
 
             // Optionally, disable the collider to prevent further collisions
             GetComponent<Collider>().enabled = false;
+            
+            // Parent the projectile to the collided object
+            transform.parent = collision.transform;
 
             // Stop the rotation coroutine
             StopAllCoroutines();

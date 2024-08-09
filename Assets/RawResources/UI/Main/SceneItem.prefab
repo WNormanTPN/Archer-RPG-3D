@@ -87,9 +87,9 @@ GameObject:
   - component: {fileID: 3664117296986910733}
   - component: {fileID: 1223398057085465440}
   - component: {fileID: 7901141018314747077}
-  - component: {fileID: 354700442683270853}
   - component: {fileID: 5338024125730030705}
   - component: {fileID: 3090784108292626340}
+  - component: {fileID: 5469642504234468598}
   m_Layer: 5
   m_Name: SceneItem
   m_TagString: Untagged
@@ -177,20 +177,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &354700442683270853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3809238913995127034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ce0d0f8c8ca4e1fba7e704fc6a96022, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lockIcon: {fileID: 0}
-  scenePath: Scenes/
 --- !u!225 &5338024125730030705
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -259,7 +245,7 @@ MonoBehaviour:
           m_StringArgument: Pressed
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 354700442683270853}
+      - m_Target: {fileID: 5469642504234468598}
         m_TargetAssemblyTypeName: UI.SceneItem, Assembly-CSharp
         m_MethodName: LoadLevel
         m_Mode: 1
@@ -271,6 +257,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5469642504234468598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3809238913995127034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ce0d0f8c8ca4e1fba7e704fc6a96022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockIcon: {fileID: 2865081423426635700}
+  genericLevelSceneKey: Assets/Scenes/GenericMapLevel.unity
+  mapDetailConfig: {fileID: 4900000, guid: b745c00686c74360abfada8d5e49830d, type: 3}
 --- !u!1 &7026724359206731016
 GameObject:
   m_ObjectHideFlags: 0

@@ -478,6 +478,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &1494643706 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2773256134006831282, guid: 7e7ca3c6d1453b84e9c4358bd9a15894, type: 3}
+  m_PrefabInstance: {fileID: 6838107520655472552}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6838107520655472552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -490,6 +495,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1317893250258778231, guid: 7e7ca3c6d1453b84e9c4358bd9a15894, type: 3}
+      propertyPath: centerScrollRect
+      value: 
+      objectReference: {fileID: 1494643706}
     - target: {fileID: 1464154913595260517, guid: 7e7ca3c6d1453b84e9c4358bd9a15894, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -698,6 +707,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8145551361415686389, guid: 7e7ca3c6d1453b84e9c4358bd9a15894, type: 3}
+      propertyPath: centerScrollRect
+      value: 
+      objectReference: {fileID: 1494643706}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Evironment.MapGenerator
 {
@@ -71,12 +72,26 @@ namespace Evironment.MapGenerator
         void InitializeMap()
         {
             if(!player) player = GameObject.FindGameObjectWithTag("Player").transform;
+            viewDistance = PlayerPrefs.GetInt("ViewDistance", viewDistance);
+            unloadDistance = PlayerPrefs.GetInt("UnloadDistance", unloadDistance);
+            tileSpacing = PlayerPrefs.GetInt("TileSpacing", tileSpacing);
+            obstacleSpawnRatio = PlayerPrefs.GetFloat("ObstacleSpawnRatio", obstacleSpawnRatio);
+            string objectPoolAssetsPath = PlayerPrefs.GetString("ObjectPoolAssetsPath", "");
+            var loadAsync = Addressables.LoadAssetAsync<ScriptableObjectPooling>(objectPoolAssetsPath);
+            loadAsync.Completed += handle =>
+            {
+                tileTypes = handle.Result.tiles;
+                obstacleTypes = handle.Result.obstacles;
+                fencePrefab = handle.Result.fencePrefab;
+            };
             playerPos = GetPlayerTilePosition();
             activeTiles = new Dictionary<Vector2Int, GameObject>();
             tilePrefabIndexes = new Dictionary<Vector2Int, int>();
-            totalTileRatio = CalculateTotalRatio(tileTypes);
             activeObstacles = new Dictionary<Vector2Int, GameObject>();
             obstaclePrefabIndexes = new Dictionary<Vector2Int, int>();
+            
+            loadAsync.WaitForCompletion();
+            totalTileRatio = CalculateTotalRatio(tileTypes);
             if (obstacleTypes.Length > 0)
             {
                 totalObstacleRatio = CalculateTotalRatio(obstacleTypes);

@@ -41,7 +41,7 @@ namespace UI
     {
         public int mapId;
         public string mapName;
-        public string mapRes;
+        public int mapDetailId;
         public int monsterWaveGroup;
     }
 

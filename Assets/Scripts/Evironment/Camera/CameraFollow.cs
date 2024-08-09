@@ -28,6 +28,10 @@ namespace Environment.Camera
                 // Ensure the camera looks at the target
                 transform.LookAt(targetPosition);
             }
+            else
+            {
+                target = GameObject.FindGameObjectWithTag("Player").transform;
+            }
         }
     }
 }

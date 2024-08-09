@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ObjectPool
   - Enemy
+  - MapGenerator
   layers:
   - Default
   - TransparentFX

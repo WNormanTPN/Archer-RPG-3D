@@ -476,7 +476,7 @@ GameObject:
   - component: {fileID: 437422}
   - component: {fileID: 9535804}
   - component: {fileID: 5495698}
-  - component: {fileID: 6469502999290875098}
+  - component: {fileID: 1465090572169275178}
   m_Layer: 0
   m_Name: box_man
   m_TagString: Untagged
@@ -492,7 +492,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 165820}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0.0000000754979}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -1.96, y: 0.08, z: -1.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -502,7 +502,7 @@ Transform:
   - {fileID: 3702746824393951036}
   - {fileID: 4499847768708643295}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &9535804
 Animator:
   serializedVersion: 5
@@ -551,8 +551,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!65 &6469502999290875098
-BoxCollider:
+--- !u!136 &1465090572169275178
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -569,8 +569,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.46, y: 0.64, z: 0.4}
+  serializedVersion: 2
+  m_Radius: 0.23
+  m_Height: 0.7
+  m_Direction: 1
   m_Center: {x: 0, y: 0.37, z: 0}
 --- !u!1 &166804
 GameObject:

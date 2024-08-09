@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 440454}
   - component: {fileID: 9562300}
   - component: {fileID: 5447642}
-  - component: {fileID: 6654366513968143877}
+  - component: {fileID: 2801948366513239560}
   m_Layer: 0
   m_Name: magic_plant
   m_TagString: Untagged
@@ -601,7 +601,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164414}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -0.86, y: 0.08, z: 0.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -611,7 +611,7 @@ Transform:
   - {fileID: 6835037585588886153}
   - {fileID: 471046974878217611}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!95 &9562300
 Animator:
   serializedVersion: 5
@@ -660,8 +660,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!65 &6654366513968143877
-BoxCollider:
+--- !u!136 &2801948366513239560
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -678,8 +678,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.37, y: 0.67, z: 0.35}
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 0.7
+  m_Direction: 1
   m_Center: {x: 0, y: 0.38, z: 0}
 --- !u!1 &167446
 GameObject:

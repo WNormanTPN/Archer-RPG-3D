@@ -569,7 +569,7 @@ GameObject:
   - component: {fileID: 426156}
   - component: {fileID: 9559642}
   - component: {fileID: 5416642}
-  - component: {fileID: 1816152643150547343}
+  - component: {fileID: 2122537382455942260}
   m_Layer: 0
   m_Name: king
   m_TagString: Untagged
@@ -585,7 +585,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149806}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0.0000000754979}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0.0029725283, y: 0.08, z: -3.628125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -595,7 +595,7 @@ Transform:
   - {fileID: 2221662472834643298}
   - {fileID: 4822814497879964990}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &9559642
 Animator:
   serializedVersion: 5
@@ -644,8 +644,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!65 &1816152643150547343
-BoxCollider:
+--- !u!136 &2122537382455942260
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -662,8 +662,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.52, y: 0.91, z: 0.59}
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0.49, z: 0}
 --- !u!1 &152032
 GameObject:

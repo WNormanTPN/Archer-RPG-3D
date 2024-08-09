@@ -529,7 +529,7 @@ GameObject:
   - component: {fileID: 440732}
   - component: {fileID: 9566754}
   - component: {fileID: 5429712}
-  - component: {fileID: 202066486278314998}
+  - component: {fileID: 2774914361255909704}
   m_Layer: 0
   m_Name: woopa
   m_TagString: Untagged
@@ -545,7 +545,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 158898}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -0.67, y: 0.08, z: 2.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -554,7 +554,7 @@ Transform:
   - {fileID: 441670}
   - {fileID: 3131398927556755725}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!95 &9566754
 Animator:
   serializedVersion: 5
@@ -603,8 +603,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!65 &202066486278314998
-BoxCollider:
+--- !u!136 &2774914361255909704
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -621,8 +621,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.41, y: 0.81, z: 0.39}
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 0.8
+  m_Direction: 1
   m_Center: {x: 0, y: 0.45, z: 0}
 --- !u!1 &161284
 GameObject:

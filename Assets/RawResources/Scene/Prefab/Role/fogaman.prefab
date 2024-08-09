@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 416308}
   - component: {fileID: 9586150}
   - component: {fileID: 5469178}
-  - component: {fileID: 486300745855433790}
+  - component: {fileID: 4765627615468514119}
   m_Layer: 0
   m_Name: fogaman
   m_TagString: Untagged
@@ -153,7 +153,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 133122}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -0.49, y: 0.08, z: -1.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -163,7 +163,7 @@ Transform:
   - {fileID: 7727966805588154840}
   - {fileID: 8826341018799684158}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!95 &9586150
 Animator:
   serializedVersion: 5
@@ -212,8 +212,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!65 &486300745855433790
-BoxCollider:
+--- !u!136 &4765627615468514119
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -230,8 +230,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.46, y: 0.69, z: 0.4}
+  serializedVersion: 2
+  m_Radius: 0.23
+  m_Height: 0.7
+  m_Direction: 1
   m_Center: {x: 0, y: 0.41, z: 0}
 --- !u!1 &134910
 GameObject:

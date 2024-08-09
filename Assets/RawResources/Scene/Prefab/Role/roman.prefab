@@ -778,7 +778,7 @@ GameObject:
   - component: {fileID: 439320}
   - component: {fileID: 9513128}
   - component: {fileID: 5475446}
-  - component: {fileID: 6013192610908988636}
+  - component: {fileID: 3003182526100740519}
   m_Layer: 0
   m_Name: roman
   m_TagString: Untagged
@@ -854,8 +854,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!65 &6013192610908988636
-BoxCollider:
+--- !u!136 &3003182526100740519
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -872,8 +872,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.44, y: 0.68, z: 0.3}
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 0.7
+  m_Direction: 1
   m_Center: {x: 0, y: 0.34, z: 0}
 --- !u!1 &170362
 GameObject:

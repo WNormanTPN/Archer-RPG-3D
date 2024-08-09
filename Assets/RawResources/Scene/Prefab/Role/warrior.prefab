@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 483958}
   - component: {fileID: 9580880}
   - component: {fileID: 5404110}
-  - component: {fileID: 8536419810434986544}
+  - component: {fileID: 8782110249831385234}
   m_Layer: 0
   m_Name: warrior
   m_TagString: Untagged
@@ -59,7 +59,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113162}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0.0000000754979}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -2.31, y: 0.2, z: 3.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -69,7 +69,7 @@ Transform:
   - {fileID: 3430244678928683297}
   - {fileID: 432777941037069002}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &9580880
 Animator:
   serializedVersion: 5
@@ -118,8 +118,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!65 &8536419810434986544
-BoxCollider:
+--- !u!136 &8782110249831385234
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -136,8 +136,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.41, y: 0.81, z: 0.39}
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 0.8
+  m_Direction: 1
   m_Center: {x: 0, y: 0.37, z: 0}
 --- !u!1 &119716
 GameObject:

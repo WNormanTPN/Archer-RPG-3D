@@ -5141,7 +5141,7 @@ GameObject:
   - component: {fileID: 447580}
   - component: {fileID: 9582194}
   - component: {fileID: 5450012}
-  - component: {fileID: 5895167771254592079}
+  - component: {fileID: 5579352551804541215}
   m_Layer: 0
   m_Name: surgeon_zombie
   m_TagString: Untagged
@@ -5157,7 +5157,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 146438}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 1.613, y: 1.21, z: -0.378}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5168,7 +5168,7 @@ Transform:
   - {fileID: 8723588126102296043}
   - {fileID: 8330698727505141691}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!95 &9582194
 Animator:
   serializedVersion: 5
@@ -5217,8 +5217,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!65 &5895167771254592079
-BoxCollider:
+--- !u!136 &5579352551804541215
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5235,8 +5235,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.38, y: 0.7, z: 0.41}
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 0.7
+  m_Direction: 1
   m_Center: {x: 0, y: 0.35, z: 0}
 --- !u!1 &148142
 GameObject:

@@ -415,7 +415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   viewDistance: 7
-  unloadDistance: 20
+  unloadDistance: 10
   tileSpacing: 2
   obstacleSpawnRatio: 0.2
   isLimitedMap: 1

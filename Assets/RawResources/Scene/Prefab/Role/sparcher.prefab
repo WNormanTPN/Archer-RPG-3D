@@ -767,8 +767,8 @@ GameObject:
   - component: {fileID: 454324}
   - component: {fileID: 9575164}
   - component: {fileID: 5432282}
-  - component: {fileID: 8501929195627512687}
   - component: {fileID: 3080620819367477841}
+  - component: {fileID: 1652416519902787928}
   m_Layer: 7
   m_Name: sparcher
   m_TagString: Untagged
@@ -843,27 +843,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!65 &8501929195627512687
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 180456}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.39, y: 0.67, z: 0.3}
-  m_Center: {x: 0, y: 0.36, z: 0}
 --- !u!114 &3080620819367477841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -893,6 +872,29 @@ MonoBehaviour:
   projectileSpeed: 10
   projectileLifeTime: 5
   shootingOffset: 0.3
+--- !u!136 &1652416519902787928
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180456}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 0.7
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.36, z: 0}
 --- !u!1 &182236
 GameObject:
   m_ObjectHideFlags: 0

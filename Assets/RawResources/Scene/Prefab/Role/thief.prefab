@@ -516,8 +516,8 @@ GameObject:
   - component: {fileID: 458692}
   - component: {fileID: 9588438}
   - component: {fileID: 5464972}
-  - component: {fileID: 266234990605727068}
   - component: {fileID: 3704331994001688902}
+  - component: {fileID: 7118643972476427840}
   m_Layer: 6
   m_Name: thief
   m_TagString: Player
@@ -593,27 +593,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!65 &266234990605727068
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162160}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.41, y: 0.7, z: 0.42}
-  m_Center: {x: 0, y: 0.38, z: 0}
 --- !u!114 &3704331994001688902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,6 +615,29 @@ MonoBehaviour:
   arrowLifeTime: 5
   shootingOffset: 0.3
   shootingAngle: 10
+--- !u!136 &7118643972476427840
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162160}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 0.7
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.38, z: 0}
 --- !u!1 &162646
 GameObject:
   m_ObjectHideFlags: 0

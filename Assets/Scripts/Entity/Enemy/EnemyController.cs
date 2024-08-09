@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Entity.Attack;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Entity.Enemy
@@ -34,7 +35,6 @@ namespace Entity.Enemy
         private readonly string speedParameter = "Speed";
         private readonly string attackSpeedParameter = "AttackSpeed";
         
-        
         public float curHealth { get => _curHealth; set => _curHealth = value; }
         public float maxHealth { get => _maxHealth; set => _maxHealth = value; }
         
@@ -64,7 +64,7 @@ namespace Entity.Enemy
                         StartCoroutine(PerformAttack());
                     }
                 }
-                else if (distanceToPlayer >= keepMovingDistance)
+                else if (distanceToPlayer >= keepMovingDistance) // Keep moving towards the player
                 {
                     isMovingForward = true;
                     isRotating = true;
@@ -123,7 +123,7 @@ namespace Entity.Enemy
         public void Move(Vector3 direction) // Move forward towards the player
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation)) return;
-            rb.position += moveSpeed * Time.fixedDeltaTime * transform.forward;
+            rb.position += moveSpeed * Time.fixedDeltaTime * direction;
             animator.SetFloat(speedParameter, moveSpeed);
         }
 

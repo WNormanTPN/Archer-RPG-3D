@@ -3,9 +3,8 @@ using UnityEngine;
 
 namespace Entity.Player
 {
-    public class ArcherBehavior : PlayerController, IRangedAttack, IHealth
+    public class ArcherBehavior : PlayerController, IRangedAttack
     {
-        [SerializeField] private float _maxHealth = 100f;
         [Header("Archer Settings")]
         public float attackDamage = 10f;
         public GameObject arrowPrefab;
@@ -13,11 +12,6 @@ namespace Entity.Player
         [Range(0, 10)] public float arrowLifeTime = 5f;
         public float shootingOffset = 0.3f;
         [Range(0, 90)] public float shootingAngle = 10f;
-
-        private float _curHealth;
-        
-        public float curHealth { get => _curHealth; set => _curHealth = value; }
-        public float maxHealth { get => _maxHealth; set => _maxHealth = value; }
         
         protected override void Start()
         {
@@ -35,8 +29,8 @@ namespace Entity.Player
                 Quaternion.LookRotation(shootingDirection)
                 );
             
-            Rigidbody rb = arrow.GetComponent<Rigidbody>();
-            rb.velocity = shootingDirection * arrowSpeed;
+            Rigidbody arrowRb = arrow.GetComponent<Rigidbody>();
+            arrowRb.velocity = shootingDirection * arrowSpeed;
 
             // Set the arrow behavior
             ProjectileBehavior arrowBehavior = arrow.GetComponent<ProjectileBehavior>();

@@ -31,14 +31,14 @@ namespace Entity.Attack
                 if (screenPos.z > 0 && screenPos.x > 0 && screenPos.x < Screen.width && screenPos.y > 0 && screenPos.y < Screen.height)
                 {
                     transform.position = screenPos;
-                    
-                    var iHealth = target.GetComponent<IHealth>();
-                    if (iHealth != null)
+
+                    var targetCharacter = target.GetComponent<CharacterBase>();
+                    if (targetCharacter)
                     {
-                        var curHealth = iHealth.curHealth;
-                        var maxHealth = iHealth.maxHealth;
+                        var curHealth = targetCharacter.curHealth;
+                        var maxHealth = targetCharacter.maxHealth;
                         var slider = GetComponent<UnityEngine.UI.Slider>();
-                        slider.value = curHealth / maxHealth;
+                        slider.value = Mathf.Clamp(curHealth / maxHealth, 0, 1);
                     }
                 }
                 else

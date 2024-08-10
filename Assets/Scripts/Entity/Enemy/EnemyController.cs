@@ -1,53 +1,35 @@
-using System;
 using System.Collections;
-using Entity.Attack;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Entity.Enemy
 {
-    public abstract class EnemyController : MonoBehaviour, ICharacter, IHealth
+    public abstract class EnemyController : CharacterBase
     {
-        [Header("Movement Settings")]
         public Transform player;                                // Reference to the player
-        [Range(0, 10)] public float moveSpeed = 2f;             // Speed of the enemy movement
         [Range(0, 5)] public float moveDuration = 1.5f;         // Duration for moving forward before re-evaluating
         [Range(0, 5)] public float rotateDuration = 1f;         // Duration for rotating towards the player
         [Range(0, 100)] public float keepMovingDistance = 10f;  // Distance to keep moving towards the player
 
-        [Header("Attack Settings")] 
-        [SerializeField] private float _maxHealth = 20f;        // Health of the enemy
         public string attackAnimation;                          // Name of the attack animation
         [Range(0, 100)] public float rangeForAttack = 2f;       // Range at which the enemy starts attacking
-        [Range(0, 10)] public float attackSpeed = 1f;           // Speed of the enemy attack per second
         public float attackCooldown = 1f;                       // Cooldown time between attacks
-        public int _exp = 0;
 
         protected bool isMovingForward;           // Flag to check if enemy is moving forward
         protected bool isRotating;                // Flag to check if enemy is rotating
         protected bool isAttacking;               // Flag to check if the enemy is attacking
-        protected Rigidbody rb;                   // Reference to the Rigidbody component
-        protected Animator animator;              // Reference to the Animator component
 
-        private float _curHealth;                 // Current health of the enemy
         private float moveTimer;                  // Timer to track movement duration
         private float rotateTimer;                // Timer to track rotation duration
         private float attackTimer;                // Timer for attack cooldown
         private readonly string speedParameter = "Speed";
         private readonly string attackSpeedParameter = "AttackSpeed";
         
-        public int exp { get => _exp; set => _exp = value; }
-        public float curHealth { get => _curHealth; set => _curHealth = value; }
-        public float maxHealth { get => _maxHealth; set => _maxHealth = value; }
         
-        protected virtual void Start()
+        protected override void Start()
         {
             moveTimer = moveDuration;
             isMovingForward = true;
-            rb = GetComponent<Rigidbody>();
-            animator = GetComponent<Animator>();
             attackTimer = attackCooldown;
-            curHealth = maxHealth;
         }
 
         protected virtual void FixedUpdate()
@@ -122,14 +104,14 @@ namespace Entity.Enemy
             }
         }
 
-        public void Move(Vector3 direction) // Move forward towards the player
+        public override void Move(Vector3 direction) // Move forward towards the player
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation)) return;
             rb.position += moveSpeed * Time.fixedDeltaTime * direction;
             animator.SetFloat(speedParameter, moveSpeed);
         }
 
-        public void Rotate(Vector3 direction) // Rotate towards the player based on the duration
+        public override void Rotate(Vector3 direction) // Rotate towards the player based on the duration
         {
             direction.y = 0; // Ignore y-axis
             direction = direction.normalized;
@@ -146,37 +128,22 @@ namespace Entity.Enemy
             transform.rotation = targetRotation;
         }
 
-        public void StopMove()
+        public override void StopMove()
         {
             rb.velocity = Vector3.zero; // Stop any existing movement
             animator.SetFloat(speedParameter, 0f);
         }
 
-        public void Attack()
+        public override void Attack()
         {
             isAttacking = true;
             animator.SetBool(attackAnimation, true);
         }
         
-        public void StopAttack()
+        public override void StopAttack()
         {
             isAttacking = false;
             animator.SetBool(attackAnimation, false);
-        }
-
-        public void SetScale(float scale)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetWeapon(Weapon weapon)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetSkill(Skill skill)
-        {
-            throw new NotImplementedException();
         }
 
         void SetAnimationAttackSpeed()

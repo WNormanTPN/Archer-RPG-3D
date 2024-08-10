@@ -48,7 +48,8 @@ namespace Entity.Enemy
         {
             Vector3 end = start + direction * 100f;
             Ray ray = new Ray(start, direction);
-            RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
+            RaycastHit[] hits = new RaycastHit[10];
+            int size = Physics.RaycastNonAlloc(ray, hits, 100f, LayerMask.NameToLayer("Enemy"));
             
             foreach (var hit in hits)
             {

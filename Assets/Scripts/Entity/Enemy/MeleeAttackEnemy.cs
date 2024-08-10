@@ -24,8 +24,9 @@ namespace Entity.Enemy
         public void DoAttack()
         {
             StopAttack();
-            Collider[] hitPlayers = Physics.OverlapSphere(attackPoint.position, attackRange, playerLayer);
-            foreach (Collider player in hitPlayers)
+            Collider[] hitPlayers = new Collider[1];
+            int size = Physics.OverlapSphereNonAlloc(attackPoint.position, attackRange, hitPlayers, playerLayer);
+            foreach (Collider _ in hitPlayers)
             {
                 Debug.Log("Player hit!");
             }

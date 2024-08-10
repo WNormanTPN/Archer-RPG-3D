@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IRangedAttack
+namespace Entity.Attack
 {
-    void ShootProjectile();
+    public interface IRangedAttack
+    {
+        void ShootProjectile();
+    }
 }

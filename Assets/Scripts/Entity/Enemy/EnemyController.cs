@@ -21,6 +21,7 @@ namespace Entity.Enemy
         [Range(0, 100)] public float rangeForAttack = 2f;       // Range at which the enemy starts attacking
         [Range(0, 10)] public float attackSpeed = 1f;           // Speed of the enemy attack per second
         public float attackCooldown = 1f;                       // Cooldown time between attacks
+        public int _exp = 0;
 
         protected bool isMovingForward;           // Flag to check if enemy is moving forward
         protected bool isRotating;                // Flag to check if enemy is rotating
@@ -35,6 +36,7 @@ namespace Entity.Enemy
         private readonly string speedParameter = "Speed";
         private readonly string attackSpeedParameter = "AttackSpeed";
         
+        public int exp { get => _exp; set => _exp = value; }
         public float curHealth { get => _curHealth; set => _curHealth = value; }
         public float maxHealth { get => _maxHealth; set => _maxHealth = value; }
         
@@ -161,7 +163,22 @@ namespace Entity.Enemy
             isAttacking = false;
             animator.SetBool(attackAnimation, false);
         }
-        
+
+        public void SetScale(float scale)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetWeapon(Weapon weapon)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetSkill(Skill skill)
+        {
+            throw new NotImplementedException();
+        }
+
         void SetAnimationAttackSpeed()
         {
             float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;

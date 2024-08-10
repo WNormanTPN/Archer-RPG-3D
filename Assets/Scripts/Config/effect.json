@@ -1,0 +1,12 @@
+﻿{
+  "1": {"effectID": 1, "name": "Flame", "changeValue": {"baseAttackMultiplier": -0.1}, "duration": 10, "effect": "TX_buff_zhuoshao"},
+  "2": {"effectID": 2, "name": "Poison", "changeValue": {"maxHpMultiplier": -0.01}, "duration": 5, "effect": "TX_buff_du"},
+  "3": {"effectID": 3, "name": "Heal HP", "changeValue": {"maxHpMultiplier": 0.3}, "duration": 3, "effect": "TX_buff_jiaxue"},
+  "5": {"effectID": 5, "name": "Slow", "changeValue": null, "duration": 5, "effect": "TX_buff_jiansu"},
+  "6": {"effectID": 6, "name": "Rage", "changeValue": null, "duration": 10, "effect": null},
+  "20": {"effectID": 20, "name": "Stun 5s", "changeValue": null, "duration": 5, "effect": "TX_buff_touyun"},
+  "30": {"effectID": 30, "name": "Invincible 2s", "changeValue": null, "duration": 2, "effect": "ShieldBlue"},
+  "100001": {"effectID": 100001, "name": "Area Poison Main Buff", "changeValue": null, "duration": 5, "effect": null},
+  "100002": {"effectID": 100002, "name": "Area Poison Target DeBuff", "changeValue": null, "duration": 5, "effect": "SoulMissileGreen"},
+  "100003": {"effectID": 100003, "name": "Life Drain", "changeValue": null, "duration": 5, "effect": null}
+}

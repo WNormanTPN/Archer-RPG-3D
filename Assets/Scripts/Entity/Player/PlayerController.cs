@@ -20,6 +20,8 @@ namespace Entity.Player
         private readonly string attackAnimation = "Attack_bow";
         private readonly string attackSpeedParameter = "AttackSpeed";
 
+        public int exp { get; set; }
+        
         protected virtual void Start()
         {
             input = new MyInput();
@@ -61,6 +63,21 @@ namespace Entity.Player
             animator.SetBool(attackAnimation, false);
             if(animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation))
                 animator.Play(idleAnimation);
+        }
+
+        public void SetScale(float scale)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetWeapon(Weapon weapon)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetSkill(Skill skill)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void Move(Vector3 direction)

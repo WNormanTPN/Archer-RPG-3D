@@ -72,6 +72,7 @@ namespace Evironment.MapGenerator
         void InitializeMap()
         {
             if(!player) player = GameObject.FindGameObjectWithTag("Player").transform;
+            isLimitedMap = PlayerPrefs.GetInt("IsLimitedMap", isLimitedMap ? 1 : 0) == 1;
             viewDistance = PlayerPrefs.GetInt("ViewDistance", viewDistance);
             unloadDistance = PlayerPrefs.GetInt("UnloadDistance", unloadDistance);
             tileSpacing = PlayerPrefs.GetInt("TileSpacing", tileSpacing);

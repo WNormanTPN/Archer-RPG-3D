@@ -17,22 +17,25 @@ namespace UI
         private Text text;
         private int mapDetailId;
         private int monsterWaveGroup;
+        private bool isLimitedMap;
         
         void Awake()
         {
             text ??= GetComponentInChildren<Text>();
             lockIcon ??= gameObject.transform.Find("Lock").gameObject;
         }
-        public void SetMapData(MapData mapData)
+        public void SetMapData(MapData mapData, bool isLimitedMap)
         {
             text.text = mapData.mapName;
             mapDetailId = mapData.mapDetailId;
             monsterWaveGroup = mapData.monsterWaveGroup;
+            this.isLimitedMap = isLimitedMap;
         }
         
         public void LoadLevel()
         {
             MapDetail mapDetail = JSONLoader.LoadJSON<Dictionary<string, MapDetail>>(mapDetailConfig)[mapDetailId.ToString()];
+            PlayerPrefs.SetInt("IsLimitedMap", isLimitedMap? 1 : 0);
             PlayerPrefs.SetInt("ViewDistance", mapDetail.viewDistance);
             PlayerPrefs.SetInt("UnloadDistance", mapDetail.unloadDistance);
             PlayerPrefs.SetInt("TileSpacing", mapDetail.tileSpacing);

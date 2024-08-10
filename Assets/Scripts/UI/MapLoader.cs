@@ -29,7 +29,8 @@ namespace UI
                 SceneItem sceneItemComponent = sceneItem.GetComponent<SceneItem>();
                 if (sceneItemComponent != null)
                 {
-                    sceneItemComponent.SetMapData(map);
+                    var isLimitedMap = mapMode == mapCollection.EndlessMode;
+                    sceneItemComponent.SetMapData(map, isLimitedMap);
                 }
             }
             Instantiate(nullPrefab, contentContainer);

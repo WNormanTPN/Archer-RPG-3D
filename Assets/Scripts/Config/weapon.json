@@ -1,0 +1,21 @@
+﻿{
+  "1000": {"ID":1000,"type":1,"bulletName":"Bullet_1000","ballistic":1,"bulletLogic":null,"distance":99,"speed":15,"knockBack":null,"destroyEffect":null},
+  "1001": {"ID":1001,"type":1,"bulletName":"Bullet_1003","ballistic":1,"bulletLogic":null,"distance":20,"speed":10,"knockBack":null,"destroyEffect":null},
+  "1002": {"ID":1002,"type":1,"bulletName":"Bullet_1004","ballistic":2,"bulletLogic":null,"distance":5,"speed":10,"knockBack":null,"destroyEffect":"GasExplosionFire"},
+  "1003": {"ID":1003,"type":1,"bulletName":"Bullet_1002","ballistic":null,"bulletLogic":{"logic":"BulletLaser","args":[]},"distance":null,"speed":null,"knockBack":null,"destroyEffect":null},
+  "1005": {"ID":1005,"type":1,"bulletName":"bt_CannonBalls","ballistic":0,"bulletLogic":null,"distance":999,"speed":12,"knockBack":null,"destroyEffect":null},
+  "1006": {"ID":1006,"type":1,"bulletName":"bt_fbx_sickle","ballistic":0,"bulletLogic":null,"distance":999,"speed":4,"knockBack":null,"destroyEffect":null},
+  "1007": {"ID":1007,"type":1,"bulletName":"bt_crystalA","ballistic":0,"bulletLogic":null,"distance":999,"speed":4.4,"knockBack":null,"destroyEffect":null},
+  "1008": {"ID":1008,"type":1,"bulletName":"bt_mushroom","ballistic":0,"bulletLogic":null,"distance":999,"speed":3.9,"knockBack":null,"destroyEffect":null},
+  "1009": {"ID":1009,"type":1,"bulletName":"bt_fbx_sickleA","ballistic":0,"bulletLogic":null,"distance":999,"speed":5,"knockBack":null,"destroyEffect":null},
+  "1010": {"ID":1010,"type":1,"bulletName":"bt_fbx_sickleA","ballistic":0,"bulletLogic":null,"distance":999,"speed":10,"knockBack":null,"destroyEffect":null},
+  "2001": {"ID":2001,"type":1,"bulletName":"bt_FireballMissileBlue","ballistic":0,"bulletLogic":null,"distance":999,"speed":5,"knockBack":null,"destroyEffect":null},
+  "2005": {"ID":2005,"type":1,"bulletName":"bt_MagicMissileSoftPink","ballistic":0,"bulletLogic":null,"distance":999,"speed":4,"knockBack":null,"destroyEffect":null},
+  "2006": {"ID":2006,"type":1,"bulletName":"bt_MagicMissileSoftGreen","ballistic":0,"bulletLogic":null,"distance":999,"speed":4,"knockBack":null,"destroyEffect":null},
+  "2011": {"ID":2011,"type":1,"bulletName":"bt_MagicMissileFire","ballistic":0,"bulletLogic":null,"distance":999,"speed":3,"knockBack":null,"destroyEffect":null},
+  "2015": {"ID":2015,"type":1,"bulletName":"bt_LiquidMissileOil","ballistic":0,"bulletLogic":null,"distance":999,"speed":6,"knockBack":null,"destroyEffect":null},
+  "2020": {"ID":2020,"type":1,"bulletName":"bt_SoulMissile_blue","ballistic":0,"bulletLogic":null,"distance":999,"speed":2,"knockBack":null,"destroyEffect":null},
+  "2021": {"ID":2021,"type":1,"bulletName":"bt_SoulMissilePurple","ballistic":4,"bulletLogic":null,"distance":999,"speed":3,"knockBack":null,"destroyEffect":null},
+  "3001": {"ID":3001,"type":1,"bulletName":"ex_NovaFrost","ballistic":0,"bulletLogic":{"logic":"BulletBomb","args":{"startTime":0.1,"endTime":0.6}},"distance":99,"speed":0,"knockBack":null,"destroyEffect":null},
+  "4001": {"ID":4001,"type":1,"bulletName":"ft_CartoonyFire","ballistic":0,"bulletLogic":{"logic":"BulletBomb","args":{"startTime":0.1,"endTime":3,"tick":1}},"distance":99,"speed":0,"knockBack":null,"destroyEffect":null}
+}

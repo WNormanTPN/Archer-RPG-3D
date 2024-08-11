@@ -607,8 +607,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   rotationSpeed: 360
+  maxHealth: 100
+  curHealth: 100
   attackSpeed: 1
-  _maxHealth: 100
+  weapon: {fileID: 0}
+  skills: []
+  exp: 0
   attackDamage: 10
   arrowPrefab: {fileID: 1538924604248878, guid: 74669aeed2e6dbc428c925f537f612eb, type: 3}
   arrowSpeed: 15

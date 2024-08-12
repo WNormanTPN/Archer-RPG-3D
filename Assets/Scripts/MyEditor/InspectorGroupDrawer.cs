@@ -18,7 +18,7 @@ namespace MyEditor
             groupProperties.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
 
             var lastGroup = new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>());
-            
+
             var obj = serializedObject;
             var iterator = obj.GetIterator();
 
@@ -63,7 +63,7 @@ namespace MyEditor
             }
             groupProperties.Add(lastGroup);
         }
-        
+
         public int GetGroupIndex(string groupName)
         {
             for (int i = 0; i < groupProperties.Count; i++)
@@ -83,14 +83,14 @@ namespace MyEditor
             foreach (var group in groupProperties)
             {
                 bool isFoldedOut = !string.IsNullOrEmpty(group.Key) && foldoutStates.ContainsKey(group.Key) ? foldoutStates[group.Key] : true;
-            
+
                 if (!string.IsNullOrEmpty(group.Key))
                 {
                     isFoldedOut = EditorGUILayout.Foldout(isFoldedOut, group.Key);
                     foldoutStates[group.Key] = isFoldedOut;
                     EditorGUI.indentLevel++;
                 }
-            
+
                 if (isFoldedOut)
                 {
                     foreach (var property in group.Value)
@@ -126,7 +126,7 @@ namespace MyEditor
 
 
 
-    
+
 
     public class InspectorGroupAttribute : PropertyAttribute
     {

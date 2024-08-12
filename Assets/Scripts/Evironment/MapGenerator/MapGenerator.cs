@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Generic;
+using MyEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -25,20 +26,28 @@ namespace Evironment.MapGenerator
             public bool canConnect;
         }
 
-        public Transform player;
+        [HideInInspector] public Transform player;
+        [HideInInspector]public ObjectPool objectPool;
+        
+        [InspectorGroup("Map Generation Settings")]
         public int viewDistance = 5;
         public int unloadDistance = 10;
         public int tileSpacing = 1;
         [Range(0, 1)] public float obstacleSpawnRatio = 0.1f;
+        
+        [NonGroup]
         public bool isLimitedMap = false;
-        public ObjectPool objectPool;
-        public GameObject fencePrefab;
-        public Transform fenceParent;
+        [ShowWhen("isLimitedMap", true)] public GameObject fencePrefab;
+        [ShowWhen("isLimitedMap", true)] public Transform fenceParent;
+        
+        [InspectorGroup("Pooling Object Settings")]
         public TileType[] tileTypes;
         public Transform tileParent;
         public ObstacleType[] obstacleTypes;
         public Transform obstacleParent;
 
+        
+        
         private Vector2Int playerPos;
         private Dictionary<Vector2Int, GameObject> activeTiles;
         private Dictionary<Vector2Int, int> tilePrefabIndexes;
@@ -47,7 +56,7 @@ namespace Evironment.MapGenerator
         private Dictionary<Vector2Int, int> obstaclePrefabIndexes;
         private float totalObstacleRatio;
         private System.Random random = new System.Random();
-
+        
         void Start()
         {
             objectPool = objectPool ?? GameObject.FindGameObjectWithTag("ObjectPool").GetComponent<ObjectPool>();

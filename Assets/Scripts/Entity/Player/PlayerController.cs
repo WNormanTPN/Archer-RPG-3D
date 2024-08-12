@@ -13,6 +13,7 @@ namespace Entity.Player
         
         protected override void Start()
         {
+            base.Start();
             input = new MyInput();
             input.Enable();
         }

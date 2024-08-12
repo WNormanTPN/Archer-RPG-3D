@@ -9,13 +9,15 @@ namespace Entity
 {
     public abstract class CharacterBase : MonoBehaviour, ICharacter
     {
-        [InspectorGroup("Character Settings")]
+        [InspectorGroup("Character Movement")]
         [Range(0, 10)] public float moveSpeed = 5f;           // Speed of the character movement
         [Range(0, 720)] public float rotationSpeed = 720f;    // Speed of the character rotation in degrees per second
         
         [NonGroup]
         public Weapon weapon;                                 // Reference to the weapon
         public List<Skill> skills;                            // List of skills the character has
+        
+        [LastGroup]
         public int exp;                                       // Experience points of the character
     
         [InspectorGroup("Attack Settings")]

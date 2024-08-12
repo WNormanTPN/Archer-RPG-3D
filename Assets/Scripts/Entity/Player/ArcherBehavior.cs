@@ -8,7 +8,6 @@ namespace Entity.Player
     {
         [InspectorGroup("Attack Settings")]
         public float attackDamage = 10f;
-        [InspectorGroup("Archer Settings")]
         public GameObject arrowPrefab;
         [Range(0, 100)] public float arrowSpeed = 15f;
         [Range(0, 10)] public float arrowLifeTime = 5f;

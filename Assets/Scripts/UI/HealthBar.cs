@@ -1,7 +1,8 @@
-using System;
+using Entity;
+using Entity.Attack;
 using UnityEngine;
 
-namespace Entity.Attack
+namespace UI
 {
     public class HealthBar : MonoBehaviour
     {

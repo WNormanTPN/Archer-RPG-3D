@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Generic;
 using UnityEngine;
 
-namespace Entity.Attack
+namespace UI
 {
     public class HealthBarManager : MonoBehaviour
     {

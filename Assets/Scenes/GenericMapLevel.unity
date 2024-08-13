@@ -599,7 +599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 3063514823551203476, guid: d2398f6b553347749b2115b83395c4bd, type: 3}
-  canvasTransform: {fileID: 0}
+  canvasTransform: {fileID: 1563459937}
 --- !u!4 &774949246
 Transform:
   m_ObjectHideFlags: 0

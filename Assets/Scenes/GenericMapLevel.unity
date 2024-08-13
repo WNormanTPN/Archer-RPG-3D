@@ -415,11 +415,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   objectPool: {fileID: 0}
+  isLimitedMap: 0
   viewDistance: 7
   unloadDistance: 10
   tileSpacing: 2
   obstacleSpawnRatio: 0.2
-  isLimitedMap: 1
   fencePrefab: {fileID: 0}
   fenceParent: {fileID: 1450875543}
   tileTypes: []

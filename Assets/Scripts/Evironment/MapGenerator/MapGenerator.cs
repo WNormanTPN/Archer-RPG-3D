@@ -29,6 +29,8 @@ namespace Evironment.MapGenerator
         [HideInInspector] public Transform player;
         [HideInInspector]public ObjectPool objectPool;
         
+        public bool isLimitedMap = false;
+        
         [InspectorGroup("Map Generation Settings")]
         public int viewDistance = 5;
         public int unloadDistance = 10;
@@ -36,9 +38,10 @@ namespace Evironment.MapGenerator
         [Range(0, 1)] public float obstacleSpawnRatio = 0.1f;
         
         [NonGroup]
-        public bool isLimitedMap = false;
-        [ShowWhen("isLimitedMap", true)] public GameObject fencePrefab;
-        [ShowWhen("isLimitedMap", true)] public Transform fenceParent;
+        [ShowWhen("isLimitedMap", true, "Fence Settings")] 
+        public GameObject fencePrefab;
+        [ShowWhen("isLimitedMap", true, "Fence Settings")] 
+        public Transform fenceParent;
         
         [InspectorGroup("Pooling Object Settings")]
         public TileType[] tileTypes;

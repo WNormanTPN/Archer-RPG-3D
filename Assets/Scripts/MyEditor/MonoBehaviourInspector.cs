@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -6,16 +7,19 @@ using UnityEngine;
 namespace MyEditor
 {
     [CustomEditor(typeof(MonoBehaviour), true)]
-    public class InspectorGroupDrawer : UnityEditor.Editor
+    public class MonoBehaviourInspector : UnityEditor.Editor
     {
+        
         private List<KeyValuePair<string, List<SerializedProperty>>> groupProperties;
         private Dictionary<string, bool> foldoutStates;
+        private Dictionary<string, KeyValuePair<bool, bool>> showWhenFoldoutStates;
 
         private void OnEnable()
         {
             foldoutStates = new Dictionary<string, bool>();
             groupProperties = new List<KeyValuePair<string, List<SerializedProperty>>>();
             groupProperties.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
+            showWhenFoldoutStates = new Dictionary<string, KeyValuePair<bool, bool>>();
 
             var lastGroup = new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>());
 
@@ -60,6 +64,7 @@ namespace MyEditor
                 {
                     groupProperties[groupProperties.Count - 1].Value.Add(iterator.Copy());
                 }
+                
             }
             groupProperties.Add(lastGroup);
         }
@@ -97,14 +102,87 @@ namespace MyEditor
                     {
                         if(property.propertyType == SerializedPropertyType.ArraySize)
                             continue;
-                        EditorGUILayout.PropertyField(property, true);
+                        var showWhenAttribute = property.GetAttribute<ShowWhenAttribute>();
+                        if (showWhenAttribute != null)
+                        {
+                            var targetProperty = serializedObject.FindProperty(showWhenAttribute.property);
+                            if (targetProperty != null && IsConditionMet(targetProperty, showWhenAttribute.equal))
+                            {
+                                if (showWhenAttribute.groupName != String.Empty)
+                                {
+                                    string groupName = showWhenAttribute.groupName;
+                                    if (!showWhenFoldoutStates.ContainsKey(groupName))
+                                    {
+                                        showWhenFoldoutStates[groupName] = new KeyValuePair<bool, bool>(true, EditorGUILayout.Foldout(false, groupName));
+                                    }
+                                    var isDrawed = showWhenFoldoutStates[groupName].Key;
+                                    var isFolded = showWhenFoldoutStates[groupName].Value;
+                                    
+                                    if (!isDrawed)
+                                    {
+                                        showWhenFoldoutStates[groupName] = new KeyValuePair<bool, bool>(true, EditorGUILayout.Foldout(isFolded, groupName));
+                                    }
+                                    
+                                    if (isFolded)
+                                    {
+                                        EditorGUI.indentLevel++;
+                                        EditorGUILayout.PropertyField(property, true);
+                                        EditorGUI.indentLevel--;
+                                    }
+                                }
+                                else
+                                {
+                                    EditorGUILayout.PropertyField(property, true);
+                                }
+                            }
+                        }
+                        else
+                            EditorGUILayout.PropertyField(property, true);
                     }
                 }
+                ResetShowWhenFoldoutStates();
                 if (!string.IsNullOrEmpty(group.Key))
                     EditorGUI.indentLevel--;
             }
 
             serializedObject.ApplyModifiedProperties();
+        }
+
+        private void ResetShowWhenFoldoutStates()
+        {
+            var needResets = new List<string>();
+            foreach (var group in showWhenFoldoutStates)
+            {
+                if (group.Value.Key)
+                {
+                    needResets.Add(group.Key);
+                }
+            }
+
+            foreach (var group in needResets)
+            {
+                showWhenFoldoutStates[group] = new KeyValuePair<bool, bool>(false, showWhenFoldoutStates[group].Value);
+            }
+        }
+        
+        private bool IsConditionMet(SerializedProperty targetProperty, object equal)
+        {
+            switch (targetProperty.propertyType)
+            {
+                case SerializedPropertyType.Boolean:
+                    return targetProperty.boolValue.Equals(equal);
+                case SerializedPropertyType.Enum:
+                    return targetProperty.enumValueIndex.Equals((int)equal);
+                case SerializedPropertyType.Integer:
+                    return targetProperty.intValue.Equals((int)equal);
+                case SerializedPropertyType.Float:
+                    return targetProperty.floatValue.Equals((float)equal);
+                case SerializedPropertyType.String:
+                    return targetProperty.stringValue.Equals(equal);
+                default:
+                    Debug.LogWarning("Unsupported property type in ShowWhen attribute.");
+                    return false;
+            }
         }
     }
 
@@ -145,4 +223,18 @@ namespace MyEditor
 
     public class LastGroupAttribute : PropertyAttribute { }
 
+    public class ShowWhenAttribute : PropertyAttribute
+    {
+        public string property { get; }
+        public object equal { get; }
+        
+        public string groupName { get; }
+
+        public ShowWhenAttribute(string property, object equal, string groupName = "")
+        {
+            this.property = property;
+            this.equal = equal;
+            this.groupName = groupName;
+        }
+    }
 }

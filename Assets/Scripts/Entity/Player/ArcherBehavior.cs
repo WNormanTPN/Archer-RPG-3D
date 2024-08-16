@@ -6,9 +6,6 @@ namespace Entity.Player
 {
     public class ArcherBehavior : PlayerController, IRangedAttack
     {
-        [FirstGroup]
-        public int weaponID;
-        
         [InspectorGroup("Attack Settings")]
         public float attackDamage = 10f;
         public GameObject arrowPrefab;

@@ -24,13 +24,13 @@ namespace Entity
         [Range(0, 10)] public float moveSpeed = 5f;           // Speed of the character movement
         [Range(0, 720)] public float rotationSpeed = 720f;    // Speed of the character rotation in degrees per second
         
-        [NonGroup]
-        public WeaponData weapon;                                 // Reference to the weapon
-        public List<Skill> skills;                            // List of skills the character has
-        public List<EffectData> effects;
+        // [NonGroup]
+        // public WeaponData weapon;                             // Reference to the weapon
+        // public List<Skill> skills;                            // List of skills the character has
+        // public List<EffectData> effects;
         
         [LastGroup]
-        public int exp;                                       // Experience points of the character
+        public CharacterData characterInitData;               // Initial data of the character
     
         [InspectorGroup("Attack Settings")]
         [Range(0, 1000)]public int maxHealth = 100;           // Health of the character

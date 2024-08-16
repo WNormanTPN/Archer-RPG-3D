@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 namespace Entity
 {
-    public class Skill : MonoBehaviour
+    [Serializable]
+    public class SkillData
     {
         public struct SkillAttribute
         {
@@ -15,8 +16,8 @@ namespace Entity
         }
         public int skillID;
         public string skillName;
-        public Image skillIcon;
-        public List<Effect> effects;
+        public string skillIconKey;
+        public List<int> effectIds;
         public List<SkillAttribute> attributes;
     }
 }

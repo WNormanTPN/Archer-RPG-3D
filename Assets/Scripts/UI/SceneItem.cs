@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Evironment.MapGenerator;
 using Generic;
 using UnityEditor;
 using UnityEngine;
@@ -44,15 +45,5 @@ namespace UI
             PlayerPrefs.SetInt("MonsterWaveGroup", monsterWaveGroup);
             Addressables.LoadSceneAsync(genericLevelSceneKey, LoadSceneMode.Single);
         }
-    }
-    
-    public class MapDetail
-    {
-        public int mapDetailId;
-        public int viewDistance;
-        public int unloadDistance;
-        public int tileSpacing;
-        public float obstacleSpawnRatio;
-        public string objectPoolAssetsPath;
     }
 }

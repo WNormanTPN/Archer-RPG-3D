@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Generic;
 using MyEditor;
@@ -6,6 +7,16 @@ using UnityEngine.AddressableAssets;
 
 namespace Evironment.MapGenerator
 {
+    [Serializable]
+    public class MapDetail
+    {
+        public int mapDetailId;
+        public int viewDistance;
+        public int unloadDistance;
+        public int tileSpacing;
+        public float obstacleSpawnRatio;
+        public string objectPoolAssetsPath;
+    }
     public class MapGenerator : MonoBehaviour
     {
         [System.Serializable]

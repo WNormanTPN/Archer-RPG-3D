@@ -7,6 +7,17 @@ using UnityEngine;
 
 namespace Entity
 {
+    [Serializable]
+    public class CharacterData
+    {
+        public int id;
+        public string name;
+        public float scale;
+        public int weaponId;
+        public List<int> skillIds;
+        public int exp;
+        public string prefabKey;
+    }
     public abstract class CharacterBase : MonoBehaviour, ICharacter
     {
         [InspectorGroup("Character Movement")]
@@ -14,8 +25,9 @@ namespace Entity
         [Range(0, 720)] public float rotationSpeed = 720f;    // Speed of the character rotation in degrees per second
         
         [NonGroup]
-        public Weapon weapon;                                 // Reference to the weapon
+        public WeaponData weapon;                                 // Reference to the weapon
         public List<Skill> skills;                            // List of skills the character has
+        public List<EffectData> effects;
         
         [LastGroup]
         public int exp;                                       // Experience points of the character

@@ -86,7 +86,7 @@ namespace Entity
             if (monsterPrefabs.ContainsKey(monsterId)) return;
             monsterPrefabs.Add(monsterId, null);
             var monsterData = GetMonsterData(monsterId);
-            var loadAssetAsync = Addressables.LoadAssetAsync<GameObject>(monsterData.key);
+            var loadAssetAsync = Addressables.LoadAssetAsync<GameObject>(monsterData.prefabKey);
             loadAssetAsync.Completed += handle =>
             {
                 monsterPrefabs[monsterId] = handle.Result;
@@ -108,18 +108,6 @@ namespace Entity
             var waveId = PlayerPrefs.GetInt("MonsterWaveGroup");
             return JSONLoader.LoadJSON<Dictionary<string, List<WaveData>>>(monsterWaveJsonFile)[waveId.ToString()];
         }
-    }
-    
-    public class CharacterData
-    {
-        public int characterId;
-        public string characterName;
-        public float scale;
-        public List<int> skills;
-        public int attack;
-        public int maxHP;
-        public int exp;
-        public string key;
     }
     
     public class WaveData

@@ -2,7 +2,7 @@
   "1000": {"ID":1000,"bulletName":"Bullet_1000","ballistic":0,"bulletLogic":null,"distance":99,"speed":15,"knockBack":null,"destroyEffect":null},
   "1001": {"ID":1001,"bulletName":"Bullet_1003","ballistic":0,"bulletLogic":null,"distance":20,"speed":10,"knockBack":null,"destroyEffect":null},
   "1002": {"ID":1002,"bulletName":"Bullet_1004","ballistic":2,"bulletLogic":null,"distance":5,"speed":10,"knockBack":null,"destroyEffect":"GasExplosionFire"},
-  "1003": {"ID":1003,"bulletName":"Bullet_1002","ballistic":0,"bulletLogic":{"logic":"BulletLaser","args":[]},"distance":null,"speed":null,"knockBack":null,"destroyEffect":null},
+  "1003": {"ID":1003,"bulletName":"Bullet_1002","ballistic":0,"bulletLogic":{"logic":"BulletLaser","args":{}},"distance":null,"speed":null,"knockBack":null,"destroyEffect":null},
   "1005": {"ID":1005,"bulletName":"bt_CannonBalls","ballistic":0,"bulletLogic":null,"distance":999,"speed":12,"knockBack":null,"destroyEffect":null},
   "1006": {"ID":1006,"bulletName":"bt_fbx_sickle","ballistic":0,"bulletLogic":null,"distance":999,"speed":4,"knockBack":null,"destroyEffect":null},
   "1007": {"ID":1007,"bulletName":"bt_crystalA","ballistic":0,"bulletLogic":null,"distance":999,"speed":4.4,"knockBack":null,"destroyEffect":null},
@@ -17,5 +17,5 @@
   "2020": {"ID":2020,"bulletName":"bt_SoulMissile_blue","ballistic":0,"bulletLogic":null,"distance":999,"speed":2,"knockBack":null,"destroyEffect":null},
   "2021": {"ID":2021,"bulletName":"bt_SoulMissilePurple","ballistic":1,"bulletLogic":null,"distance":999,"speed":3,"knockBack":null,"destroyEffect":null},
   "3001": {"ID":3001,"bulletName":"ex_NovaFrost","ballistic":0,"bulletLogic":{"logic":"BulletBomb","args":{"startTime":0.1,"endTime":0.6}},"distance":99,"speed":0,"knockBack":null,"destroyEffect":null},
-  "4001": {"ID":4001,"bulletName":"ft_CartoonyFire","ballistic":0,"bulletLogic":{"logic":"BulletBomb","args":{"startTime":0.1,"endTime":3,"tick":1}},"distance":99,"speed":0,"knockBack":null,"destroyEffect":null}
+  "4001": {"ID":4001,"bulletName":"ft_CartoonyFire","ballistic":0,"bulletLogic":{"logic":"BulletBomb","args":{"startTime":0.1,"endTime":3}},"distance":99,"speed":0,"knockBack":null,"destroyEffect":null}
 }

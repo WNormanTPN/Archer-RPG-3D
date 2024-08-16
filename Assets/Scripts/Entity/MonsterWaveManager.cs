@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Config;
 using Evironment.MapGenerator;
 using Generic;
 using UnityEngine;
@@ -11,15 +12,13 @@ namespace Entity
 {
     public class MonsterWaveManager : MonoBehaviour
     {
-        public TextAsset monsterWaveJsonFile;           // Assign your JSON file in the Inspector
-        public TextAsset characterJsonFile;             // Assign your JSON file in the Inspector
         public GameObject player;                       // Assign your player prefab in the Inspector
         
         private List<WaveData> waveDatas;
         private ObjectPool objectPool;
         private int mapViewDistance;
         private Dictionary<int, GameObject> monsterPrefabs;
-        private Dictionary<string, CharacterData> monsterDatas;
+        private CharacterDataCollection monsterDatas;
         private MapGenerator mapGenerator;
         
         void Awake()
@@ -29,7 +28,7 @@ namespace Entity
             objectPool = GameObject.FindGameObjectWithTag("ObjectPool").GetComponent<ObjectPool>();
             mapViewDistance = PlayerPrefs.GetInt("ViewDistance");
             monsterPrefabs = new Dictionary<int, GameObject>();
-            monsterDatas = JSONLoader.LoadJSON<Dictionary<string, CharacterData>>(characterJsonFile);
+            monsterDatas = ConfigDataManager.Instance.GetConfigData<CharacterDataCollection>();
             LoadAllNeededAssets();
         }
 
@@ -100,16 +99,17 @@ namespace Entity
         
         CharacterData GetMonsterData(int monsterId)
         {
-            return monsterDatas[monsterId.ToString()];
+            return monsterDatas.characterDatas[monsterId.ToString()];
         }
         
         List<WaveData> GetWaveData()
         {
             var waveId = PlayerPrefs.GetInt("MonsterWaveGroup");
-            return JSONLoader.LoadJSON<Dictionary<string, List<WaveData>>>(monsterWaveJsonFile)[waveId.ToString()];
+            return ConfigDataManager.Instance.GetConfigData<WaveDataCollection>().waveDatas[waveId.ToString()];
         }
     }
     
+    [Serializable]
     public class WaveData
     {
         public int waveId;
@@ -118,5 +118,11 @@ namespace Entity
         public float attack;
         public float maxHP;
         public List<List<int>> monsters;
+    }
+    
+    [Serializable]
+    public class WaveDataCollection
+    {
+        public Dictionary<string, List<WaveData>> waveDatas;
     }
 }

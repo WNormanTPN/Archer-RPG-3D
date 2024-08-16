@@ -22,13 +22,13 @@ namespace Config
         private Dictionary<Type, object> cachedData = new Dictionary<Type, object>();
         private static readonly Dictionary<ConfigType, Type> configTypeMap = new Dictionary<ConfigType, Type>
         {
-            { ConfigType.Character, typeof(Dictionary<string, CharacterData>) },
-            { ConfigType.Effect, typeof(Dictionary<string, EffectData>) },
-            { ConfigType.Map, typeof(MapCollection) },
-            { ConfigType.MapDetail, typeof(Dictionary<string, MapDetail>) },
-            { ConfigType.MonsterWave, typeof(Dictionary<string, List<WaveData>>) },
-            { ConfigType.Skill, typeof(Dictionary<string, Skill>) },
-            { ConfigType.Weapon, typeof(Dictionary<string, WeaponData>) },
+            { ConfigType.Character, typeof(CharacterDataCollection) },
+            { ConfigType.Effect, typeof(EffectDataCollection) },
+            { ConfigType.Map, typeof(MapDataCollection) },
+            { ConfigType.MapDetail, typeof(MapDetailDataCollection) },
+            { ConfigType.MonsterWave, typeof(WaveDataCollection) },
+            { ConfigType.Skill, typeof(SkillDataCollection) },
+            { ConfigType.Weapon, typeof(WeaponDataCollection) },
         };
 
         public static ConfigDataManager Instance { get; private set; }

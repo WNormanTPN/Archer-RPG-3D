@@ -17,6 +17,13 @@ namespace Evironment.MapGenerator
         public float obstacleSpawnRatio;
         public string objectPoolAssetsPath;
     }
+    
+    [Serializable]
+    public class MapDetailDataCollection
+    {
+        public Dictionary<string, MapDetail> mapDetails;
+    }
+    
     public class MapGenerator : MonoBehaviour
     {
         [System.Serializable]

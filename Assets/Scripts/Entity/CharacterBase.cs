@@ -18,6 +18,12 @@ namespace Entity
         public int exp;
         public string prefabKey;
     }
+    
+    [Serializable]
+    public class CharacterDataCollection
+    {
+        public Dictionary<string, CharacterData> characterDatas;
+    }
     public abstract class CharacterBase : MonoBehaviour, ICharacter
     {
         [InspectorGroup("Character Movement")]
@@ -30,7 +36,7 @@ namespace Entity
         // public List<EffectData> effects;
         
         [LastGroup]
-        public CharacterData characterInitData;               // Initial data of the character
+        private CharacterData characterInitData;               // Initial data of the character
     
         [InspectorGroup("Attack Settings")]
         [Range(0, 1000)]public int maxHealth = 100;           // Health of the character

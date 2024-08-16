@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Config;
 using Evironment.MapGenerator;
 using Generic;
 using UnityEditor;
@@ -13,8 +14,8 @@ namespace UI
     {
         public GameObject lockIcon;
         public string genericLevelSceneKey;
-        public TextAsset mapDetailConfig; 
         
+        private MapDetail mapDetail;
         private Text text;
         private int mapDetailId;
         private int monsterWaveGroup;
@@ -31,11 +32,11 @@ namespace UI
             mapDetailId = mapData.mapDetailId;
             monsterWaveGroup = mapData.monsterWaveGroup;
             this.isLimitedMap = isLimitedMap;
+            mapDetail = ConfigDataManager.Instance.GetConfigData<MapDetailDataCollection>().mapDetails[mapDetailId.ToString()];
         }
         
         public void LoadLevel()
         {
-            MapDetail mapDetail = JSONLoader.LoadJSON<Dictionary<string, MapDetail>>(mapDetailConfig)[mapDetailId.ToString()];
             PlayerPrefs.SetInt("IsLimitedMap", isLimitedMap? 1 : 0);
             PlayerPrefs.SetInt("ViewDistance", mapDetail.viewDistance);
             PlayerPrefs.SetInt("UnloadDistance", mapDetail.unloadDistance);

@@ -7,12 +7,18 @@ using UnityEngine.UI;
 namespace Entity
 {
     [Serializable]
-    public class Skill
+    public class SkillData
     {
         public int skillID;
         public string skillName;
         public string skillIconKey;
         public List<int> effectIds;
         public Dictionary<string, float> attributes;
+    }
+    
+    [Serializable]
+    public class SkillDataCollection
+    {
+        public Dictionary<string, SkillData> skillDatas;
     }
 }

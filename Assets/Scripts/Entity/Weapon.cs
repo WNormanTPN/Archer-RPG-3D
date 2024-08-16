@@ -15,6 +15,12 @@ namespace Entity
         public float? knockback;
         public string destroyEffectKey;
     }
+    
+    [Serializable]
+    public class WeaponDataCollection
+    {
+        public Dictionary<string, WeaponData> weaponDatas;
+    }
 
     [Serializable]
     public class BulletLogic

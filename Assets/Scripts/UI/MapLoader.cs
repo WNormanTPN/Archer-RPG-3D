@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Config;
 using Generic;
 using UnityEngine;
 
@@ -6,17 +7,16 @@ namespace UI
 {
     public class MapLoader : MonoBehaviour
     {
-        public TextAsset mapJsonFile;           // Assign your JSON file in the Inspector
         public GameObject sceneItemPrefab;      // Assign your SceneItem prefab in the Inspector
         public Transform defaultModeContent;    // Assign the content container for DefaultMode in the Inspector
         public Transform endlessModeContent;    // Assign the content container for EndlessMode in the Inspector
         public GameObject nullPrefab;           // Assign the null prefab in the Inspector
 
-        private MapCollection mapCollection;
+        private MapDataCollection mapCollection;
 
         void Start()
         {
-            mapCollection = JSONLoader.LoadJSON<MapCollection>(mapJsonFile);
+            mapCollection = ConfigDataManager.Instance.GetConfigData<MapDataCollection>();
             CreateMapUI(mapCollection.DefaultMode, defaultModeContent);
             CreateMapUI(mapCollection.EndlessMode, endlessModeContent);
         }
@@ -47,7 +47,7 @@ namespace UI
     }
 
     [System.Serializable]
-    public class MapCollection
+    public class MapDataCollection
     {
         public List<MapData> DefaultMode;
         public List<MapData> EndlessMode;

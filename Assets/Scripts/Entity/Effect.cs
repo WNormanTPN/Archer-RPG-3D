@@ -13,4 +13,10 @@ namespace Entity
         public int duration;
         public string prefabKey;
     }
+    
+    [Serializable]
+    public class EffectDataCollection
+    {
+        public Dictionary<string, EffectData> effectDatas;
+    }
 }

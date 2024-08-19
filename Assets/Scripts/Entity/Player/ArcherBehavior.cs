@@ -22,22 +22,23 @@ namespace Entity.Player
 
         public void ShootProjectile()
         {
-            Vector3 shootingDirection = Quaternion.AngleAxis(-shootingAngle, transform.right) * transform.forward;
-            
-            GameObject arrow = Instantiate(
-                arrowPrefab,
-                transform.position + shootingOffset * Vector3.up,
-                Quaternion.LookRotation(shootingDirection)
-                );
-            
-            Rigidbody arrowRb = arrow.GetComponent<Rigidbody>();
-            arrowRb.velocity = shootingDirection * arrowSpeed;
-
-            // Set the arrow behavior
-            ProjectileBehavior arrowBehavior = arrow.GetComponent<ProjectileBehavior>();
-            arrowBehavior.lifeTime = arrowLifeTime;
-            arrowBehavior.destroyOnCollision = false;
-            arrowBehavior.rotateBasedOnVelocity = true;
+            weapon.DoAttack();
+            // Vector3 shootingDirection = Quaternion.AngleAxis(-shootingAngle, transform.right) * transform.forward;
+            //
+            // GameObject arrow = Instantiate(
+            //     arrowPrefab,
+            //     transform.position + shootingOffset * Vector3.up,
+            //     Quaternion.LookRotation(shootingDirection)
+            //     );
+            //
+            // Rigidbody arrowRb = arrow.GetComponent<Rigidbody>();
+            // arrowRb.velocity = shootingDirection * arrowSpeed;
+            //
+            // // Set the arrow behavior
+            // ProjectileBehavior arrowBehavior = arrow.GetComponent<ProjectileBehavior>();
+            // arrowBehavior.lifeTime = arrowLifeTime;
+            // arrowBehavior.destroyOnCollision = false;
+            // arrowBehavior.rotateBasedOnVelocity = true;
         }
     }
 }

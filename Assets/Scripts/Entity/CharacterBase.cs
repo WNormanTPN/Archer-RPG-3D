@@ -12,7 +12,7 @@ namespace Entity
     {
         public int id;
         public string name;
-        public float scale;
+        public float scale = 1;
         public int weaponId;
         public List<int> skillIds;
         public int exp;
@@ -30,13 +30,13 @@ namespace Entity
         [Range(0, 10)] public float moveSpeed = 5f;           // Speed of the character movement
         [Range(0, 720)] public float rotationSpeed = 720f;    // Speed of the character rotation in degrees per second
         
-        // [NonGroup]
-        // public WeaponData weapon;                             // Reference to the weapon
-        // public List<Skill> skills;                            // List of skills the character has
-        // public List<EffectData> effects;
+        [NonGroup]
+        public Weapon weapon;                                 // Reference to the weapon
+        public List<Skill> skills;                            // List of skills the character has
+        public List<Effect> effects;
         
         [LastGroup]
-        private CharacterData characterInitData;               // Initial data of the character
+        public CharacterData characterInitData;               // Initial data of the character
     
         [InspectorGroup("Attack Settings")]
         [Range(0, 1000)]public int maxHealth = 100;           // Health of the character
@@ -53,6 +53,7 @@ namespace Entity
         {
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
+            LoadInitData();
         }
         
         
@@ -73,12 +74,23 @@ namespace Entity
             transform.rotation = Quaternion.RotateTowards(
                 transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
         }
+
         public abstract void Attack();
         public abstract void StopAttack();
 
         public virtual void SetScale(float scale)
         {
             transform.localScale = new Vector3(scale, scale, scale);
+        }
+        
+        protected virtual void LoadInitData()
+        {
+            SetScale(characterInitData.scale);
+            if (characterInitData.weaponId != 0)
+            {
+                weapon = new Weapon(characterInitData.weaponId);
+            }
+            // skills = characterInitData.skillIds.Select(skillId => new Skill(skillId)).ToList();
         }
     }
 }

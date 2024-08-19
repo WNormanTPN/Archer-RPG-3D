@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Weapons
+  m_EditorClassIdentifier: 
+  m_GroupName: Weapons
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b2205d0d50f2fc44fa18ac638291cf57
+  m_SerializeEntries:
+  - m_GUID: 74669aeed2e6dbc428c925f537f612eb
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/Bullet_1000.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7332f8f6a8d29a44a1aaafb85044cf3
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/Bullet_1003.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f9309bb1b9276964b863dba76268a56d
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/Bullet_1004.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ce1c90723fe1444ea253ce82ff292f5
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/Bullet_1002.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c4053e3f4d9efb409681388d3ea9ad0
+    m_Address: Assets/RawResources/Effect/GasExplosionFire.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de4a0f05343430f4f9fc18b184ec460f
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_CannonBalls.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 23646d0f26a57c346a5e159a05db8914
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_fbx_sickle.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 276c6c03c3fad01449978cda38ac0af9
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_fbx_sickleA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e10da902457650e4ea00adc14ca3d03e
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_crystalA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab9d234e27d61514fb1438c647da05c2
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_mushroom.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 853092324d73c0f42a362786c4fee1d8
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_FireballMissileBlue.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 261ab96f91866dc4f87caf3efe61ea5b
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_MagicMissileFire.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c23a56117091c14aa57532fdd6dbac1
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_MagicMissileSoftGreen.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 591b13297de2df84eaa2e98c34ed86cc
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_MagicMissileSoftPink.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ff96d7481d2e7e479bff79a5b34e5b7
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_LiquidMissileOil.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d11a6b97dc1f65408d476f52c583921
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_SoulMissile_blue.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 975079b15a29d35459a28df64d49a653
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/bt_SoulMissilePurple.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a13c7528c03f2b498a7afb0c4d9d10e
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/ex_NovaFrost.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28115419ec6f6c146a3ec5ffb94aafc4
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/ft_CartoonyFire.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3679f7d567722af49b516d8cfad9104c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7344800e17d4d274b83860ad47648faf, type: 2}
+    - {fileID: 11400000, guid: 7af0c728493ed754e9571bfa61bd942f, type: 2}

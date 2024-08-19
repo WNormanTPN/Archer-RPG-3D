@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Entity
 {
     [Serializable]
-    public class SkillData
+    public class Skill
     {
         public int skillID;
         public string skillName;
@@ -17,8 +17,8 @@ namespace Entity
     }
     
     [Serializable]
-    public class SkillDataCollection
+    public class SkillCollection
     {
-        public Dictionary<string, SkillData> skillDatas;
+        public Dictionary<string, Skill> Skills;
     }
 }

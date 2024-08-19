@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Entity
 {
     [Serializable]
-    public class EffectData
+    public class Effect
     {
         public int id;
         public string name;
@@ -15,8 +15,8 @@ namespace Entity
     }
     
     [Serializable]
-    public class EffectDataCollection
+    public class EffectCollection
     {
-        public Dictionary<string, EffectData> effectDatas;
+        public Dictionary<string, Effect> Effects;
     }
 }

@@ -23,12 +23,12 @@ namespace Config
         private static readonly Dictionary<ConfigType, Type> configTypeMap = new Dictionary<ConfigType, Type>
         {
             { ConfigType.Character, typeof(CharacterDataCollection) },
-            { ConfigType.Effect, typeof(EffectDataCollection) },
+            { ConfigType.Effect, typeof(EffectCollection) },
             { ConfigType.Map, typeof(MapDataCollection) },
             { ConfigType.MapDetail, typeof(MapDetailDataCollection) },
             { ConfigType.MonsterWave, typeof(WaveDataCollection) },
-            { ConfigType.Skill, typeof(SkillDataCollection) },
-            { ConfigType.Weapon, typeof(WeaponDataCollection) },
+            { ConfigType.Skill, typeof(SkillCollection) },
+            { ConfigType.Weapon, typeof(WeaponCollection) },
         };
 
         public static ConfigDataManager Instance { get; private set; }

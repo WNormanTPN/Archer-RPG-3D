@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Config;
+using Entity;
 using Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace UI
@@ -47,9 +49,26 @@ namespace UI
     }
 
     [System.Serializable]
-    public class MapDataCollection
+    public class MapDataCollection : IConfigCollection
     {
         public List<MapData> DefaultMode;
         public List<MapData> EndlessMode;
+        
+        public MapDataCollection() {}
+
+        [JsonConstructor]
+        public MapDataCollection(List<MapData> defaultMode, List<MapData> endlessMode)
+        {
+            DefaultMode = defaultMode;
+            EndlessMode = endlessMode;
+        }
+
+        public void FromJson(string json)
+        {
+            var data = JsonConvert.DeserializeObject<MapDataCollection>(json);
+            DefaultMode = data.DefaultMode;
+            EndlessMode = data.EndlessMode;
+        }
     }
+
 }

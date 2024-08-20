@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entity;
 using Evironment.MapGenerator;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ namespace Config
             public TextAsset file;
             public ConfigType type;
         }
-        
+
         public List<ConfigFile> configFiles;
 
         private Dictionary<Type, object> cachedData = new Dictionary<Type, object>();
@@ -33,13 +34,16 @@ namespace Config
 
         public static ConfigDataManager Instance { get; private set; }
 
+        private static TaskCompletionSource<bool> loadDataCompletionSource;
+
         private void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
-                LoadAllData();
+                loadDataCompletionSource = new TaskCompletionSource<bool>();
+                _ = LoadAllDataAsync(); // Trigger async loading
             }
             else
             {
@@ -47,21 +51,33 @@ namespace Config
             }
         }
 
-        private void LoadAllData()
+        private Task LoadAllDataAsync()
         {
             foreach (var config in configFiles)
             {
                 var json = config.file.text;
-                var file = config.file;
                 var configType = config.type;
                 var type = configTypeMap[configType];
-                var data = JsonConvert.DeserializeObject(json, type);
-                cachedData[type] = data;
+
+                // Create an instance dynamically
+                if (Activator.CreateInstance(type) is IConfigCollection collection)
+                {
+                    // Deserialize and cache the data
+                    collection.FromJson(json);
+                    cachedData[type] = collection;
+                }
             }
+
+            // Mark data loading as complete
+            loadDataCompletionSource.SetResult(true);
+            return Task.CompletedTask;
         }
 
         public T GetConfigData<T>() where T : class
         {
+            // Wait until data loading is complete
+            loadDataCompletionSource.Task.Wait();
+            
             var type = typeof(T);
             if (cachedData.TryGetValue(type, out var data))
             {
@@ -72,6 +88,7 @@ namespace Config
         }
     }
 
+    [Flags]
     public enum ConfigType
     {
         Character,
@@ -81,5 +98,10 @@ namespace Config
         MonsterWave,
         Skill,
         Weapon
+    }
+    
+    public interface IConfigCollection
+    {
+        void FromJson(string json);
     }
 }

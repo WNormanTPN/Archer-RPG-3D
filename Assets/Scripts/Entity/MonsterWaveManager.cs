@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Config;
 using Evironment.MapGenerator;
 using Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
@@ -28,13 +29,13 @@ namespace Entity
             objectPool = GameObject.FindGameObjectWithTag("ObjectPool").GetComponent<ObjectPool>();
             mapViewDistance = PlayerPrefs.GetInt("ViewDistance");
             monsterPrefabs = new Dictionary<int, GameObject>();
-            monsterDatas = ConfigDataManager.Instance.GetConfigData<CharacterDataCollection>();
-            LoadAllNeededAssets();
         }
 
         private void Start()
         {
             mapGenerator = GameObject.FindGameObjectWithTag("MapGenerator").GetComponent<MapGenerator>();
+            monsterDatas = ConfigDataManager.Instance.GetConfigData<CharacterDataCollection>();
+            LoadAllNeededAssets();
             StartCoroutine(SetUpWave());
         }
         
@@ -99,7 +100,7 @@ namespace Entity
         
         CharacterData GetMonsterData(int monsterId)
         {
-            return monsterDatas.characterDatas[monsterId.ToString()];
+            return monsterDatas.CharacterDatas[monsterId.ToString()];
         }
         
         List<WaveData> GetWaveData()
@@ -112,7 +113,7 @@ namespace Entity
     [Serializable]
     public class WaveData
     {
-        public int waveId;
+        public int waveID;
         public int waveGroup;
         public int nextTime;
         public float attack;
@@ -121,8 +122,21 @@ namespace Entity
     }
     
     [Serializable]
-    public class WaveDataCollection
+    public class WaveDataCollection : IConfigCollection
     {
         public Dictionary<string, List<WaveData>> waveDatas;
+        
+        public WaveDataCollection() {}
+        
+        [JsonConstructor]
+        public WaveDataCollection(Dictionary<string, List<WaveData>> waveDatas)
+        {
+            this.waveDatas = waveDatas;
+        }
+
+        public void FromJson(string json)
+        {
+            waveDatas = JsonConvert.DeserializeObject<Dictionary<string, List<WaveData>>>(json);
+        }
     }
 }

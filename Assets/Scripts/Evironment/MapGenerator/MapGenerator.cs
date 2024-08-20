@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Config;
 using Generic;
 using MyEditor;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -17,12 +19,27 @@ namespace Evironment.MapGenerator
         public float obstacleSpawnRatio;
         public string objectPoolAssetsPath;
     }
-    
+
     [Serializable]
-    public class MapDetailDataCollection
+    public class MapDetailDataCollection : IConfigCollection
     {
         public Dictionary<string, MapDetail> mapDetails;
+        
+        public MapDetailDataCollection() {}
+
+        [JsonConstructor]
+        public MapDetailDataCollection(Dictionary<string, MapDetail> mapDetails)
+        {
+            this.mapDetails = mapDetails;
+        }
+
+        public void FromJson(string json)
+        {
+            mapDetails = JsonConvert.DeserializeObject<Dictionary<string, MapDetail>>(json);
+        }
     }
+
+
     
     public class MapGenerator : MonoBehaviour
     {

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Config;
 using MyEditor;
+using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,19 +12,44 @@ namespace Entity
     [Serializable]
     public class CharacterData
     {
+        [JsonProperty("charID")]
         public int id;
+    
+        [JsonProperty("charName")]
         public string name;
+    
         public float scale = 1;
+    
+        [JsonProperty("weaponID")]
         public int weaponId;
+    
+        [JsonProperty("skills")]
         public List<int> skillIds;
+    
         public int exp;
+    
+        [JsonProperty("key")]
         public string prefabKey;
     }
+
     
     [Serializable]
-    public class CharacterDataCollection
+    public class CharacterDataCollection : IConfigCollection
     {
-        public Dictionary<string, CharacterData> characterDatas;
+        public Dictionary<string, CharacterData> CharacterDatas;
+        
+        public CharacterDataCollection() {}
+        
+        [JsonConstructor]
+        public CharacterDataCollection(Dictionary<string, CharacterData> CharacterDatas)
+        {
+            this.CharacterDatas = CharacterDatas;
+        }
+
+        public void FromJson(string json)
+        {
+            CharacterDatas = JsonConvert.DeserializeObject<Dictionary<string, CharacterData>>(json);
+        }
     }
     public abstract class CharacterBase : MonoBehaviour, ICharacter
     {

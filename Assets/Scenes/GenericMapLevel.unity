@@ -577,6 +577,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 774949246}
+  - component: {fileID: 774949248}
   - component: {fileID: 774949245}
   - component: {fileID: 774949247}
   m_Layer: 0
@@ -627,9 +628,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9602745cb33a84744b9b43ce866b8cb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterWaveJsonFile: {fileID: 4900000, guid: 417d8f57f3c281748ab375d73fa7f4c5, type: 3}
-  characterJsonFile: {fileID: 4900000, guid: 7004fd41e3f1fc74da4863e03e615daf, type: 3}
   player: {fileID: 162160, guid: bce05bf4d50c2ad4883af7e4826a5331, type: 3}
+--- !u!114 &774949248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774949244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d83654ad14db84e8b936cebd966885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  configFiles:
+  - file: {fileID: 4900000, guid: 7004fd41e3f1fc74da4863e03e615daf, type: 3}
+    type: 0
+  - file: {fileID: 4900000, guid: 43b232dadd3343a9a19136198865083c, type: 3}
+    type: 1
+  - file: {fileID: 4900000, guid: 8e5c3186cab5d3c42b7eb4b175a69b1f, type: 3}
+    type: 2
+  - file: {fileID: 4900000, guid: b745c00686c74360abfada8d5e49830d, type: 3}
+    type: 3
+  - file: {fileID: 4900000, guid: 417d8f57f3c281748ab375d73fa7f4c5, type: 3}
+    type: 4
+  - file: {fileID: 4900000, guid: ebb80b443d454aeea5c86ebb18905615, type: 3}
+    type: 5
+  - file: {fileID: 4900000, guid: 685198c01d864fcda51cc42aba39dd7b, type: 3}
+    type: 6
 --- !u!1 &1450875542
 GameObject:
   m_ObjectHideFlags: 0

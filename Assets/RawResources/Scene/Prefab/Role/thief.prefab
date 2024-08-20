@@ -607,12 +607,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   rotationSpeed: 360
+  weapon:
+    weaponID: 0
+    ballistic: 0
+    bulletLogic:
+      logic: 
+    distance: 0
+    speed: 0
+    destroyEffectKey: 
+    bulletPrefabKey: 
+  skills: []
+  effects: []
+  characterInitData:
+    id: 0
+    name: Player
+    scale: 1
+    weaponId: 1000
+    skillIds: 
+    exp: 0
+    prefabKey: 
   maxHealth: 100
   curHealth: 100
   attackSpeed: 1
-  weapon: {fileID: 0}
-  skills: []
-  exp: 0
   attackDamage: 10
   arrowPrefab: {fileID: 1538924604248878, guid: 74669aeed2e6dbc428c925f537f612eb, type: 3}
   arrowSpeed: 15

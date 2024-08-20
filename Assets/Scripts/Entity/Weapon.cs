@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Config;
+using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
 
 namespace Entity
@@ -9,14 +11,16 @@ namespace Entity
     [Serializable]
     public class Weapon : IWeapon
     {
-        public int weaponID;
+        [JsonProperty("ID")]public int weaponID;
         public Ballistic ballistic;
         public BulletLogic bulletLogic;
         public float distance;
         public float speed;
         public float? knockback;
-        public string destroyEffectKey;
-        public string bulletPrefabKey;
+        [JsonProperty("destroyEffect")]public string destroyEffectKey;
+        [JsonProperty("bulletKey")]public string bulletPrefabKey;
+
+        private GameObject bulletPrefab;
         
         public Weapon() {}
 
@@ -31,18 +35,15 @@ namespace Entity
             knockback = data.knockback;
             destroyEffectKey = data.destroyEffectKey;
             bulletPrefabKey = data.bulletPrefabKey;
+            var task = Addressables.LoadAssetAsync<GameObject>(bulletPrefabKey);
+            task.Completed += handle =>
+            {
+                bulletPrefab = handle.Result;
+            };
         }
 
         public GameObject DoAttack(AttackConfig config = null)
         {
-            // Load the bullet prefab
-            GameObject bulletPrefab = Resources.Load<GameObject>(bulletPrefabKey);
-            if (bulletPrefab == null)
-            {
-                Debug.LogError($"Bullet prefab not found at {bulletPrefabKey}");
-                return null;
-            }
-
             // Instantiate the bullet
             GameObject bulletInstance = Object.Instantiate(bulletPrefab);
 
@@ -105,9 +106,22 @@ namespace Entity
     }
 
     [Serializable]
-    public class WeaponCollection
+    public class WeaponCollection : IConfigCollection
     {
         public Dictionary<string, Weapon> Weapons;
+        
+        public WeaponCollection() {}
+        
+        [JsonConstructor]
+        public WeaponCollection(Dictionary<string, Weapon> Weapons)
+        {
+            this.Weapons = Weapons;
+        }
+
+        public void FromJson(string json)
+        {
+            Weapons = JsonConvert.DeserializeObject<Dictionary<string, Weapon>>(json);
+        }
     }
 
     [Serializable]

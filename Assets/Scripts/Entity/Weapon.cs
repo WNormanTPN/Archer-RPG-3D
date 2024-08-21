@@ -42,7 +42,7 @@ namespace Entity
             };
         }
 
-        public GameObject DoAttack(AttackConfig config = null)
+        public GameObject DoAttack(AttackConfig config)
         {
             // Instantiate the bullet
             GameObject bulletInstance = Object.Instantiate(bulletPrefab);
@@ -51,19 +51,19 @@ namespace Entity
             switch (ballistic)
             {
                 case Ballistic.Straight:
-                    bulletInstance.AddComponent<StraightMovement>().Init(speed, distance);
+                    bulletInstance.AddComponent<StraightMovement>().Init(speed, distance, config);
                     break;
                 case Ballistic.Curve:
-                    bulletInstance.AddComponent<CurveMovement>().Init(speed, distance);
+                    bulletInstance.AddComponent<CurveMovement>().Init(speed, distance, config);
                     break;
                 case Ballistic.Parabola:
-                    bulletInstance.AddComponent<ParabolaMovement>().Init(speed, distance);
+                    bulletInstance.AddComponent<ParabolaMovement>().Init(speed, distance, config);
                     break;
                 case Ballistic.Chase:
-                    bulletInstance.AddComponent<ChaseMovement>().Init(speed, distance);
+                    bulletInstance.AddComponent<ChaseMovement>().Init(speed, distance, config);
                     break;
                 case Ballistic.Round:
-                    bulletInstance.AddComponent<RoundMovement>().Init(speed, distance);
+                    bulletInstance.AddComponent<RoundMovement>().Init(speed, distance, config);
                     break;
             }
 
@@ -103,6 +103,8 @@ namespace Entity
     {
         public float damage;
         public float knockback;
+        public Transform from;
+        public Transform to;
     }
 
     [Serializable]
@@ -146,11 +148,21 @@ namespace Entity
     {
         protected float speed;
         protected float distance;
+        protected AttackConfig config;
+        protected Rigidbody rb;
 
-        public virtual void Init(float speed, float distance)
+        public virtual void Init(float speed, float distance, AttackConfig config)
         {
             this.speed = speed;
             this.distance = distance;
+            this.config = config;
+            rb = GetComponent<Rigidbody>();
+            
+            if (config.from)
+            {
+                transform.position = config.from.position;
+                transform.rotation = config.from.rotation;
+            }
         }
 
         protected virtual void Update()
@@ -163,8 +175,9 @@ namespace Entity
     {
         protected override void Update()
         {
-            transform.Translate(speed * Time.deltaTime * Vector3.forward);
-            distance -= speed * Time.deltaTime;
+            var direction = config.from?.forward ?? transform.forward;
+            rb.velocity = speed * direction;
+            distance -= rb.velocity.magnitude * Time.deltaTime;
 
             if (distance <= 0)
             {
@@ -180,7 +193,7 @@ namespace Entity
 
         public void Init(float speed, float distance, float curveSpeed)
         {
-            base.Init(speed, distance);
+            base.Init(speed, distance, config);
             this.curveSpeed = curveSpeed;
         }
 
@@ -211,7 +224,7 @@ namespace Entity
 
         public void Init(float speed, float distance, Transform target)
         {
-            base.Init(speed, distance);
+            base.Init(speed, distance, config);
             this.target = target;
             startPosition = transform.position;
             flightDuration = distance / speed;
@@ -246,7 +259,7 @@ namespace Entity
 
         public void Init(float speed, float distance, Transform target)
         {
-            base.Init(speed, distance);
+            base.Init(speed, distance, config);
             this.target = target;
         }
 
@@ -274,7 +287,7 @@ namespace Entity
 
         public void Init(float speed, float distance, float radius)
         {
-            base.Init(speed, distance);
+            base.Init(speed, distance, config);
             this.radius = radius;
             centerPosition = transform.position;
         }

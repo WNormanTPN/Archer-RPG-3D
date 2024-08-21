@@ -69,17 +69,24 @@ namespace Entity
         [Range(0, 1000)]public int maxHealth = 100;           // Health of the character
         [Range(0, 1000)] public int curHealth = 100;          // Current health of the character
         [Range(0, 10)] public float attackSpeed = 1f;         // Speed of the character attack per second
-        
+        public Transform attackPoint;                         // Point where the attack will be executed
         
         protected Animator animator;                          // Reference to the Animator component
         protected float velocity;                             // Current velocity of the character
         protected Rigidbody rb;                               // Reference to the Rigidbody component
+        protected AttackConfig attackConfig;                  // Configuration of the attack
         
         
         protected virtual void Start()
         {
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
+            attackConfig = new AttackConfig();
+            if (attackPoint)
+            {
+                attackConfig.from = attackPoint;
+            }
+
             LoadInitData();
         }
         

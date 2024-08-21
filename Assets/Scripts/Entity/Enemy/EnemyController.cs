@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Entity.Enemy
 {
-    public abstract class EnemyController : CharacterBase
+    public class EnemyController : CharacterBase
     {
         [HideInInspector] public Transform player;                                // Reference to the player
         

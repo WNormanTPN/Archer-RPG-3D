@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace MyEditor
 {
+    [CanEditMultipleObjects]
     [CustomEditor(typeof(MonoBehaviour), true)]
     public class MonoBehaviourInspector : UnityEditor.Editor
     {

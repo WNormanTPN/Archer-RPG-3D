@@ -87,7 +87,7 @@ namespace Entity.Enemy
             projectileRb.velocity = shootingDirection * projectileSpeed;
 
             // Get the ArrowBehavior component and start the rotation correction coroutine
-            ProjectileBehavior projectileBehavior = projectile.GetComponent<ProjectileBehavior>();
+            ProjectileBehaviour projectileBehavior = projectile.GetComponent<ProjectileBehaviour>();
 
             // Destroy the arrow after the specified lifetime
             Destroy(projectile, projectileLifeTime);

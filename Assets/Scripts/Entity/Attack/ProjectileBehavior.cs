@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 namespace Entity.Attack
 {
-    public class ProjectileBehavior : MonoBehaviour
+    public class ProjectileBehaviour : MonoBehaviour
     {
-        public float lifeTime = 5f;
+        public float lifeTime = 0f;
         public bool destroyOnCollision = true;
         public bool rotateBasedOnVelocity = false;
         

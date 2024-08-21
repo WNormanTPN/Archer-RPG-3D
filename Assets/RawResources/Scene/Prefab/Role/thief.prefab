@@ -629,12 +629,8 @@ MonoBehaviour:
   maxHealth: 100
   curHealth: 100
   attackSpeed: 1
+  attackPoint: {fileID: 8227067831097381751}
   attackDamage: 10
-  arrowPrefab: {fileID: 1538924604248878, guid: 74669aeed2e6dbc428c925f537f612eb, type: 3}
-  arrowSpeed: 15
-  arrowLifeTime: 5
-  shootingOffset: 0.3
-  shootingAngle: 10
 --- !u!136 &7118643972476427840
 CapsuleCollider:
   m_ObjectHideFlags: 0

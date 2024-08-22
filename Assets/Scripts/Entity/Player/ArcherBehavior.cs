@@ -5,21 +5,8 @@ using UnityEngine;
 
 namespace Entity.Player
 {
-    public class ArcherBehavior : PlayerController, IRangedAttack
+    public class ArcherBehavior : PlayerController
     {
-        [InspectorGroup("Attack Settings")]
-        public float attackDamage = 10f;
         
-        protected override void Start()
-        {
-            base.Start();
-            curHealth = maxHealth;
-            attackConfig.damage = attackDamage;
-        }
-
-        public void ShootProjectile()
-        {
-            weapon.DoAttack(attackConfig);
-        }
     }
 }

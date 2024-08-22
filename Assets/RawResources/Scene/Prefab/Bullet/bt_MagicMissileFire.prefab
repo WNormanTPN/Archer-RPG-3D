@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3327143445568878727}
   - component: {fileID: 8279522975454969448}
   - component: {fileID: 5212445168283072526}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4874,7 +4874,7 @@ GameObject:
   - component: {fileID: 3367159367324699114}
   - component: {fileID: 8051072879715723796}
   - component: {fileID: 5372855739825536181}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SparkleTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9645,7 +9645,7 @@ GameObject:
   - component: {fileID: 9010910582312591461}
   - component: {fileID: 3327181306714982414}
   - component: {fileID: 2770601615874483230}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14416,7 +14416,7 @@ GameObject:
   - component: {fileID: 5117887865450110351}
   - component: {fileID: 5238378252576122040}
   - component: {fileID: 5405218864959082209}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GlowTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19178,7 +19178,7 @@ GameObject:
   - component: {fileID: 6640198562895301675}
   - component: {fileID: 1849908712556086920}
   - component: {fileID: 6289942948727426399}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MagicNova
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23930,7 +23930,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2919827781725119157}
   - component: {fileID: 2704430510778580418}
-  m_Layer: 0
+  - component: {fileID: -9113364862379633676}
+  - component: {fileID: 2274010165052032900}
+  m_Layer: 9
   m_Name: bt_MagicMissileFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23974,3 +23976,45 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.16
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &-9113364862379633676
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7042411277766539672}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2274010165052032900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7042411277766539672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef791402178328641a29d6d7d88a9720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 0
+  destroyOnCollision: 1
+  rotateBasedOnVelocity: 0

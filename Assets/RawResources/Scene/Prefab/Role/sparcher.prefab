@@ -872,20 +872,21 @@ MonoBehaviour:
     id: 0
     name: 
     scale: 1
-    weaponId: 1000
+    weaponId: 0
     skillIds: 
     exp: 0
     prefabKey: 
   maxHealth: 100
   curHealth: 100
   attackSpeed: 0.5
+  attackDamage: 10
   attackPoint: {fileID: 6563319465556445261}
   player: {fileID: 0}
   moveDuration: 1.5
   rotateDuration: 1
   keepMovingDistance: 10
   attackAnimation: Attack_bow
-  rangeForAttack: 2
+  rangeForAttack: 5
   attackCooldown: 2
   lineRenderer: {fileID: 1596139180802800107, guid: 7a28303471512ba4993ebdc0c78500d4, type: 3}
   lineRendererWidth: 1

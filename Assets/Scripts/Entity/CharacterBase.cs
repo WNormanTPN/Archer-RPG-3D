@@ -69,6 +69,7 @@ namespace Entity
         [Range(0, 1000)]public int maxHealth = 100;           // Health of the character
         [Range(0, 1000)] public int curHealth = 100;          // Current health of the character
         [Range(0, 10)] public float attackSpeed = 1f;         // Speed of the character attack per second
+        [Range(0, 1000)] public float attackDamage = 10f;     // Damage dealt by the character
         public Transform attackPoint;                         // Point where the attack will be executed
         
         protected Animator animator;                          // Reference to the Animator component
@@ -82,6 +83,8 @@ namespace Entity
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
             attackConfig = new AttackConfig();
+            curHealth = maxHealth;
+            attackConfig.damage = attackDamage;
             if (attackPoint)
             {
                 attackConfig.from = attackPoint;
@@ -110,7 +113,11 @@ namespace Entity
                 transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
         }
 
-        public abstract void Attack();
+        public abstract void StartAttack();
+        public virtual void DoAttack()
+        {
+            weapon.DoAttack(attackConfig);
+        }
         public abstract void StopAttack();
 
         public virtual void SetScale(float scale)

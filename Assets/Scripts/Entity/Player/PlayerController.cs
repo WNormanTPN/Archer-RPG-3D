@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Entity.Player
 {
-    public abstract class PlayerController : CharacterBase
+    public class PlayerController : CharacterBase
     {
         private MyInput input;                                // Reference to the MyInput script
         private readonly string speedParameter = "Speed";
@@ -27,7 +27,7 @@ namespace Entity.Player
             if (movement == Vector3.zero)
             {
                 StopMove();
-                Attack();
+                StartAttack();
             }
             else
             {
@@ -40,7 +40,7 @@ namespace Entity.Player
             animator.SetFloat(speedParameter, movement.magnitude);
         }
 
-        public override void Attack()
+        public override void StartAttack()
         {
             animator.SetBool(attackAnimation, true);
             StartCoroutine(SetAnimationAttackSpeed());

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Entity.Enemy
 {
-    public class SparcherController : EnemyController, IRangedAttack
+    public class SparcherController : EnemyController
     {
         [Header("Trajectory Settings")]
         public GameObject lineRenderer;                     // Line renderer for the shooting effect
@@ -62,9 +62,9 @@ namespace Entity.Enemy
             lineRenderer.SetPosition(1, end);
         }
 
-        public void ShootProjectile()
+        public override void DoAttack()
         {
-            weapon.DoAttack(attackConfig);
+            base.DoAttack();
             StopAttack();
             if (lineRendererInstance != null)
             {

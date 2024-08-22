@@ -7,7 +7,7 @@ namespace Entity
         void Move(Vector3 direction);
         void StopMove();
         void Rotate(Vector3 direction);
-        void Attack();
+        void StartAttack();
         void StopAttack();
         void SetScale(float scale);
     }

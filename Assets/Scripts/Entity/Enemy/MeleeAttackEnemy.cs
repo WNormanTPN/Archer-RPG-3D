@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Entity.Enemy
 {
-    public class MeleeAttackEnemy : EnemyController, IMeleeAttack
+    public class MeleeAttackEnemy : EnemyController
     {
         [Header("Melee Attack Settings")]
         [Range(0, 100)] public float attackDamage = 10f;    // Damage dealt by the enemy

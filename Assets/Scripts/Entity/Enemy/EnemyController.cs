@@ -1,4 +1,5 @@
 using System.Collections;
+using Entity.Attack;
 using MyEditor;
 using UnityEngine;
 
@@ -140,7 +141,7 @@ namespace Entity.Enemy
             animator.SetFloat(speedParameter, 0f);
         }
 
-        public override void Attack()
+        public override void StartAttack()
         {
             isAttacking = true;
             animator.SetBool(attackAnimation, true);
@@ -161,11 +162,14 @@ namespace Entity.Enemy
 
         private IEnumerator PerformAttack()
         {
-            Attack();
-            attackTimer = -1 / attackSpeed; // Reset attack timer
+            StartAttack();
+            attackTimer = - 1 / attackSpeed; // Reset attack timer
 
             yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation));
             SetAnimationAttackSpeed();
+            
+            yield return new WaitForSeconds(-attackTimer * 0.95f);
+            StopAttack();
         }
     }
 }

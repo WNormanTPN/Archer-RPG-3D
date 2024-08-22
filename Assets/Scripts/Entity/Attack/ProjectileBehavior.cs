@@ -68,6 +68,14 @@ namespace Entity.Attack
             // Stop the rotation coroutine
             StopAllCoroutines();
         }
+        
+        void OnTriggerEnter(Collider collider)
+        {
+            isCollided = true;
+
+            // Stop the rotation coroutine
+            StopAllCoroutines();
+        }
 
         void StartRotationCorrection() {
             StartCoroutine(RotateProjectileBaseOnVelocity());

@@ -9,7 +9,7 @@ namespace Entity.Attack
     {
         public float lifeTime = 0f;
         public bool destroyOnCollision = true;
-        public bool rotateBasedOnVelocity = false;
+        public bool rotateBasedOnVelocity = true;
         
         private Rigidbody rb;
         private bool isCollided = false;
@@ -21,7 +21,10 @@ namespace Entity.Attack
         
         void Start()
         {
-            transform.rotation = Quaternion.LookRotation(rb.velocity);
+            if (rb.velocity != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(rb.velocity);
+            }
             if (rotateBasedOnVelocity)
             {
                 StartRotationCorrection();

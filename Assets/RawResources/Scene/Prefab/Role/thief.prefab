@@ -622,7 +622,7 @@ MonoBehaviour:
     id: 0
     name: Player
     scale: 1
-    weaponId: 1000
+    weaponId: 1
     skillIds: 
     exp: 0
     prefabKey: 

@@ -112,6 +112,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8d724be3204d7964db8aa01af83a6490
+    m_Address: Assets/RawResources/Scene/Prefab/Bullet/Bullet_1000 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3679f7d567722af49b516d8cfad9104c, type: 2}
   m_SchemaSet:

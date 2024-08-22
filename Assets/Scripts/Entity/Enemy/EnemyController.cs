@@ -60,7 +60,7 @@ namespace Entity.Enemy
                             
                     Vector3 directionToPlayer = player.position - transform.position;
                     Move(directionToPlayer);
-                    Rotate(directionToPlayer);
+                    LockOnPlayer();
                 }
                 else
                 {
@@ -112,6 +112,7 @@ namespace Entity.Enemy
         public override void Move(Vector3 direction) // Move forward towards the player
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation)) return;
+            direction.Normalize();
             rb.position += moveSpeed * Time.fixedDeltaTime * direction;
             animator.SetFloat(speedParameter, moveSpeed);
         }

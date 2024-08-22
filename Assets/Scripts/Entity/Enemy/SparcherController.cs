@@ -7,7 +7,7 @@ namespace Entity.Enemy
 {
     public class SparcherController : EnemyController, IRangedAttack
     {
-        [Header("Ranged Attack Settings")]
+        [Header("Trajectory Settings")]
         public GameObject lineRenderer;                     // Line renderer for the shooting effect
         public float lineRendererWidth = 0.5f;              // Width of the line renderer
         
@@ -24,9 +24,11 @@ namespace Entity.Enemy
                 {
                     lineRendererInstance = Instantiate(lineRenderer);
                 }
-
+                
                 var lineRendererComponent = lineRendererInstance.GetComponent<LineRenderer>();
-                DrawTrajectoryLine(lineRendererComponent, attackPoint.position, attackPoint.forward);
+                var attackPos = attackPoint?.position ?? transform.position;
+                var attackDir = attackPoint?.forward ?? transform.forward;
+                DrawTrajectoryLine(lineRendererComponent, attackPos, attackDir);
             }
             else
             {
@@ -42,11 +44,12 @@ namespace Entity.Enemy
             Vector3 end = start + direction * 100f;
             Ray ray = new Ray(start, direction);
             RaycastHit[] hits = new RaycastHit[10];
-            int size = Physics.RaycastNonAlloc(ray, hits, 100f, LayerMask.NameToLayer("Enemy"));
+            int size = Physics.RaycastNonAlloc(ray, hits, weapon.distance);
             
-            foreach (var hit in hits)
+            for (int i = size - 1; i >= 0; i--)
             {
-                if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Enemy"))
+                var hit = hits[i];
+                if (hit.collider?.gameObject.layer != LayerMask.NameToLayer("Enemy"))
                 {
                     end = hit.point;
                     break;
@@ -61,13 +64,12 @@ namespace Entity.Enemy
 
         public void ShootProjectile()
         {
+            weapon.DoAttack(attackConfig);
             StopAttack();
             if (lineRendererInstance != null)
             {
                 Destroy(lineRendererInstance);
             }
-
-            weapon.DoAttack(attackConfig);
         }
     }
 }

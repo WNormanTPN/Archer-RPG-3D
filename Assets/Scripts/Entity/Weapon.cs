@@ -173,9 +173,14 @@ namespace Entity
 
     public class StraightMovement : BulletMovement
     {
+        private Vector3 direction;
+        
         protected override void Update()
         {
-            var direction = config.from?.forward ?? transform.forward;
+            if (direction == Vector3.zero)
+            {
+                direction = config.to?.position ?? transform.forward;
+            }
             rb.velocity = speed * direction;
             distance -= rb.velocity.magnitude * Time.deltaTime;
 

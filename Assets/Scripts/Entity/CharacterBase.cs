@@ -85,6 +85,7 @@ namespace Entity
             if (attackPoint)
             {
                 attackConfig.from = attackPoint;
+                attackPoint.rotation = Quaternion.LookRotation(transform.forward);
             }
 
             LoadInitData();
@@ -120,11 +121,10 @@ namespace Entity
         protected virtual void LoadInitData()
         {
             SetScale(characterInitData.scale);
-            if (characterInitData.weaponId != 0)
+            if (characterInitData.weaponId != 0 && weapon.weaponID != characterInitData.weaponId)
             {
                 weapon = new Weapon(characterInitData.weaponId);
             }
-            // skills = characterInitData.skillIds.Select(skillId => new Skill(skillId)).ToList();
         }
     }
 }

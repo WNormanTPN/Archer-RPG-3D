@@ -5,16 +5,11 @@ using UnityEngine;
 
 namespace Entity.Enemy
 {
-    public class RangedAttackEnemy : EnemyController, IRangedAttack
+    public class SparcherController : EnemyController, IRangedAttack
     {
         [Header("Ranged Attack Settings")]
-        [Range(0, 100)] public float attackDamage = 10f;    // Damage dealt by the enemy
         public GameObject lineRenderer;                     // Line renderer for the shooting effect
         public float lineRendererWidth = 0.5f;              // Width of the line renderer
-        public GameObject projectilePrefab;                 // Projectile to shoot
-        public float projectileSpeed = 10f;                 // Speed of the projectile
-        public float projectileLifeTime = 5f;
-        public float shootingOffset = 0.3f;
         
         private GameObject lineRendererInstance;
 
@@ -31,9 +26,7 @@ namespace Entity.Enemy
                 }
 
                 var lineRendererComponent = lineRendererInstance.GetComponent<LineRenderer>();
-                Vector3 shootingDirection = transform.forward;
-                Vector3 shootingPosition = transform.position + shootingOffset * Vector3.up;
-                DrawTrajectoryLine(lineRendererComponent, shootingPosition, shootingDirection);
+                DrawTrajectoryLine(lineRendererComponent, attackPoint.position, attackPoint.forward);
             }
             else
             {
@@ -73,24 +66,8 @@ namespace Entity.Enemy
             {
                 Destroy(lineRendererInstance);
             }
-            
-            // Instantiate projectile
-            Vector3 shootingDirection = transform.forward;
-            
-            GameObject projectile = Instantiate(
-                projectilePrefab,
-                transform.position + shootingOffset * Vector3.up,
-                Quaternion.identity
-            );
-            
-            Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
-            projectileRb.velocity = shootingDirection * projectileSpeed;
 
-            // Get the ArrowBehavior component and start the rotation correction coroutine
-            ProjectileBehaviour projectileBehavior = projectile.GetComponent<ProjectileBehaviour>();
-
-            // Destroy the arrow after the specified lifetime
-            Destroy(projectile, projectileLifeTime);
+            weapon.DoAttack(attackConfig);
         }
     }
 }

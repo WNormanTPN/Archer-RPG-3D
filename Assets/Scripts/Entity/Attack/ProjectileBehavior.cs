@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using MyEditor;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,15 +9,21 @@ namespace Entity.Attack
     public class ProjectileBehaviour : MonoBehaviour
     {
         public float lifeTime = 0f;
-        public bool destroyOnCollision = true;
         public bool rotateBasedOnVelocity = true;
+        public bool isCollideWithObstacle = true;
+        [ShowWhen("isCollideWithObstacle", true)] public bool attachToCollidedObject = false;
         
+        private LayerMask obstacleLayer;
         private Rigidbody rb;
-        private bool isCollided = false;
 
         void Awake()
         {
+            obstacleLayer = LayerMask.NameToLayer("Obstacle");
             rb = GetComponent<Rigidbody>();
+            if (!isCollideWithObstacle)
+            {
+                attachToCollidedObject = false;
+            }
         }
         
         void Start()
@@ -35,35 +42,21 @@ namespace Entity.Attack
             }
         }
 
-        void OnDestroy()
-        {
-            if (isCollided && !destroyOnCollision)
-            {
-                return;
-            }
-        }
-
         void OnCollisionEnter(Collision collision)
         {
-            if (destroyOnCollision)
+            if (!isCollideWithObstacle && collision.gameObject.layer == obstacleLayer)
             {
-                Destroy(gameObject);
                 return;
             }
             
-            isCollided = true;
-            // Stop the projectile's movement upon collision
-            if (!rb.isKinematic)
+            if (attachToCollidedObject)
             {
-                rb.velocity = Vector3.zero;
+                AttachToCollidedObject();
             }
-            rb.isKinematic = true;
-
-            // Optionally, disable the collider to prevent further collisions
-            GetComponent<Collider>().enabled = false;
-            
-            // Parent the projectile to the collided object
-            transform.parent = collision.transform;
+            else
+            {
+                Destroy(gameObject);
+            }
 
             // Stop the rotation coroutine
             StopAllCoroutines();
@@ -71,9 +64,39 @@ namespace Entity.Attack
         
         void OnTriggerEnter(Collider collider)
         {
-            isCollided = true;
-
+            if (!isCollideWithObstacle && collider.gameObject.layer == obstacleLayer)
+            {
+                return;
+            }
+            
+            if (attachToCollidedObject)
+            {
+                AttachToCollidedObject();
+            }
+            
             // Stop the rotation coroutine
+            StopAllCoroutines();
+        }
+        
+        void AttachToCollidedObject()
+        {
+            // Stop the projectile's movement upon collision
+            if (!rb.isKinematic)
+            {
+                rb.velocity = Vector3.zero;
+            }
+
+            rb.isKinematic = true;
+
+            // Optionally, disable the collider to prevent further collisions
+            GetComponent<Collider>().enabled = false;
+
+            // Parent the projectile to the collided object
+            transform.parent = rb.transform;
+        }
+        
+        void OnDestroy()
+        {
             StopAllCoroutines();
         }
 

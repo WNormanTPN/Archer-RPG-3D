@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 827628800115411566}
   - component: {fileID: 827628800118835790}
   - component: {fileID: 827628800117704846}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1193226569474955216}
   - component: {fileID: 6272876357189391738}
-  m_Layer: 0
+  - component: {fileID: 5972349133017042681}
+  - component: {fileID: 595279898072907614}
+  m_Layer: 9
   m_Name: bt_CannonBalls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,12 +135,55 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.12
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &5972349133017042681
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4132964849903929772}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &595279898072907614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4132964849903929772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef791402178328641a29d6d7d88a9720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 0
+  rotateBasedOnVelocity: 0
+  isCollideWithObstacle: 1
+  attachToCollidedObject: 0
 --- !u!1 &6604148191742805802
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +195,7 @@ GameObject:
   - component: {fileID: 1318117321868754441}
   - component: {fileID: 1738615947749568199}
   - component: {fileID: 7735882978687855873}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RingTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4840,7 +4885,7 @@ GameObject:
   - component: {fileID: 4982563154498225441}
   - component: {fileID: 7183645854816378578}
   - component: {fileID: 4698247027799981005}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GlowTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

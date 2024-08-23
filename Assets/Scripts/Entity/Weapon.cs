@@ -17,10 +17,36 @@ namespace Entity
         public float distance;
         public float speed;
         public float? knockback;
-        [JsonProperty("destroyEffect")]public string destroyEffectKey;
-        [JsonProperty("bulletKey")]public string bulletPrefabKey;
+        [JsonProperty("destroyFX")] public string destroyFXKey
+        {
+            get => _destroyFXKey;
+            set
+            {
+                if (_destroyFXKey != value)
+                {
+                    _destroyFXKey = value;
+                    Init();
+                }
+            }
+        }
+        [JsonProperty("bulletKey")] public string bulletPrefabKey
+        {
+            get => _bulletPrefabKey;
+            set
+            {
+                if (_bulletPrefabKey != value)
+                {
+                    _bulletPrefabKey = value;
+                    Init();
+                }
+            }
+        }
 
         private GameObject bulletPrefab;
+        private GameObject destroyFX;
+        
+        private string _destroyFXKey;
+        private string _bulletPrefabKey;
         
         public Weapon() {}
 
@@ -33,13 +59,24 @@ namespace Entity
             distance = data.distance;
             speed = data.speed;
             knockback = data.knockback;
-            destroyEffectKey = data.destroyEffectKey;
+            destroyFXKey = data.destroyFXKey;
             bulletPrefabKey = data.bulletPrefabKey;
-            var task = Addressables.LoadAssetAsync<GameObject>(bulletPrefabKey);
-            task.Completed += handle =>
+            Init();
+        }
+
+        public void Init()
+        {
+            if (!string.IsNullOrEmpty(bulletPrefabKey) && bulletPrefab == null)
             {
-                bulletPrefab = handle.Result;
-            };
+                var loadBulletTask = Addressables.LoadAssetAsync<GameObject>(bulletPrefabKey);
+                loadBulletTask.Completed += handle => { bulletPrefab = handle.Result; };
+            }
+
+            if (!string.IsNullOrEmpty(destroyFXKey) && destroyFX == null)
+            {
+                var loadDestroyFXTask = Addressables.LoadAssetAsync<GameObject>(destroyFXKey);
+                loadDestroyFXTask.Completed += handle => { destroyFX = handle.Result; };
+            }
         }
 
         public GameObject DoAttack(AttackConfig config)
@@ -167,7 +204,7 @@ namespace Entity
 
         protected virtual void Update()
         {
-            // Implement movement logic here for each type
+            if (rb.isKinematic) return;
         }
     }
 
@@ -177,6 +214,7 @@ namespace Entity
         
         protected override void Update()
         {
+            base.Update();
             if (direction == Vector3.zero)
             {
                 direction = config.to?.position ?? transform.forward;
@@ -204,6 +242,7 @@ namespace Entity
 
         protected override void Update()
         {
+            base.Update();
             // Curve using sinusoidal wave pattern
             float x = speed * Time.deltaTime;
             float y = Mathf.Sin(Time.time * curveSpeed) * 0.5f; // Adjust amplitude if needed
@@ -237,6 +276,7 @@ namespace Entity
 
         protected override void Update()
         {
+            base.Update();
             if (!target) return;
 
             elapsedTime += Time.deltaTime;
@@ -270,6 +310,7 @@ namespace Entity
 
         protected override void Update()
         {
+            base.Update();
             if (target)
             {
                 transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
@@ -299,6 +340,7 @@ namespace Entity
 
         protected override void Update()
         {
+            base.Update();
             float angle = rotationSpeed * Time.time * Mathf.Deg2Rad;
             Vector3 offset = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * radius;
             transform.position = centerPosition + offset;

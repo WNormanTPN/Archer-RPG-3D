@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 415946}
   - component: {fileID: 9523442}
   - component: {fileID: 6508762}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: mailbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 401788}
   - component: {fileID: 13789528}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: mailbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 436098}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: mailbox_root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 498412}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: joint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 416620}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: joint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 476652}
   - component: {fileID: 13791886}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: mon_on_mailbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 480250}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: joint3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

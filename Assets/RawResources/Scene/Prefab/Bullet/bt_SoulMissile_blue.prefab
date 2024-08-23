@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5647023293999089289}
   - component: {fileID: 7463011829947105989}
-  m_Layer: 0
+  - component: {fileID: 2720638762397175820}
+  - component: {fileID: 5509515901922903612}
+  m_Layer: 9
   m_Name: bt_SoulMissile_blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,12 +50,55 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2720638762397175820
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883751246790163966}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &5509515901922903612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883751246790163966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef791402178328641a29d6d7d88a9720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 0
+  rotateBasedOnVelocity: 0
+  isCollideWithObstacle: 1
+  attachToCollidedObject: 0
 --- !u!1 &1514399574536060420
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,7 +112,7 @@ GameObject:
   - component: {fileID: 5746045647993965271}
   - component: {fileID: 7234789234852530847}
   - component: {fileID: 9206996001670358408}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5008,7 +5053,7 @@ GameObject:
   - component: {fileID: 7814622056797773500}
   - component: {fileID: 7800570605007634057}
   - component: {fileID: 2321667786907941576}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: StarTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9815,7 +9860,7 @@ GameObject:
   - component: {fileID: 6266519604847889741}
   - component: {fileID: 8950269191028354475}
   - component: {fileID: 8139645063348355065}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CloudTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14622,7 +14667,7 @@ GameObject:
   - component: {fileID: 6388712394523334186}
   - component: {fileID: 5302337346124444665}
   - component: {fileID: 4112819308162791888}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dots
   m_TagString: Untagged
   m_Icon: {fileID: 0}

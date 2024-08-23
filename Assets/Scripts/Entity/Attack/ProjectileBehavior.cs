@@ -13,8 +13,9 @@ namespace Entity.Attack
         public bool isCollideWithObstacle = true;
         [ShowWhen("isCollideWithObstacle", true)] public bool attachToCollidedObject = false;
         
-        private LayerMask obstacleLayer;
-        private Rigidbody rb;
+        protected LayerMask obstacleLayer;
+        protected Rigidbody rb;
+        protected BulletMovement bulletMovement;
 
         void Awake()
         {
@@ -55,6 +56,7 @@ namespace Entity.Attack
             }
             else
             {
+                PlayDestroyFX();
                 Destroy(gameObject);
             }
 
@@ -76,6 +78,18 @@ namespace Entity.Attack
             
             // Stop the rotation coroutine
             StopAllCoroutines();
+        }
+        
+        void PlayDestroyFX()
+        {
+            if (!bulletMovement)
+            {
+                bulletMovement = GetComponent<BulletMovement>();
+            }
+            if (bulletMovement.config.destroyFX)
+            {
+                Instantiate(bulletMovement.config.destroyFX, transform.position, Quaternion.identity);
+            }
         }
         
         void AttachToCollidedObject()

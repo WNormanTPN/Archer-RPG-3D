@@ -83,6 +83,11 @@ namespace Entity
         {
             // Instantiate the bullet
             GameObject bulletInstance = Object.Instantiate(bulletPrefab);
+            
+            if (destroyFX)
+            {
+                config.destroyFX = destroyFX;
+            }
 
             // Configure the bullet's movement based on ballistic type
             switch (ballistic)
@@ -142,6 +147,7 @@ namespace Entity
         public float knockback;
         public Transform from;
         public Transform to;
+        public GameObject destroyFX;
     }
 
     [Serializable]
@@ -183,10 +189,10 @@ namespace Entity
 
     public abstract class BulletMovement : MonoBehaviour
     {
-        protected float speed;
-        protected float distance;
-        protected AttackConfig config;
-        protected Rigidbody rb;
+        public float speed;
+        public float distance;
+        public AttackConfig config;
+        public Rigidbody rb;
 
         public virtual void Init(float speed, float distance, AttackConfig config)
         {

@@ -13,7 +13,7 @@ namespace Entity
     {
         [JsonProperty("ID")]public int weaponID;
         public Ballistic ballistic;
-        public BulletLogic bulletLogic;
+        public List<BulletLogic> bulletLogics;
         public float distance;
         public float speed;
         public float? knockback;
@@ -55,7 +55,7 @@ namespace Entity
             var data = ConfigDataManager.Instance.GetConfigData<WeaponCollection>().Weapons[id.ToString()];
             weaponID = data.weaponID;
             ballistic = data.ballistic;
-            bulletLogic = data.bulletLogic;
+            bulletLogics = data.bulletLogics;
             distance = data.distance;
             speed = data.speed;
             knockback = data.knockback;
@@ -93,46 +93,23 @@ namespace Entity
             switch (ballistic)
             {
                 case Ballistic.Straight:
-                    bulletInstance.AddComponent<StraightMovement>().Init(speed, distance, config);
+                    bulletInstance.AddComponent<StraightMovement>().Init(speed, distance, bulletLogics, config);
                     break;
                 case Ballistic.Curve:
-                    bulletInstance.AddComponent<CurveMovement>().Init(speed, distance, config);
+                    bulletInstance.AddComponent<CurveMovement>().Init(speed, distance, bulletLogics, config);
                     break;
                 case Ballistic.Parabola:
-                    bulletInstance.AddComponent<ParabolaMovement>().Init(speed, distance, config);
+                    bulletInstance.AddComponent<ParabolaMovement>().Init(speed, distance, bulletLogics, config);
                     break;
                 case Ballistic.Chase:
-                    bulletInstance.AddComponent<ChaseMovement>().Init(speed, distance, config);
+                    bulletInstance.AddComponent<ChaseMovement>().Init(speed, distance, bulletLogics, config);
                     break;
                 case Ballistic.Round:
-                    bulletInstance.AddComponent<RoundMovement>().Init(speed, distance, config);
+                    bulletInstance.AddComponent<RoundMovement>().Init(speed, distance, bulletLogics, config);
                     break;
             }
-
-            // Apply bullet logic if defined
-            if (bulletLogic != null && !string.IsNullOrEmpty(bulletLogic.logic))
-            {
-                ApplyBulletLogic(bulletInstance, bulletLogic);
-            }
-
-            // Additional effects or knockback can be handled here if needed
 
             return bulletInstance;
-        }
-
-        private void ApplyBulletLogic(GameObject bulletInstance, BulletLogic logic)
-        {
-            // Example for handling bullet logic with arguments
-            switch (logic.logic)
-            {
-                case "BulletLaser":
-                    bulletInstance.AddComponent<BulletLaser>().Init(logic.args);
-                    break;
-                case "BulletBomb":
-                    bulletInstance.AddComponent<BulletBomb>().Init(logic.args);
-                    break;
-                // Add more bullet logic cases as needed
-            }
         }
     }
     
@@ -191,14 +168,16 @@ namespace Entity
     {
         public float speed;
         public float distance;
+        public List<BulletLogic> bulletLogics;
         public AttackConfig config;
         public Rigidbody rb;
 
-        public virtual void Init(float speed, float distance, AttackConfig config)
+        public virtual void Init(float speed, float distance, List<BulletLogic> bulletLogics, AttackConfig config)
         {
             this.speed = speed;
             this.distance = distance;
             this.config = config;
+            this.bulletLogics = bulletLogics;
             rb = GetComponent<Rigidbody>();
             
             if (config.from)
@@ -242,7 +221,7 @@ namespace Entity
 
         public void Init(float speed, float distance, float curveSpeed)
         {
-            base.Init(speed, distance, config);
+            base.Init(speed, distance, bulletLogics, config);
             this.curveSpeed = curveSpeed;
         }
 
@@ -274,7 +253,7 @@ namespace Entity
 
         public void Init(float speed, float distance, Transform target)
         {
-            base.Init(speed, distance, config);
+            base.Init(speed, distance, bulletLogics, config);
             this.target = target;
             startPosition = transform.position;
             flightDuration = distance / speed;
@@ -310,7 +289,7 @@ namespace Entity
 
         public void Init(float speed, float distance, Transform target)
         {
-            base.Init(speed, distance, config);
+            base.Init(speed, distance, bulletLogics, config);
             this.target = target;
         }
 
@@ -339,7 +318,7 @@ namespace Entity
 
         public void Init(float speed, float distance, float radius)
         {
-            base.Init(speed, distance, config);
+            base.Init(speed, distance, bulletLogics, config);
             this.radius = radius;
             centerPosition = transform.position;
         }

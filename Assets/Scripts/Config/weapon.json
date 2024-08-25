@@ -5,7 +5,7 @@
   "1002": {"ID":1002,"ballistic":2,"bulletLogics":[],"distance":5,"speed":10,"knockBack":null,"destroyFX":"Assets/RawResources/Effect/GasExplosionFire.prefab","bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/Bullet_1004.prefab"},
   "1003": {"ID":1003,"ballistic":0,"bulletLogics":[{"logic":"BulletLaser","args":{}}],"distance":-1,"speed":-1,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/Bullet_1002.prefab"},
   "1005": {"ID":1005,"ballistic":0,"bulletLogics":[],"distance":20,"speed":12,"knockBack":null,"destroyFX":"Assets/RawResources/Effect/Epic Toon FX/Prefabs/Combat/Explosions/NovaSmallExplosion/ExplosionNovaSmallFire.prefab","bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/bt_CannonBalls.prefab"},
-  "1006": {"ID":1006,"ballistic":0,"bulletLogics":[],"distance":20,"speed":4,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/bt_fbx_sickle.prefab"},
+  "1006": {"ID":1006,"ballistic":0,"bulletLogics":[{"logic":"BulletRotate", "args":{"speed":5}}],"distance":20,"speed":4,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/bt_fbx_sickle.prefab"},
   "1007": {"ID":1007,"ballistic":0,"bulletLogics":[],"distance":20,"speed":4.4,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/bt_crystalA.prefab"},
   "1008": {"ID":1008,"ballistic":0,"bulletLogics":[],"distance":20,"speed":3.9,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/bt_mushroom.prefab"},
   "1009": {"ID":1009,"ballistic":0,"bulletLogics":[],"distance":20,"speed":5,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/bt_fbx_sickleA.prefab"},

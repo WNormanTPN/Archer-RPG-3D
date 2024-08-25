@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using MyEditor;
 using UnityEditor;
 using UnityEngine;
@@ -40,6 +41,19 @@ namespace Entity.Attack
             if(lifeTime > 0)
             {
                 Destroy(gameObject, lifeTime);
+            }
+            bulletMovement = GetComponent<BulletMovement>();
+            if (bulletMovement?.bulletLogics != null)
+            {
+                foreach (var logic in bulletMovement.bulletLogics)
+                {
+                    switch (logic.logic)
+                    {
+                        case "BulletRotate":
+                            RotateLogic(logic.args);
+                            break;
+                    }
+                }
             }
         }
 
@@ -82,10 +96,6 @@ namespace Entity.Attack
         
         void PlayDestroyFX()
         {
-            if (!bulletMovement)
-            {
-                bulletMovement = GetComponent<BulletMovement>();
-            }
             if (bulletMovement.config.destroyFX)
             {
                 Instantiate(bulletMovement.config.destroyFX, transform.position, Quaternion.identity);
@@ -112,6 +122,21 @@ namespace Entity.Attack
         void OnDestroy()
         {
             StopAllCoroutines();
+        }
+
+        void RotateLogic(Dictionary<string, float> args)
+        {
+            var speed = args["speed"];
+            StartCoroutine(RotateProjectile(speed));
+        }
+        
+        IEnumerator RotateProjectile(float speed)
+        {
+            while (true)
+            {
+                transform.Rotate(Vector3.up, speed * 720 * Time.deltaTime);
+                yield return null;
+            }
         }
 
         void StartRotationCorrection() {

@@ -88,7 +88,7 @@ namespace Entity
             if (attackPoint)
             {
                 attackConfig.from = attackPoint;
-                attackPoint.rotation = Quaternion.LookRotation(transform.forward);
+                attackPoint.rotation = transform.rotation;
             }
 
             LoadInitData();

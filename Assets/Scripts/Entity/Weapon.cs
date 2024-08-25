@@ -202,7 +202,7 @@ namespace Entity
             base.Update();
             if (direction == Vector3.zero)
             {
-                direction = config.to?.position ?? transform.forward;
+                direction = config.from?.forward ?? transform.forward;
             }
             rb.velocity = speed * direction;
             distance -= rb.velocity.magnitude * Time.deltaTime;
@@ -335,35 +335,6 @@ namespace Entity
             {
                 Destroy(gameObject);
             }
-        }
-    }
-
-
-    // Bullet Logic scripts
-
-    public class BulletLaser : MonoBehaviour
-    {
-        public void Init(Dictionary<string, float> args)
-        {
-            // Handle initialization with arguments for laser behavior
-        }
-
-        private void Update()
-        {
-            // Implement laser-specific logic
-        }
-    }
-
-    public class BulletBomb : MonoBehaviour
-    {
-        public void Init(Dictionary<string, float> args)
-        {
-            // Handle initialization with arguments for bomb behavior
-        }
-
-        private void Update()
-        {
-            // Implement bomb-specific logic
         }
     }
 }

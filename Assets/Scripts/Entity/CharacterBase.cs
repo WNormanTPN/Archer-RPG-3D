@@ -57,8 +57,9 @@ namespace Entity
         [InspectorGroup("Character Movement")]
         [Range(0, 10)] public float moveSpeed = 5f;           // Speed of the character movement
         [Range(0, 720)] public float rotationSpeed = 720f;    // Speed of the character rotation in degrees per second
-
-        // [NonGroup]
+        
+        [NonGroup]
+        [SerializeField] private Weapon _weapon;
         public Weapon weapon
         {
             get => _weapon;
@@ -67,7 +68,7 @@ namespace Entity
                 _weapon = value;
                 _weapon.owner = gameObject;
             }
-        } // Reference to the weapon
+        }                             // Reference to the weapon
         public List<Skill> skills;                            // List of skills the character has
         public List<Effect> effects;
         
@@ -87,7 +88,6 @@ namespace Entity
         protected AttackConfig attackConfig;                  // Configuration of the attack
         
         
-        private Weapon _weapon;
         private List<Skill> _skills;
         private List<Effect> _effects;
 

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,21 +25,38 @@ namespace MyEditor
             groupProperties.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
             showWhenFoldoutStates = new Dictionary<string, KeyValuePair<bool, bool>>();
             drawnNestedPaths = new HashSet<string>();
+            
 
             var lastGroup = new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>());
 
             var obj = serializedObject;
             var iterator = obj.GetIterator();
+            string prevGroupName = "";
 
             while (iterator.NextVisible(true))
             {
                 if (iterator.name == "m_Script") continue;
 
-                var groupAttribute = iterator.GetAttribute<InspectorGroupAttribute>();
-                var firstGroupAttribute = iterator.GetAttribute<FirstGroupAttribute>();
-                var lastGroupAttribute = iterator.GetAttribute<LastGroupAttribute>();
-                var nonGroupAttribute = iterator.GetAttribute<NonGroupAttribute>();
-                var nonGroupSerializeAttribute = iterator.GetAttribute<NonGroupSerializeAttribute>();
+                InspectorGroupAttribute groupAttribute = null;
+                FirstGroupAttribute firstGroupAttribute = null;
+                LastGroupAttribute lastGroupAttribute = null;
+                NonGroupAttribute nonGroupAttribute = null;
+
+                try
+                {
+                    var field = iterator.GetUnderlyingField(); // Make sure this method is correctly implemented
+                    if (field != null)
+                    {
+                        groupAttribute = field.GetCustomAttribute<InspectorGroupAttribute>();
+                        firstGroupAttribute = field.GetCustomAttribute<FirstGroupAttribute>();
+                        lastGroupAttribute = field.GetCustomAttribute<LastGroupAttribute>();
+                        nonGroupAttribute = field.GetCustomAttribute<NonGroupAttribute>();
+                    }
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
 
                 if (firstGroupAttribute != null)
                 {
@@ -47,12 +66,12 @@ namespace MyEditor
                 {
                     lastGroup.Value.Add(iterator.Copy());
                 }
-                else if (nonGroupAttribute != null || nonGroupSerializeAttribute != null)
+                else if (nonGroupAttribute != null)
                 {
-                    // Ensure properties marked as NonGroupSerialize are serialized but not grouped
                     if (groupProperties[groupProperties.Count - 1].Key != "")
                         groupProperties.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
                     groupProperties[groupProperties.Count - 1].Value.Add(iterator.Copy());
+                    prevGroupName = "";
                 }
                 else if (groupAttribute != null)
                 {
@@ -64,13 +83,28 @@ namespace MyEditor
                         foldoutStates[groupAttribute.groupName] = false;
                     }
                     groupProperties[groupIndex].Value.Add(iterator.Copy());
+                    prevGroupName = groupAttribute.groupName;
                 }
                 else
                 {
-                    groupProperties[groupProperties.Count - 1].Value.Add(iterator.Copy());
+                    AddToLastGroup(iterator.Copy(), prevGroupName);
                 }
             }
             groupProperties.Add(lastGroup);
+        }
+        
+        private void AddToLastGroup(SerializedProperty property, string groupName)
+        {
+            for (int i = groupProperties.Count - 1; i >= 0; i--)
+            {
+                if (groupProperties[i].Key == groupName)
+                {
+                    groupProperties[i].Value.Add(property);
+                    return;
+                }
+            }
+            groupProperties.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
+            groupProperties[groupProperties.Count - 1].Value.Add(property);
         }
 
 
@@ -217,7 +251,7 @@ namespace MyEditor
         public static T GetAttribute<T>(this SerializedProperty property) where T : PropertyAttribute
         {
             var targetType = property.serializedObject.targetObject.GetType();
-            var field = targetType.GetField(property.propertyPath, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+            var field = GetFieldInfoFromPath(targetType, property.propertyPath);
 
             if (field != null)
             {
@@ -226,7 +260,27 @@ namespace MyEditor
             }
             return null;
         }
+
+        private static FieldInfo GetFieldInfoFromPath(Type type, string path)
+        {
+            var parts = path.Split('.');
+            FieldInfo field = null;
+
+            foreach (var part in parts)
+            {
+                field = type.GetField(part, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                if (field == null) return null;
+
+                type = field.FieldType;
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    type = type.GetGenericArguments()[0];
+                }
+            }
+            return field;
+        }
     }
+
 
 
 
@@ -244,11 +298,6 @@ namespace MyEditor
 
 
     public class NonGroupAttribute : PropertyAttribute { }
-    
-    [System.AttributeUsage(System.AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
-    public class NonGroupSerializeAttribute : PropertyAttribute { }
-
-
     public class FirstGroupAttribute : PropertyAttribute { }
 
     public class LastGroupAttribute : PropertyAttribute { }

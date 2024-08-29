@@ -11,6 +11,7 @@
   "1009": {"ID":1009,"ballistic":0,"attackLogics":[],"distance":20,"speed":5,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/bt_fbx_sickleA.prefab"},
   "1010": {"ID":1010,"ballistic":0,"attackLogics":[],"distance":20,"speed":10,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/bt_fbx_sickleA.prefab"},
   "1100": {"ID":1100,"ballistic":5,"attackLogics":[],"distance":3,"speed":1,"knockBack":null,"destroyFX":"Assets/RawResources/Effect/Epic Toon FX/Prefabs/Combat/Brawling/StunnedCirclingStars.prefab","bulletKey":""},
+  "1101": {"ID":1101,"ballistic":5,"attackLogics":[],"distance":0,"speed":1,"knockBack":null,"destroyFX":"","bulletKey":""},
   "2001": {"ID":2001,"ballistic":0,"attackLogics":[],"distance":20,"speed":5,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/bt_FireballMissileBlue.prefab"},
   "2005": {"ID":2005,"ballistic":0,"attackLogics":[],"distance":20,"speed":4,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/bt_MagicMissileSoftPink.prefab"},
   "2006": {"ID":2006,"ballistic":0,"attackLogics":[],"distance":20,"speed":4,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/bt_MagicMissileSoftGreen.prefab"},

@@ -137,6 +137,7 @@ namespace Entity
         GameObject DoAttack(AttackConfig config = null);
     }
     
+    [Serializable]
     public class AttackConfig
     {
         public float damage;
@@ -172,6 +173,7 @@ namespace Entity
         public Dictionary<string, float> args;
     }
 
+    [Serializable]
     public enum Ballistic
     {
         BulletStraight = 0,

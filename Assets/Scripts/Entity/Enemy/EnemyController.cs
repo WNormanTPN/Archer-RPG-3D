@@ -26,6 +26,8 @@ namespace Entity.Enemy
         private float moveTimer;                  // Timer to track movement duration
         private float rotateTimer;                // Timer to track rotation duration
         private float attackTimer;                // Timer for attack cooldown
+        private bool canRotate = true;
+        private bool canMove = true;
         private readonly string speedParameter = "Speed";
         private readonly string attackSpeedParameter = "AttackSpeed";
         
@@ -48,7 +50,7 @@ namespace Entity.Enemy
                 {
                     // Within attack range, stop moving and attack
                     StopMove();
-                    LockOnPlayer();
+                    if (canRotate) LockOnPlayer();
                     if (!isAttacking && attackTimer >= attackCooldown)
                     {
                         StartCoroutine(PerformAttack());
@@ -56,17 +58,21 @@ namespace Entity.Enemy
                 }
                 else if (distanceToPlayer >= keepMovingDistance) // Keep moving towards the player
                 {
-                    isMovingForward = true;
-                    isRotating = true;
-                            
-                    Vector3 directionToPlayer = player.position - transform.position;
-                    Move(directionToPlayer);
-                    LockOnPlayer();
+                    if (canMove)
+                    {
+                        isMovingForward = true;
+                        isRotating = true;
+
+                        Vector3 directionToPlayer = player.position - transform.position;
+                        Move(directionToPlayer);
+                    }
+                    
+                    if (canRotate) LockOnPlayer();
                 }
                 else
                 {
                     // Handle movement and rotation
-                    if (isMovingForward)
+                    if (isMovingForward && canMove)
                     {
                         // Move forward towards the player
                         Move(transform.forward);
@@ -80,7 +86,7 @@ namespace Entity.Enemy
                             isRotating = true; // Start rotating towards player
                         }
                     }
-                    else if (isRotating)
+                    else if (isRotating && canRotate)
                     {
                         StopMove();
                         
@@ -170,6 +176,26 @@ namespace Entity.Enemy
             
             yield return new WaitForSeconds(-attackTimer * 0.95f);
             StopAttack();
+        }
+        
+        public void ActivateMove()
+        {
+            canMove = true;
+        }
+        
+        public void ActivateRotate()
+        {
+            canRotate = true;
+        }
+        
+        public void ForceStopMove()
+        {
+            canMove = false;
+        }
+        
+        public void ForceStopRotate()
+        {
+            canRotate = false;
         }
     }
 }

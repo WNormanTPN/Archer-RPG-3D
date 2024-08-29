@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Config;
+using DG.Tweening;
+using Entity.Attack;
+using Entity.Enemy;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -13,7 +16,7 @@ namespace Entity
     {
         [JsonProperty("ID")]public int weaponID;
         public Ballistic ballistic;
-        public List<BulletLogic> bulletLogics;
+        public List<AttackLogic> attackLogics;
         public float distance;
         public float speed;
         public float? knockback;
@@ -41,6 +44,7 @@ namespace Entity
                 }
             }
         }
+        public GameObject owner;
 
         private GameObject bulletPrefab;
         private GameObject destroyFX;
@@ -55,7 +59,7 @@ namespace Entity
             var data = ConfigDataManager.Instance.GetConfigData<WeaponCollection>().Weapons[id.ToString()];
             weaponID = data.weaponID;
             ballistic = data.ballistic;
-            bulletLogics = data.bulletLogics;
+            attackLogics = data.attackLogics;
             distance = data.distance;
             speed = data.speed;
             knockback = data.knockback;
@@ -82,7 +86,7 @@ namespace Entity
         public GameObject DoAttack(AttackConfig config)
         {
             // Instantiate the bullet
-            GameObject bulletInstance = Object.Instantiate(bulletPrefab);
+            GameObject bulletInstance = bulletPrefab? Object.Instantiate(bulletPrefab) : null;
             
             if (destroyFX)
             {
@@ -92,24 +96,39 @@ namespace Entity
             // Configure the bullet's movement based on ballistic type
             switch (ballistic)
             {
-                case Ballistic.Straight:
-                    bulletInstance.AddComponent<StraightMovement>().Init(speed, distance, bulletLogics, config);
+                case Ballistic.BulletStraight:
+                    bulletInstance.AddComponent<StraightMovement>().Init(speed, distance, attackLogics, config);
                     break;
-                case Ballistic.Curve:
-                    bulletInstance.AddComponent<CurveMovement>().Init(speed, distance, bulletLogics, config);
+                case Ballistic.BulletCurve:
+                    bulletInstance.AddComponent<CurveMovement>().Init(speed, distance, attackLogics, config);
                     break;
-                case Ballistic.Parabola:
-                    bulletInstance.AddComponent<ParabolaMovement>().Init(speed, distance, bulletLogics, config);
+                case Ballistic.BulletParabola:
+                    bulletInstance.AddComponent<ParabolaMovement>().Init(speed, distance, attackLogics, config);
                     break;
-                case Ballistic.Chase:
-                    bulletInstance.AddComponent<ChaseMovement>().Init(speed, distance, bulletLogics, config);
+                case Ballistic.BulletChase:
+                    bulletInstance.AddComponent<ChaseMovement>().Init(speed, distance, attackLogics, config);
                     break;
-                case Ballistic.Round:
-                    bulletInstance.AddComponent<RoundMovement>().Init(speed, distance, bulletLogics, config);
+                case Ballistic.BulletRound:
+                    bulletInstance.AddComponent<RoundMovement>().Init(speed, distance, attackLogics, config);
+                    break;
+                case Ballistic.MeleeDash:
+                    if (owner.TryGetComponent<Dash>(out var dash))
+                    {
+                        dash.vfx = bulletPrefab? bulletInstance : null;
+                        dash.config = config;
+                        dash.DoDash(distance, speed);
+                    }
+                    else
+                    {
+                        dash = owner.AddComponent<Dash>();
+                        dash.vfx =  bulletPrefab? bulletInstance : null;
+                        dash.config = config;
+                        dash.DoDash(distance, speed);
+                    }
                     break;
             }
 
-            return bulletInstance;
+            return null;
         }
     }
     
@@ -147,7 +166,7 @@ namespace Entity
     }
 
     [Serializable]
-    public class BulletLogic
+    public class AttackLogic
     {
         public string logic;
         public Dictionary<string, float> args;
@@ -155,11 +174,12 @@ namespace Entity
 
     public enum Ballistic
     {
-        Straight = 0,
-        Curve = 1,
-        Parabola = 2,
-        Chase = 3,
-        Round = 4
+        BulletStraight = 0,
+        BulletCurve = 1,
+        BulletParabola = 2,
+        BulletChase = 3,
+        BulletRound = 4,
+        MeleeDash = 5,
     }
 
     // Movement behavior scripts
@@ -168,16 +188,16 @@ namespace Entity
     {
         public float speed;
         public float distance;
-        public List<BulletLogic> bulletLogics;
+        public List<AttackLogic> attackLogics;
         public AttackConfig config;
         public Rigidbody rb;
 
-        public virtual void Init(float speed, float distance, List<BulletLogic> bulletLogics, AttackConfig config)
+        public virtual void Init(float speed, float distance, List<AttackLogic> attackLogics, AttackConfig config)
         {
             this.speed = speed;
             this.distance = distance;
             this.config = config;
-            this.bulletLogics = bulletLogics;
+            this.attackLogics = attackLogics;
             rb = GetComponent<Rigidbody>();
             
             if (config.from)
@@ -221,7 +241,7 @@ namespace Entity
 
         public void Init(float speed, float distance, float curveSpeed)
         {
-            base.Init(speed, distance, bulletLogics, config);
+            base.Init(speed, distance, attackLogics, config);
             this.curveSpeed = curveSpeed;
         }
 
@@ -253,7 +273,7 @@ namespace Entity
 
         public void Init(float speed, float distance, Transform target)
         {
-            base.Init(speed, distance, bulletLogics, config);
+            base.Init(speed, distance, attackLogics, config);
             this.target = target;
             startPosition = transform.position;
             flightDuration = distance / speed;
@@ -289,7 +309,7 @@ namespace Entity
 
         public void Init(float speed, float distance, Transform target)
         {
-            base.Init(speed, distance, bulletLogics, config);
+            base.Init(speed, distance, attackLogics, config);
             this.target = target;
         }
 
@@ -318,7 +338,7 @@ namespace Entity
 
         public void Init(float speed, float distance, float radius)
         {
-            base.Init(speed, distance, bulletLogics, config);
+            base.Init(speed, distance, attackLogics, config);
             this.radius = radius;
             centerPosition = transform.position;
         }

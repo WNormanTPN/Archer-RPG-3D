@@ -51,14 +51,23 @@ namespace Entity
             CharacterDatas = JsonConvert.DeserializeObject<Dictionary<string, CharacterData>>(json);
         }
     }
+    
     public abstract class CharacterBase : MonoBehaviour, ICharacter
     {
         [InspectorGroup("Character Movement")]
         [Range(0, 10)] public float moveSpeed = 5f;           // Speed of the character movement
         [Range(0, 720)] public float rotationSpeed = 720f;    // Speed of the character rotation in degrees per second
-        
-        [NonGroup]
-        public Weapon weapon;                                 // Reference to the weapon
+
+        // [NonGroup]
+        public Weapon weapon
+        {
+            get => _weapon;
+            set
+            {
+                _weapon = value;
+                _weapon.owner = gameObject;
+            }
+        } // Reference to the weapon
         public List<Skill> skills;                            // List of skills the character has
         public List<Effect> effects;
         
@@ -78,6 +87,15 @@ namespace Entity
         protected AttackConfig attackConfig;                  // Configuration of the attack
         
         
+        private Weapon _weapon;
+        private List<Skill> _skills;
+        private List<Effect> _effects;
+
+        protected virtual void Awake()
+        {
+            
+        }
+
         protected virtual void Start()
         {
             rb = GetComponent<Rigidbody>();
@@ -128,7 +146,7 @@ namespace Entity
         protected virtual void LoadInitData()
         {
             SetScale(characterInitData.scale);
-            if (characterInitData.weaponId != 0 && weapon.weaponID != characterInitData.weaponId)
+            if (characterInitData.weaponId != 0 && weapon?.weaponID != characterInitData.weaponId)
             {
                 weapon = new Weapon(characterInitData.weaponId);
             }

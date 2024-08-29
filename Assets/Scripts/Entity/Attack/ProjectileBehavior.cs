@@ -43,9 +43,9 @@ namespace Entity.Attack
                 Destroy(gameObject, lifeTime);
             }
             bulletMovement = GetComponent<BulletMovement>();
-            if (bulletMovement?.bulletLogics != null)
+            if (bulletMovement?.attackLogics != null)
             {
-                foreach (var logic in bulletMovement.bulletLogics)
+                foreach (var logic in bulletMovement.attackLogics)
                 {
                     switch (logic.logic)
                     {

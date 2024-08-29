@@ -33,10 +33,11 @@ namespace MyEditor
             {
                 if (iterator.name == "m_Script") continue;
 
-                var groupAttribute = (InspectorGroupAttribute)iterator.GetAttribute<InspectorGroupAttribute>();
+                var groupAttribute = iterator.GetAttribute<InspectorGroupAttribute>();
                 var firstGroupAttribute = iterator.GetAttribute<FirstGroupAttribute>();
                 var lastGroupAttribute = iterator.GetAttribute<LastGroupAttribute>();
                 var nonGroupAttribute = iterator.GetAttribute<NonGroupAttribute>();
+                var nonGroupSerializeAttribute = iterator.GetAttribute<NonGroupSerializeAttribute>();
 
                 if (firstGroupAttribute != null)
                 {
@@ -46,8 +47,9 @@ namespace MyEditor
                 {
                     lastGroup.Value.Add(iterator.Copy());
                 }
-                else if (nonGroupAttribute != null)
+                else if (nonGroupAttribute != null || nonGroupSerializeAttribute != null)
                 {
+                    // Ensure properties marked as NonGroupSerialize are serialized but not grouped
                     if (groupProperties[groupProperties.Count - 1].Key != "")
                         groupProperties.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
                     groupProperties[groupProperties.Count - 1].Value.Add(iterator.Copy());
@@ -67,10 +69,10 @@ namespace MyEditor
                 {
                     groupProperties[groupProperties.Count - 1].Value.Add(iterator.Copy());
                 }
-                
             }
             groupProperties.Add(lastGroup);
         }
+
 
         public int GetGroupIndex(string groupName)
         {
@@ -242,6 +244,10 @@ namespace MyEditor
 
 
     public class NonGroupAttribute : PropertyAttribute { }
+    
+    [System.AttributeUsage(System.AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+    public class NonGroupSerializeAttribute : PropertyAttribute { }
+
 
     public class FirstGroupAttribute : PropertyAttribute { }
 

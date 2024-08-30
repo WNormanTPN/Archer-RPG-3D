@@ -29,9 +29,9 @@ namespace Entity.Attack
                 Destroy(vfx);
                 if (config.destroyFX != null)
                 {
-                    var pos = config.from.position;
+                    var pos = config.forwardAttackPoint.position;
                     var rot = config.destroyFX.transform.rotation;
-                    var destroyFX = Instantiate(config.destroyFX, pos, rot, config.from);
+                    var destroyFX = Instantiate(config.destroyFX, pos, rot, config.forwardAttackPoint);
                     Destroy(destroyFX, 1f);
                 }
             });

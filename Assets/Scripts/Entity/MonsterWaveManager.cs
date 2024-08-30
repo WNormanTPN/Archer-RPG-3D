@@ -106,7 +106,7 @@ namespace Entity
         List<WaveData> GetWaveData()
         {
             var waveId = PlayerPrefs.GetInt("MonsterWaveGroup");
-            return ConfigDataManager.Instance.GetConfigData<WaveDataCollection>().waveDatas[waveId.ToString()];
+            return ConfigDataManager.Instance.GetConfigData<WaveDataCollection>().WaveDatas[waveId.ToString()];
         }
     }
     
@@ -124,19 +124,22 @@ namespace Entity
     [Serializable]
     public class WaveDataCollection : IConfigCollection
     {
-        public Dictionary<string, List<WaveData>> waveDatas;
-        
-        public WaveDataCollection() {}
+        public Dictionary<string, List<WaveData>> WaveDatas;
+
+        public WaveDataCollection()
+        {
+            WaveDatas = new Dictionary<string, List<WaveData>>();
+        }
         
         [JsonConstructor]
         public WaveDataCollection(Dictionary<string, List<WaveData>> waveDatas)
         {
-            this.waveDatas = waveDatas;
+            this.WaveDatas = waveDatas;
         }
 
         public void FromJson(string json)
         {
-            waveDatas = JsonConvert.DeserializeObject<Dictionary<string, List<WaveData>>>(json);
+            WaveDatas = JsonConvert.DeserializeObject<Dictionary<string, List<WaveData>>>(json);
         }
     }
 }

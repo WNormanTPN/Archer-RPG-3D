@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Config;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -21,14 +22,32 @@ namespace Entity
         
         [JsonProperty("effect")]
         public string prefabKey;
+        
+        public Effect()
+        {
+            effectValues = new Dictionary<string, float>();
+        }
+        
+        public Effect(int id)
+        {
+            var data = ConfigDataManager.Instance.GetConfigData<EffectCollection>().Effects[id.ToString()];
+            this.id = data.id;
+            name = data.name;
+            effectValues = data.effectValues?.ToDictionary(entry => entry.Key, entry => entry.Value);
+            duration = data.duration;
+            prefabKey = data.prefabKey;
+        }
     }
     
     [Serializable]
     public class EffectCollection : IConfigCollection
     {
         public Dictionary<string, Effect> Effects;
-        
-        public EffectCollection() {}
+
+        public EffectCollection()
+        {
+            Effects = new Dictionary<string, Effect>();
+        }
         
         [JsonConstructor]
         public EffectCollection(Dictionary<string, Effect> Effects)

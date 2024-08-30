@@ -26,8 +26,8 @@ namespace Entity.Enemy
                 }
                 
                 var lineRendererComponent = lineRendererInstance.GetComponent<LineRenderer>();
-                var attackPos = attackPoint?.position ?? transform.position;
-                var attackDir = attackPoint?.forward ?? transform.forward;
+                var attackPos = forwardAttackPoint?.position ?? transform.position;
+                var attackDir = forwardAttackPoint?.forward ?? transform.forward;
                 DrawTrajectoryLine(lineRendererComponent, attackPos, attackDir);
             }
             else

@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Config;
 using DG.Tweening;
 using Entity.Attack;
@@ -47,20 +49,25 @@ namespace Entity
         }
         public GameObject owner;
 
+        private MonoBehaviour ownerMono;
         private GameObject bulletPrefab;
         private GameObject destroyFX;
+        private float bulletSpreadAngle = 90 / 5f;
         
         private string _destroyFXKey;
         private string _bulletPrefabKey;
-        
-        public Weapon() {}
+
+        public Weapon()
+        {
+            attackLogics = new List<AttackLogic>();
+        }
 
         public Weapon(int id)
         {
             var data = ConfigDataManager.Instance.GetConfigData<WeaponCollection>().Weapons[id.ToString()];
             weaponID = data.weaponID;
             ballistic = data.ballistic;
-            attackLogics = data.attackLogics;
+            attackLogics = data.attackLogics?.ToList();
             distance = data.distance;
             speed = data.speed;
             knockback = data.knockback;
@@ -84,60 +91,91 @@ namespace Entity
             }
         }
 
-        public GameObject TriggerStartAttack(AttackConfig config)
+        public void TriggerStartAttack(AttackConfig config)
         {
             if (ballistic == Ballistic.MeleeAttack)
             {
                 GameObject bulletInstance = bulletPrefab? Object.Instantiate(bulletPrefab) : null;
                 if (GetAttackLogic("DashBegin") != null)
                     DoDashAttack(config, bulletInstance);
-
-                return bulletInstance;
             }
-
-            return null;
         }
 
-        public GameObject TriggerDoAttack(AttackConfig config)
+        public void TriggerDoAttack(AttackConfig config)
         {
-            // Instantiate the bullet
-            GameObject bulletInstance = bulletPrefab? Object.Instantiate(bulletPrefab) : null;
-            
-            if (destroyFX)
+            if (ballistic == Ballistic.MeleeAttack)
             {
-                config.destroyFX = destroyFX;
+                if (GetAttackLogic("DashAttack") != null)
+                    DoDashAttack(config);
             }
-
-            // Configure the bullet's movement based on ballistic type
-            switch (ballistic)
+            else
             {
-                case Ballistic.BulletStraight:
-                    bulletInstance.AddComponent<StraightMovement>().Init(speed, distance, attackLogics, config);
-                    break;
-                case Ballistic.BulletCurve:
-                    bulletInstance.AddComponent<CurveMovement>().Init(speed, distance, attackLogics, config);
-                    break;
-                case Ballistic.BulletParabola:
-                    bulletInstance.AddComponent<ParabolaMovement>().Init(speed, distance, attackLogics, config);
-                    break;
-                case Ballistic.BulletChase:
-                    bulletInstance.AddComponent<ChaseMovement>().Init(speed, distance, attackLogics, config);
-                    break;
-                case Ballistic.BulletRound:
-                    bulletInstance.AddComponent<RoundMovement>().Init(speed, distance, attackLogics, config);
-                    break;
-                case Ballistic.MeleeAttack:
-                    if (GetAttackLogic("DashAttack") != null)
-                        DoDashAttack(config, bulletInstance);
-                    break;
+                if (ownerMono == null)
+                {
+                    ownerMono = owner.GetComponent<MonoBehaviour>();
+                }
+                ownerMono.StartCoroutine(DoAttackCoroutine(config));
             }
-
-            return bulletInstance;
         }
         
-        public GameObject TriggerEndAttack(AttackConfig config)
+        private IEnumerator DoAttackCoroutine(AttackConfig config)
         {
-            return null;
+            for (int i = 0; i < config.continuousShots; i++)
+            {
+                // Instantiate the bullet
+                List<GameObject> bulletInstances = InstantiateBullets(config);
+
+                if (destroyFX)
+                {
+                    config.destroyFX = destroyFX;
+                }
+
+                // Configure the bullet's movement based on ballistic type
+                switch (ballistic)
+                {
+                    case Ballistic.BulletStraight:
+                        foreach (var bulletInstance in bulletInstances)
+                        {
+                            bulletInstance.AddComponent<StraightMovement>().Init(speed, distance, attackLogics, config);
+                        }
+
+                        break;
+                    case Ballistic.BulletCurve:
+                        foreach (var bulletInstance in bulletInstances)
+                        {
+                            bulletInstance.AddComponent<CurveMovement>().Init(speed, distance, attackLogics, config);
+                        }
+
+                        break;
+                    case Ballistic.BulletParabola:
+                        foreach (var bulletInstance in bulletInstances)
+                        {
+                            bulletInstance.AddComponent<ParabolaMovement>().Init(speed, distance, config.target);
+                        }
+
+                        break;
+                    case Ballistic.BulletChase:
+                        foreach (var bulletInstance in bulletInstances)
+                        {
+                            bulletInstance.AddComponent<ChaseMovement>().Init(speed, distance, config.target);
+                        }
+
+                        break;
+                    case Ballistic.BulletRound:
+                        foreach (var bulletInstance in bulletInstances)
+                        {
+                            bulletInstance.AddComponent<RoundMovement>().Init(speed, distance, 1f);
+                        }
+
+                        break;
+                }
+                yield return new WaitForSeconds(1f / speed);
+            }
+        }
+        
+        public void TriggerEndAttack(AttackConfig config)
+        {
+            return;
         }
         
         private void DoDashAttack(AttackConfig config, GameObject bulletInstance = null)
@@ -157,6 +195,35 @@ namespace Entity
             }
         }
         
+        private List<GameObject> InstantiateBullets(AttackConfig config)
+        {
+            List<GameObject> bulletInstances = null;
+            if (bulletPrefab)
+            {
+                bulletInstances = new List<GameObject>();
+                InstantiateBulletsHelper(ref bulletInstances, config.forwardAttackPoint, config.forwardBulletCount);
+                InstantiateBulletsHelper(ref bulletInstances, config.backwardAttackPoint, config.backwardBulletCount);
+                InstantiateBulletsHelper(ref bulletInstances, config.leftsideAttackPoint, config.sideBulletsCount);
+                InstantiateBulletsHelper(ref bulletInstances, config.rightsideAttackPoint, config.sideBulletsCount);
+            }
+            return bulletInstances;
+        }
+        
+        private void InstantiateBulletsHelper(ref List<GameObject> bulletInstances, Transform attackPoint, int bulletCount)
+        {
+            var forward = attackPoint.forward;
+            for (int i = 0; i < bulletCount; i++)
+            {
+                float angle = (i - (bulletCount - 1) / 2f) * bulletSpreadAngle;
+                Quaternion rotation = Quaternion.Euler(0, angle, 0);
+                var bullet = Object.Instantiate(bulletPrefab);
+                bullet.transform.position = attackPoint.position;
+                Vector3 bulletDirection = rotation * forward;
+                bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
+                bulletInstances.Add(bullet);
+            }
+        }
+        
         private AttackLogic GetAttackLogic(string logic)
         {
             foreach (var attackLogic in attackLogics)
@@ -172,9 +239,9 @@ namespace Entity
     
     public interface IWeapon
     {
-        GameObject TriggerStartAttack(AttackConfig config = null);
-        GameObject TriggerDoAttack(AttackConfig config = null);
-        GameObject TriggerEndAttack(AttackConfig config = null);
+        void TriggerStartAttack(AttackConfig config = null);
+        void TriggerDoAttack(AttackConfig config = null);
+        void TriggerEndAttack(AttackConfig config = null);
     }
     
     [Serializable]
@@ -182,17 +249,31 @@ namespace Entity
     {
         public float damage;
         public float knockback;
-        public Transform from;
-        public Transform to;
+        public Transform target;
         public GameObject destroyFX;
+        public Transform forwardAttackPoint;
+        public Transform backwardAttackPoint;
+        public Transform leftsideAttackPoint;
+        public Transform rightsideAttackPoint;
+        public int forwardBulletCount = 1;
+        public int backwardBulletCount = 0;
+        public int sideBulletsCount = 0;
+        public int continuousShots = 1;
+        public bool wallRebound = false;
+        public bool eject = false;
+        public bool penetration = false;
+        public float headshot = 0;
     }
 
     [Serializable]
     public class WeaponCollection : IConfigCollection
     {
         public Dictionary<string, Weapon> Weapons;
-        
-        public WeaponCollection() {}
+
+        public WeaponCollection()
+        {
+            Weapons = new Dictionary<string, Weapon>();
+        }
         
         [JsonConstructor]
         public WeaponCollection(Dictionary<string, Weapon> Weapons)
@@ -222,181 +303,5 @@ namespace Entity
         BulletChase = 3,
         BulletRound = 4,
         MeleeAttack = 5,
-    }
-
-    // Movement behavior scripts
-
-    public abstract class BulletMovement : MonoBehaviour
-    {
-        public float speed;
-        public float distance;
-        public List<AttackLogic> attackLogics;
-        public AttackConfig config;
-        public Rigidbody rb;
-
-        public virtual void Init(float speed, float distance, List<AttackLogic> attackLogics, AttackConfig config)
-        {
-            this.speed = speed;
-            this.distance = distance;
-            this.config = config;
-            this.attackLogics = attackLogics;
-            rb = GetComponent<Rigidbody>();
-            
-            if (config.from)
-            {
-                transform.position = config.from.position;
-                transform.rotation = config.from.rotation;
-            }
-        }
-
-        protected virtual void Update()
-        {
-            if (rb.isKinematic) return;
-        }
-    }
-
-    public class StraightMovement : BulletMovement
-    {
-        private Vector3 direction;
-        
-        protected override void Update()
-        {
-            base.Update();
-            if (direction == Vector3.zero)
-            {
-                direction = config.from?.forward ?? transform.forward;
-            }
-            rb.velocity = speed * direction;
-            distance -= rb.velocity.magnitude * Time.deltaTime;
-
-            if (distance <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
-
-
-    public class CurveMovement : BulletMovement
-    {
-        private float curveSpeed = 5f;
-
-        public void Init(float speed, float distance, float curveSpeed)
-        {
-            base.Init(speed, distance, attackLogics, config);
-            this.curveSpeed = curveSpeed;
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            // Curve using sinusoidal wave pattern
-            float x = speed * Time.deltaTime;
-            float y = Mathf.Sin(Time.time * curveSpeed) * 0.5f; // Adjust amplitude if needed
-            float z = speed * Time.deltaTime;
-
-            transform.Translate(new Vector3(x, y, z));
-            distance -= speed * Time.deltaTime;
-
-            if (distance <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
-
-
-    public class ParabolaMovement : BulletMovement
-    {
-        private Transform target;
-        private Vector3 startPosition;
-        private float flightDuration;
-        private float elapsedTime = 0f;
-
-        public void Init(float speed, float distance, Transform target)
-        {
-            base.Init(speed, distance, attackLogics, config);
-            this.target = target;
-            startPosition = transform.position;
-            flightDuration = distance / speed;
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            if (!target) return;
-
-            elapsedTime += Time.deltaTime;
-
-            float progress = elapsedTime / flightDuration;
-            Vector3 currentPos = Vector3.Lerp(startPosition, target.position, progress);
-
-            // Add parabolic curve by modifying the y-axis
-            float height = Mathf.Sin(Mathf.PI * progress) * (distance / 4); // Adjust for a higher arc
-            currentPos.y += height;
-
-            transform.position = currentPos;
-
-            if (progress >= 1f)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
-
-
-    public class ChaseMovement : BulletMovement
-    {
-        private Transform target;
-
-        public void Init(float speed, float distance, Transform target)
-        {
-            base.Init(speed, distance, attackLogics, config);
-            this.target = target;
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            if (target)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-                distance -= speed * Time.deltaTime;
-
-                if (distance <= 0)
-                {
-                    Destroy(gameObject);
-                }
-            }
-        }
-    }
-
-
-    public class RoundMovement : BulletMovement
-    {
-        private float rotationSpeed = 360f; // degrees per second
-        private float radius = 1f;
-        private Vector3 centerPosition;
-
-        public void Init(float speed, float distance, float radius)
-        {
-            base.Init(speed, distance, attackLogics, config);
-            this.radius = radius;
-            centerPosition = transform.position;
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            float angle = rotationSpeed * Time.time * Mathf.Deg2Rad;
-            Vector3 offset = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * radius;
-            transform.position = centerPosition + offset;
-            distance -= speed * Time.deltaTime;
-
-            if (distance <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
     }
 }

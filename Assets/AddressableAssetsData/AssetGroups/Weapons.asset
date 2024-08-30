@@ -127,6 +127,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64181b9e9fc304d499c2308f51f7e144
+    m_Address: Assets/RawResources/Effect/FrostExplosionBlue.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3679f7d567722af49b516d8cfad9104c, type: 2}
   m_SchemaSet:

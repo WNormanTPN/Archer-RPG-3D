@@ -4,6 +4,7 @@ using Config;
 using DG.Tweening;
 using Entity.Attack;
 using Entity.Enemy;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -83,7 +84,21 @@ namespace Entity
             }
         }
 
-        public GameObject DoAttack(AttackConfig config)
+        public GameObject TriggerStartAttack(AttackConfig config)
+        {
+            if (ballistic == Ballistic.MeleeAttack)
+            {
+                GameObject bulletInstance = bulletPrefab? Object.Instantiate(bulletPrefab) : null;
+                if (GetAttackLogic("DashBegin") != null)
+                    DoDashAttack(config, bulletInstance);
+
+                return bulletInstance;
+            }
+
+            return null;
+        }
+
+        public GameObject TriggerDoAttack(AttackConfig config)
         {
             // Instantiate the bullet
             GameObject bulletInstance = bulletPrefab? Object.Instantiate(bulletPrefab) : null;
@@ -111,30 +126,55 @@ namespace Entity
                 case Ballistic.BulletRound:
                     bulletInstance.AddComponent<RoundMovement>().Init(speed, distance, attackLogics, config);
                     break;
-                case Ballistic.MeleeDash:
-                    if (owner.TryGetComponent<Dash>(out var dash))
-                    {
-                        dash.vfx = bulletPrefab? bulletInstance : null;
-                        dash.config = config;
-                        dash.DoDash(distance, speed);
-                    }
-                    else
-                    {
-                        dash = owner.AddComponent<Dash>();
-                        dash.vfx =  bulletPrefab? bulletInstance : null;
-                        dash.config = config;
-                        dash.DoDash(distance, speed);
-                    }
+                case Ballistic.MeleeAttack:
+                    if (GetAttackLogic("DashAttack") != null)
+                        DoDashAttack(config, bulletInstance);
                     break;
             }
 
+            return bulletInstance;
+        }
+        
+        public GameObject TriggerEndAttack(AttackConfig config)
+        {
+            return null;
+        }
+        
+        private void DoDashAttack(AttackConfig config, GameObject bulletInstance = null)
+        {
+            if (owner.TryGetComponent<Dash>(out var dash))
+            {
+                dash.vfx = bulletInstance;
+                dash.config = config;
+                dash.DoDash(distance, speed);
+            }
+            else
+            {
+                dash = owner.AddComponent<Dash>();
+                dash.vfx = bulletInstance;
+                dash.config = config;
+                dash.DoDash(distance, speed);
+            }
+        }
+        
+        private AttackLogic GetAttackLogic(string logic)
+        {
+            foreach (var attackLogic in attackLogics)
+            {
+                if (attackLogic.logic == logic)
+                {
+                    return attackLogic;
+                }
+            }
             return null;
         }
     }
     
     public interface IWeapon
     {
-        GameObject DoAttack(AttackConfig config = null);
+        GameObject TriggerStartAttack(AttackConfig config = null);
+        GameObject TriggerDoAttack(AttackConfig config = null);
+        GameObject TriggerEndAttack(AttackConfig config = null);
     }
     
     [Serializable]
@@ -181,7 +221,7 @@ namespace Entity
         BulletParabola = 2,
         BulletChase = 3,
         BulletRound = 4,
-        MeleeDash = 5,
+        MeleeAttack = 5,
     }
 
     // Movement behavior scripts

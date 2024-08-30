@@ -106,7 +106,6 @@ namespace Entity
             if (attackPoint)
             {
                 attackConfig.from = attackPoint;
-                attackPoint.rotation = transform.rotation;
             }
 
             LoadInitData();
@@ -131,10 +130,19 @@ namespace Entity
                 transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
         }
 
-        public abstract void StartAttack();
-        public virtual void DoAttack()
+        public abstract void StartAttackAnim();
+
+        public virtual void TriggerStartAttack()
         {
-            weapon.DoAttack(attackConfig);
+            weapon.TriggerStartAttack(attackConfig);
+        }
+        public virtual void TriggerDoAttack()
+        {
+            weapon.TriggerDoAttack(attackConfig);
+        }
+        public virtual void TriggerEndAttack()
+        {
+            weapon.TriggerEndAttack(attackConfig);
         }
         public abstract void StopAttack();
 

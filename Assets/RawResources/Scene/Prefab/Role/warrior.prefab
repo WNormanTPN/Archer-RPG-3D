@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 451144}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,9 +44,10 @@ GameObject:
   - component: {fileID: 9580880}
   - component: {fileID: 5404110}
   - component: {fileID: 8782110249831385234}
-  m_Layer: 0
+  - component: {fileID: 8747397708369148017}
+  m_Layer: 7
   m_Name: warrior
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,6 +142,49 @@ CapsuleCollider:
   m_Height: 0.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.37, z: 0}
+--- !u!114 &8747397708369148017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ff29d4415dd7dc42b8240f51a3c7976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  rotationSpeed: 720
+  _weapon:
+    weaponID: 0
+    ballistic: 0
+    attackLogics: []
+    distance: 0
+    speed: 0
+    owner: {fileID: 0}
+  skills: []
+  effects: []
+  characterInitData:
+    id: 0
+    name: 
+    scale: 1
+    weaponId: 0
+    skillIds: 
+    exp: 0
+    prefabKey: 
+  maxHealth: 100
+  curHealth: 100
+  attackSpeed: 0.8
+  attackDamage: 10
+  attackPoint: {fileID: 402892}
+  player: {fileID: 0}
+  moveDuration: 1.5
+  rotateDuration: 1
+  keepMovingDistance: 10
+  attackAnimation: Attack3
+  rangeForAttack: 0.8
+  attackCooldown: 3.5
 --- !u!1 &119716
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 401406}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: joint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 406024}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_RightUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 493894}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +290,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 484918}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_RightForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 479220}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +354,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 457806}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +388,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 423174}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +419,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 486224}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +450,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 437498}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_LeftForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +482,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 470614}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_RightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +514,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 453836}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -502,7 +546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 476124}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_LeftUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -534,7 +578,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 417218}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +610,7 @@ GameObject:
   m_Component:
   - component: {fileID: 478368}
   - component: {fileID: 9576030}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: axe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -620,7 +664,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 453868}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -651,7 +695,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 438796}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -683,7 +727,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 418620}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -717,7 +761,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 401582}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +794,7 @@ GameObject:
   m_Component:
   - component: {fileID: 484446}
   - component: {fileID: 13734922}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: warrior1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -853,7 +897,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 438022}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -885,7 +929,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 412832}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: transform70
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -916,7 +960,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 422228}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character1_LeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -950,7 +994,7 @@ GameObject:
   - component: {fileID: 402892}
   - component: {fileID: 13794188}
   - component: {fileID: 5168750677051471653}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Axe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1056,7 +1100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3430244678928683297}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TopPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1087,7 +1131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 432777941037069002}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

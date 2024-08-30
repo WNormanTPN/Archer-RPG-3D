@@ -105,7 +105,7 @@ namespace Entity.Enemy
                 }
 
                 // Update attack timer
-                if (attackTimer < attackCooldown)
+                if (attackTimer < attackCooldown && !isAttacking)
                 {
                     attackTimer += Time.fixedDeltaTime;
                 }
@@ -147,7 +147,7 @@ namespace Entity.Enemy
             animator.SetFloat(speedParameter, 0f);
         }
 
-        public override void StartAttack()
+        public override void StartAttackAnim()
         {
             isAttacking = true;
             animator.SetBool(attackAnimation, true);
@@ -168,7 +168,7 @@ namespace Entity.Enemy
 
         private IEnumerator PerformAttack()
         {
-            StartAttack();
+            StartAttackAnim();
             attackTimer = - 1 / attackSpeed; // Reset attack timer
 
             yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation));

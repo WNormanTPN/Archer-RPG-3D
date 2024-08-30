@@ -62,9 +62,9 @@ namespace Entity.Enemy
             lineRenderer.SetPosition(1, end);
         }
 
-        public override void DoAttack()
+        public override void TriggerDoAttack()
         {
-            base.DoAttack();
+            base.TriggerDoAttack();
             StopAttack();
             if (lineRendererInstance != null)
             {

@@ -352,6 +352,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   rotationSpeed: 720
+  _weapon:
+    weaponID: 0
+    ballistic: 0
+    attackLogics: []
+    distance: 0
+    speed: 0
+    owner: {fileID: 0}
   skills: []
   effects: []
   characterInitData:
@@ -366,7 +373,7 @@ MonoBehaviour:
   curHealth: 100
   attackSpeed: 0.5
   attackDamage: 10
-  attackPoint: {fileID: 3036022427368667832}
+  attackPoint: {fileID: 2646661077071320975}
   player: {fileID: 0}
   moveDuration: 0.5
   rotateDuration: 1

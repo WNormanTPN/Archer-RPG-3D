@@ -98,7 +98,8 @@ namespace Entity.Attack
         {
             if (bulletMovement.config.destroyFX)
             {
-                Instantiate(bulletMovement.config.destroyFX, transform.position, Quaternion.identity);
+                var destroyFX = Instantiate(bulletMovement.config.destroyFX, transform.position, Quaternion.identity);
+                Destroy(destroyFX, 5f);
             }
         }
         

@@ -30,7 +30,7 @@ namespace Entity.Player
             if (movement == Vector3.zero)
             {
                 StopMove();
-                StartAttack();
+                StartAttackAnim();
             }
             else
             {
@@ -43,10 +43,15 @@ namespace Entity.Player
             animator.SetFloat(speedParameter, movement.magnitude);
         }
 
-        public override void StartAttack()
+        public override void StartAttackAnim()
         {
             animator.SetBool(attackAnimation, true);
             StartCoroutine(SetAnimationAttackSpeed());
+        }
+        
+        public override void TriggerStartAttack()
+        {
+            
         }
 
         public override void StopAttack()

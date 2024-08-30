@@ -77,11 +77,11 @@ GameObject:
   - component: {fileID: 481008}
   - component: {fileID: 9563636}
   - component: {fileID: 5424828}
-  - component: {fileID: 5035814260481978632}
   - component: {fileID: 3823553530768436559}
+  - component: {fileID: 616019492324227029}
   m_Layer: 7
   m_Name: knight
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,34 +152,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &5035814260481978632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bebac91c66c4b6995a9c66c2379f5f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  moveSpeed: 2
-  moveDuration: 1.5
-  rotateDuration: 1
-  keepMovingDistance: 5
-  _maxHealth: 20
-  attackAnimation: Attack2
-  rangeForAttack: 0.7
-  attackSpeed: 1
-  attackCooldown: 3
-  attackDamage: 10
-  attackPoint: {fileID: 4553757055595141909}
-  attackRange: 0.25
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!136 &3823553530768436559
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -203,6 +175,49 @@ CapsuleCollider:
   m_Height: 0.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.36, z: 0}
+--- !u!114 &616019492324227029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ff29d4415dd7dc42b8240f51a3c7976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  rotationSpeed: 720
+  _weapon:
+    weaponID: 0
+    ballistic: 0
+    attackLogics: []
+    distance: 0
+    speed: 0
+    owner: {fileID: 0}
+  skills: []
+  effects: []
+  characterInitData:
+    id: 0
+    name: 
+    scale: 1
+    weaponId: 0
+    skillIds: 
+    exp: 0
+    prefabKey: 
+  maxHealth: 100
+  curHealth: 100
+  attackSpeed: 0.5
+  attackDamage: 10
+  attackPoint: {fileID: 3856615822628972498}
+  player: {fileID: 0}
+  moveDuration: 1.5
+  rotateDuration: 1
+  keepMovingDistance: 10
+  attackAnimation: Attack2
+  rangeForAttack: 0.8
+  attackCooldown: 3
 --- !u!1 &109414
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +504,8 @@ Transform:
   m_LocalPosition: {x: 0.21118991, y: 0.28187048, z: 0.05291465}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3856615822628972498}
   m_Father: {fileID: 435542}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3379152
@@ -1093,6 +1109,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 489252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2505336038222110146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3856615822628972498}
+  - component: {fileID: 5322737695501022671}
+  m_Layer: 7
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3856615822628972498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2505336038222110146}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.09431608, y: 0.17712428, z: 0.01705512, w: 0.9795104}
+  m_LocalPosition: {x: -0.03, y: -0.01, z: 0.157}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 499528}
+  m_LocalEulerAnglesHint: {x: -11, y: 20.5, z: 0}
+--- !u!65 &5322737695501022671
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2505336038222110146}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.1, z: 0.6}
+  m_Center: {x: 0.10057861, y: 0.014349917, z: 0.23613565}
 --- !u!1 &5307460080712518108
 GameObject:
   m_ObjectHideFlags: 0

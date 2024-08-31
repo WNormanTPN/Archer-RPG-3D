@@ -229,7 +229,7 @@ namespace Entity
                     case "reboundWall":
                         attackConfig.wallRebound = !isRemove;
                         break;
-                    case "arrowEject":
+                    case "bulletEject":
                         attackConfig.eject = !isRemove;
                         break;
                     case "throughEnemy":

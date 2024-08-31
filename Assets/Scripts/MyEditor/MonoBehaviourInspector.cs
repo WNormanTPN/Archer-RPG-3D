@@ -24,14 +24,17 @@ namespace MyEditor
             groupProperties = new List<KeyValuePair<string, List<SerializedProperty>>>();
             showWhenFoldoutStates = new Dictionary<string, KeyValuePair<bool, bool>>();
             drawnNestedPaths = new HashSet<string>();
+            
 
             var lastGroup = new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>());
+
             var obj = serializedObject;
             var iterator = obj.GetIterator();
             string prevGroupName = "";
 
-            // Tạo danh sách tạm thời để chứa các nhóm và thuộc tính
+
             var temporaryGroupProperties = new List<KeyValuePair<string, List<SerializedProperty>>>();
+            temporaryGroupProperties.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
 
             while (iterator.NextVisible(true))
             {
@@ -44,7 +47,7 @@ namespace MyEditor
 
                 try
                 {
-                    var field = iterator.GetUnderlyingField(); // Ensure this method is correctly implemented
+                    var field = iterator.GetUnderlyingField();
                     if (field != null)
                     {
                         groupAttribute = field.GetCustomAttribute<InspectorGroupAttribute>();
@@ -60,10 +63,6 @@ namespace MyEditor
 
                 if (firstGroupAttribute != null)
                 {
-                    if (temporaryGroupProperties.Count == 0 || temporaryGroupProperties[0].Key != "")
-                    {
-                        temporaryGroupProperties.Insert(0, new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
-                    }
                     temporaryGroupProperties[0].Value.Add(iterator.Copy());
                 }
                 else if (lastGroupAttribute != null)
@@ -72,7 +71,7 @@ namespace MyEditor
                 }
                 else if (nonGroupAttribute != null)
                 {
-                    if (temporaryGroupProperties.Count == 0 || temporaryGroupProperties[temporaryGroupProperties.Count - 1].Key != "")
+                    if (temporaryGroupProperties[temporaryGroupProperties.Count - 1].Key != "")
                     {
                         temporaryGroupProperties.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
                     }
@@ -93,26 +92,25 @@ namespace MyEditor
                 }
                 else
                 {
-                    AddToLastGroup(iterator.Copy(), prevGroupName);
+                    AddToLastGroup(iterator.Copy(), prevGroupName, ref temporaryGroupProperties);
                 }
             }
             temporaryGroupProperties.Add(lastGroup);
             groupProperties = temporaryGroupProperties;
         }
-
         
-        private void AddToLastGroup(SerializedProperty property, string groupName)
+        private void AddToLastGroup(SerializedProperty property, string groupName, ref List<KeyValuePair<string, List<SerializedProperty>>> collection)
         {
-            for (int i = groupProperties.Count - 1; i >= 0; i--)
+            for (int i = collection.Count - 1; i >= 0; i--)
             {
-                if (groupProperties[i].Key == groupName)
+                if (collection[i].Key == groupName)
                 {
-                    groupProperties[i].Value.Add(property);
+                    collection[i].Value.Add(property);
                     return;
                 }
             }
-            groupProperties.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
-            groupProperties[groupProperties.Count - 1].Value.Add(property);
+            collection.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
+            collection[collection.Count - 1].Value.Add(property);
         }
 
 

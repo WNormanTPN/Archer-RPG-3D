@@ -13,6 +13,10 @@ namespace Entity.Attack
         public bool rotateBasedOnVelocity = true;
         public bool isCollideWithObstacle = true;
         [ShowWhen("isCollideWithObstacle", true)] public bool attachToCollidedObject = false;
+        public bool reboundWall = false;
+        public bool bulletEject = false;
+        public bool throughEnemy = false;
+        
         
         protected LayerMask obstacleLayer;
         protected Rigidbody rb;

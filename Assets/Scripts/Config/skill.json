@@ -4,7 +4,7 @@
   "5003": {"skillID": 5003, "name": "Add Side Bullet", "skillIcon": "1000005", "effects": null, "max":5, "attributes": {"bulletSide": 1}, "exclusions":[]},
   "5007": {"skillID": 5007, "name": "Add Continuous Shooting", "skillIcon": "1000008", "effects": null, "max":2, "attributes": {"bulletContinue": 1}, "exclusions":[]},
   "5008": {"skillID": 5008, "name": "Wall Rebound", "skillIcon": "1000003", "effects": null, "max":1, "attributes": {"reboundWall": 1}, "exclusions":[]},
-  "5009": {"skillID": 5009, "name": "Eject", "skillIcon": "1000028", "effects": null, "max":1, "attributes": {"arrowEject": 1}, "exclusions":[5010]},
+  "5009": {"skillID": 5009, "name": "Bullet Eject", "skillIcon": "1000028", "effects": null, "max":1, "attributes": {"bulletEject": 1}, "exclusions":[5010]},
   "5010": {"skillID": 5010, "name": "Penetration", "skillIcon": "1000026", "effects": null, "max":1, "attributes": {"throughEnemy": 1}, "exclusions":[5009]},
   "5011": {"skillID": 5011, "name": "Headshot", "skillIcon": "1000027", "effects": null, "max":1, "attributes": {"headShot": 0.3}, "exclusions":[]},
   "5012": {"skillID": 5012, "name": "Attack Boost", "skillIcon": "6000001", "effects": null, "max":5, "attributes": {"attackAdd": 5}, "exclusions":[]},

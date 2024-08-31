@@ -1,5 +1,5 @@
 ﻿{
-  "1": {"ID":1,"ballistic":0,"attackLogics":[],"distance":20,"speed":15,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/Bullet_1000.prefab"},
+  "1": {"ID":1,"ballistic":0,"attackLogics":[],"distance":20,"speed":15,"knockBack":null,"destroyFX":"Assets/RawResources/Effect/MagicSwordHitRed.prefab","bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/Bullet_1000.prefab"},
   "1000": {"ID":1000,"ballistic":0,"attackLogics":[],"distance":20,"speed":15,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/Bullet_1000 1.prefab"},
   "1001": {"ID":1001,"ballistic":0,"attackLogics":[],"distance":20,"speed":10,"knockBack":null,"destroyFX":null,"bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/Bullet_1003.prefab"},
   "1002": {"ID":1002,"ballistic":2,"attackLogics":[],"distance":5,"speed":10,"knockBack":null,"destroyFX":"Assets/RawResources/Effect/GasExplosionFire.prefab","bulletKey":"Assets/RawResources/Scene/Prefab/Bullet/Bullet_1004.prefab"},

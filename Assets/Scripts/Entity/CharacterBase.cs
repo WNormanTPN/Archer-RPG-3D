@@ -95,6 +95,10 @@ namespace Entity
         protected Transform backwardAttackPoint;              // Point where the backward attack will be executed
         protected Transform leftsideAttackPoint;              // Point where the left attack will be executed
         protected Transform rightsideAttackPoint;             // Point where the right attack will be executed
+        protected readonly string speedParameter = "Speed";
+        protected readonly string attackSpeedParameter = "AttackSpeed";
+        protected readonly string takeDamageParameter = "Damage";
+        protected readonly string dieParameter = "Death";
         
 
         protected virtual void Awake()
@@ -159,6 +163,26 @@ namespace Entity
         public virtual void SetScale(float scale)
         {
             transform.localScale = new Vector3(scale, scale, scale);
+        }
+        
+        public virtual void TakeDamage(float damage)
+        {
+            curHealth -= (int) damage;
+            animator.SetTrigger(takeDamageParameter);
+            if (curHealth <= 0)
+            {
+                Die();
+            }
+        }
+        
+        public virtual void Die()
+        {
+            animator.SetTrigger(dieParameter);
+            foreach (var col in GetComponentsInChildren<Collider>())
+            {
+                col.enabled = false;
+            }
+            Destroy(gameObject, 1.5f);
         }
 
         private void CalculateAttackPoints()

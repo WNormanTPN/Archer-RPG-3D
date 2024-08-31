@@ -28,8 +28,7 @@ namespace Entity.Enemy
         private float attackTimer;                // Timer for attack cooldown
         private bool canRotate = true;
         private bool canMove = true;
-        private readonly string speedParameter = "Speed";
-        private readonly string attackSpeedParameter = "AttackSpeed";
+        
         
         
         protected override void Start()

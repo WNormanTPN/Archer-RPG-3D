@@ -10,5 +10,7 @@ namespace Entity
         void StartAttackAnim();
         void StopAttack();
         void SetScale(float scale);
+        void TakeDamage(float damage);
+        void Die();
     }
 }

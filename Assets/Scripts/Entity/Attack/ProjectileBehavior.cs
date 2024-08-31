@@ -141,24 +141,40 @@ namespace Entity.Attack
         
         void OnTriggerEnter(Collider collider)
         {
-            if (throughEnemy && collider.gameObject.layer == enemyLayer)
+            if (collider.gameObject.layer == enemyLayer)
             {
-                return;
-            }
-            if (reboundWall || bulletEject)
-            {
-                if (reboundWall)
-                    ReboundWall(collider);
+                // Get the enemy's ICharacter component in collider or its parent
+                var enemy = collider.GetComponentInParent<ICharacter>();
+                enemy.TakeDamage(bulletMovement.config.damage);
                 
                 if (bulletEject)
-                    BulletEject(collider);
+                {
+                    Reflect();
+                }
+                else if (isCollideWithObstacle)
+                {
+                    StopAllCoroutines();
+                    PlayDestroyFX();
+                    if (attachToCollidedObject)
+                    {
+                        AttachToCollidedObject(collider);
+                    }
+                    else
+                    {
+                        Destroy(gameObject);
+                    }
+                }
+            }
+            else if (reboundWall)
+            {
+                ReboundWall(collider);
             }
             else if (isCollideWithObstacle)
             {
                 StopAllCoroutines();
                 if (attachToCollidedObject)
                 {
-                    AttachToCollidedObject();
+                    AttachToCollidedObject(collider);
                 }
                 else
                 {
@@ -208,7 +224,7 @@ namespace Entity.Attack
             }
         }
         
-        void AttachToCollidedObject()
+        void AttachToCollidedObject(Collider collider)
         {
             // Stop the projectile's movement upon collision
             if (!rb.isKinematic)
@@ -222,7 +238,7 @@ namespace Entity.Attack
             GetComponent<Collider>().enabled = false;
 
             // Parent the projectile to the collided object
-            transform.parent = rb.transform;
+            transform.parent = collider.transform;
         }
         
         void OnDestroy()

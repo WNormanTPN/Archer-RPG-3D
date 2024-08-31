@@ -132,6 +132,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: afaa5e50193589145b3cc1d5c84cf5e8
+    m_Address: Assets/RawResources/Effect/MagicSwordHitRed.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3679f7d567722af49b516d8cfad9104c, type: 2}
   m_SchemaSet:

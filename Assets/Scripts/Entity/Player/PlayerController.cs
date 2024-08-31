@@ -1,15 +1,17 @@
 using System.Collections;
+using MyEditor;
 using UnityEngine;
 
 namespace Entity.Player
 {
     public class PlayerController : CharacterBase
     {
+        [InspectorGroup("Attack Settings")]
+        public GameObject damageFX;                           // Reference to the damage effect
+        
         private MyInput input;                                // Reference to the MyInput script
-        private readonly string speedParameter = "Speed";
         private readonly string idleAnimation = "Idle";
         private readonly string attackAnimation = "Attack_bow";
-        private readonly string attackSpeedParameter = "AttackSpeed";
         
         protected override void Start()
         {
@@ -48,11 +50,6 @@ namespace Entity.Player
             animator.SetBool(attackAnimation, true);
             StartCoroutine(SetAnimationAttackSpeed());
         }
-        
-        public override void TriggerStartAttack()
-        {
-            
-        }
 
         public override void StopAttack()
         {
@@ -66,6 +63,19 @@ namespace Entity.Player
             velocity = 0f;
             // Update animator parameter to transition to idle
             animator.SetFloat(speedParameter, 0f);
+        }
+        
+        public override void TakeDamage(float damage)
+        {
+            base.TakeDamage(damage);
+            StartCoroutine(PlayDamageEffect());
+        }
+        
+        private IEnumerator PlayDamageEffect()
+        {
+            damageFX.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            damageFX.SetActive(false);
         }
         
         IEnumerator SetAnimationAttackSpeed()

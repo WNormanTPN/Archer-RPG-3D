@@ -80,7 +80,7 @@ namespace MyEditor
                 }
                 else if (groupAttribute != null)
                 {
-                    var groupIndex = GetGroupIndex(groupAttribute.groupName);
+                    var groupIndex = GetGroupIndex(groupAttribute.groupName, temporaryGroupProperties);
                     if (groupIndex == -1)
                     {
                         temporaryGroupProperties.Add(new KeyValuePair<string, List<SerializedProperty>>(groupAttribute.groupName, new List<SerializedProperty>()));
@@ -99,22 +99,22 @@ namespace MyEditor
             groupProperties = temporaryGroupProperties;
         }
         
-        private void AddToLastGroup(SerializedProperty property, string groupName, ref List<KeyValuePair<string, List<SerializedProperty>>> collection)
+        private void AddToLastGroup(SerializedProperty property, string groupName, ref List<KeyValuePair<string, List<SerializedProperty>>> groupProperties)
         {
-            for (int i = collection.Count - 1; i >= 0; i--)
+            for (int i = groupProperties.Count - 1; i >= 0; i--)
             {
-                if (collection[i].Key == groupName)
+                if (groupProperties[i].Key == groupName)
                 {
-                    collection[i].Value.Add(property);
+                    groupProperties[i].Value.Add(property);
                     return;
                 }
             }
-            collection.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
-            collection[collection.Count - 1].Value.Add(property);
+            groupProperties.Add(new KeyValuePair<string, List<SerializedProperty>>("", new List<SerializedProperty>()));
+            groupProperties[groupProperties.Count - 1].Value.Add(property);
         }
 
 
-        public int GetGroupIndex(string groupName)
+        public int GetGroupIndex(string groupName, List<KeyValuePair<string, List<SerializedProperty>>> groupProperties)
         {
             for (int i = 0; i < groupProperties.Count; i++)
             {

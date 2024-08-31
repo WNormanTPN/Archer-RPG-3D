@@ -11,20 +11,73 @@ namespace Entity.Attack
     {
         public float lifeTime = 0f;
         public bool rotateBasedOnVelocity = true;
-        public bool isCollideWithObstacle = true;
-        [ShowWhen("isCollideWithObstacle", true)] public bool attachToCollidedObject = false;
+        [SerializeField]
+        private bool _isCollideWithObstacle = true;
+        public bool isCollideWithObstacle
+        {
+            get => _isCollideWithObstacle;
+            set
+            {
+                _isCollideWithObstacle = value;
+                if (!value)
+                {
+                    attachToCollidedObject = false;
+                }
+            }
+        }
+        [ShowWhen("_isCollideWithObstacle", true)] public bool attachToCollidedObject = false;
         public bool reboundWall = false;
-        public bool bulletEject = false;
-        public bool throughEnemy = false;
+        [ShowWhen("_throughEnemy", false)] 
+        [SerializeField]
+        private bool _bulletEject = false;
+        public bool bulletEject
+            {
+            get => _bulletEject;
+            set
+            {
+                _bulletEject = value;
+                if (value)
+                {
+                    throughEnemy = false;
+                }
+            }
+        }
+        [ShowWhen("_bulletEject", false)]
+        [SerializeField]
+        private bool _throughEnemy = false;
+        public bool throughEnemy
+        {
+            get => _throughEnemy;
+            set
+            {
+                _throughEnemy = value;
+                if (value)
+                {
+                    bulletEject = false;
+                }
+            }
+        }
         
         
-        protected LayerMask obstacleLayer;
+        protected LayerMask obstacleAndWallLayer;
+        protected LayerMask enemyLayer;
         protected Rigidbody rb;
         protected BulletMovement bulletMovement;
+        
+        private RaycastHit hitPredicted;
+        
 
         void Awake()
         {
-            obstacleLayer = LayerMask.NameToLayer("Obstacle");
+            obstacleAndWallLayer = LayerMask.NameToLayer("Obstacle");
+            if (gameObject.layer == LayerMask.NameToLayer("Player Immunity"))
+            {
+                enemyLayer = LayerMask.NameToLayer("Enemy");
+            }
+            else
+            {
+                enemyLayer = LayerMask.NameToLayer("Player");
+            }
             rb = GetComponent<Rigidbody>();
             if (!isCollideWithObstacle)
             {
@@ -47,6 +100,8 @@ namespace Entity.Attack
                 Destroy(gameObject, lifeTime);
             }
             bulletMovement = GetComponent<BulletMovement>();
+            reboundWall = bulletMovement is StraightMovement && reboundWall;
+            bulletEject = bulletMovement is StraightMovement && bulletEject;
             if (bulletMovement?.attackLogics != null)
             {
                 foreach (var logic in bulletMovement.attackLogics)
@@ -60,44 +115,90 @@ namespace Entity.Attack
                 }
             }
         }
-
-        void OnCollisionEnter(Collision collision)
+        
+        void Update()
         {
-            if (!isCollideWithObstacle && collision.gameObject.layer == obstacleLayer)
-            {
-                return;
-            }
-            
-            if (attachToCollidedObject)
-            {
-                AttachToCollidedObject();
-            }
-            else
-            {
-                PlayDestroyFX();
-                Destroy(gameObject);
-            }
+            if (rb.isKinematic) return;
 
-            // Stop the rotation coroutine
-            StopAllCoroutines();
+            int layermask = 0;
+
+            if (reboundWall)
+                layermask |= 1 << obstacleAndWallLayer;
+
+            if (bulletEject)
+                layermask |= 1 << enemyLayer;
+
+            if (layermask != 0)
+            {
+                Physics.Raycast(transform.position,
+                    rb.velocity.normalized,
+                    out hitPredicted,
+                    rb.velocity.magnitude * Time.deltaTime * 5,
+                    layermask);
+            }
         }
+
         
         void OnTriggerEnter(Collider collider)
         {
-            if (!isCollideWithObstacle && collider.gameObject.layer == obstacleLayer)
+            if (throughEnemy && collider.gameObject.layer == enemyLayer)
             {
                 return;
             }
-            
-            if (attachToCollidedObject)
+            if (reboundWall || bulletEject)
             {
-                AttachToCollidedObject();
+                if (reboundWall)
+                    ReboundWall(collider);
+                
+                if (bulletEject)
+                    BulletEject(collider);
             }
-            
-            // Stop the rotation coroutine
-            StopAllCoroutines();
+            else if (isCollideWithObstacle)
+            {
+                StopAllCoroutines();
+                if (attachToCollidedObject)
+                {
+                    AttachToCollidedObject();
+                }
+                else
+                {
+                    PlayDestroyFX();
+                    Destroy(gameObject);
+                }
+            }
         }
         
+        private void ReboundWall(Collider collider)
+        {
+            if (collider.gameObject.layer == obstacleAndWallLayer)
+            {
+                Reflect();
+            }
+        }
+        
+        private void BulletEject(Collider collider)
+        {
+            if (collider.gameObject.layer == enemyLayer)
+            {
+                Reflect();
+            }
+        }
+
+        private void Reflect()
+        {
+            var straightMovement = bulletMovement as StraightMovement;
+            if (hitPredicted.collider != null)
+            {
+                var normal = hitPredicted.normal;
+                var reflect = Vector3.Reflect(rb.velocity, normal);
+                straightMovement.direction = reflect.normalized;
+            }
+            else
+            {
+                straightMovement.direction = -straightMovement.direction;
+            }
+        }
+
         void PlayDestroyFX()
         {
             if (bulletMovement.config.destroyFX)

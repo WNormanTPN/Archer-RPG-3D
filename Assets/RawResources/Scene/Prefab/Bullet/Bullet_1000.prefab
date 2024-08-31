@@ -96,12 +96,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 0
-  rotateBasedOnVelocity: 0
-  isCollideWithObstacle: 1
-  attachToCollidedObject: 0
+  rotateBasedOnVelocity: 1
+  _isCollideWithObstacle: 1
+  attachToCollidedObject: 1
   reboundWall: 0
-  bulletEject: 0
-  throughEnemy: 0
+  _bulletEject: 0
+  _throughEnemy: 0
 --- !u!1 &1792694259927570
 GameObject:
   m_ObjectHideFlags: 0

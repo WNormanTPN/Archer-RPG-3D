@@ -19,6 +19,16 @@ namespace Entity.Attack
             this.attackLogics = attackLogics;
             rb = GetComponent<Rigidbody>();
         }
+        
+        protected virtual void Awake()
+        {
+            
+        }
+        
+        protected virtual void Start()
+        {
+            
+        }
 
         protected virtual void Update()
         {
@@ -28,15 +38,18 @@ namespace Entity.Attack
 
     public class StraightMovement : BulletMovement
     {
-        private Vector3 direction;
-        
+        public Vector3 direction;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            direction = transform.forward;
+        }
+
         protected override void Update()
         {
             base.Update();
-            if (direction == Vector3.zero)
-            {
-                direction = transform.forward;
-            }
+            if (rb.isKinematic) return;
             rb.velocity = speed * direction;
             distance -= rb.velocity.magnitude * Time.deltaTime;
 
@@ -61,6 +74,7 @@ namespace Entity.Attack
         protected override void Update()
         {
             base.Update();
+            if (rb.isKinematic) return;
             // Curve using sinusoidal wave pattern
             float x = speed * Time.deltaTime;
             float y = Mathf.Sin(Time.time * curveSpeed) * 0.5f; // Adjust amplitude if needed
@@ -95,6 +109,7 @@ namespace Entity.Attack
         protected override void Update()
         {
             base.Update();
+            if (rb.isKinematic) return;
             if (!target) return;
 
             elapsedTime += Time.deltaTime;
@@ -129,6 +144,7 @@ namespace Entity.Attack
         protected override void Update()
         {
             base.Update();
+            if (rb.isKinematic) return;
             if (target)
             {
                 transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
@@ -159,6 +175,7 @@ namespace Entity.Attack
         protected override void Update()
         {
             base.Update();
+            if (rb.isKinematic) return;
             float angle = rotationSpeed * Time.time * Mathf.Deg2Rad;
             Vector3 offset = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * radius;
             transform.position = centerPosition + offset;

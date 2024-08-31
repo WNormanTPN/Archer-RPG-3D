@@ -50,7 +50,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -99,6 +99,9 @@ MonoBehaviour:
   rotateBasedOnVelocity: 0
   isCollideWithObstacle: 1
   attachToCollidedObject: 0
+  reboundWall: 0
+  bulletEject: 0
+  throughEnemy: 0
 --- !u!1 &1514399574536060420
 GameObject:
   m_ObjectHideFlags: 0

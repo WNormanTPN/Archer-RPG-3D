@@ -22,6 +22,22 @@ namespace Entity
         
         [JsonProperty("effect")]
         public string prefabKey;
+
+        public static EffectCollection effectCollection
+        {
+            get
+            {
+                if (_effectCollection == null)
+                {
+                    _effectCollection = ConfigDataManager.Instance.GetConfigData<EffectCollection>();
+                }
+
+                return _effectCollection;
+            }
+            private set => _effectCollection = value;
+        }
+
+        private static EffectCollection _effectCollection;
         
         public Effect()
         {

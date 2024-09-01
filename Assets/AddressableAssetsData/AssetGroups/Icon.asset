@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Icon
+  m_EditorClassIdentifier: 
+  m_GroupName: Icon
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a53f31fd852e7654c916f6d15dd0b337
+  m_SerializeEntries:
+  - m_GUID: 6aa83cbfda3c21d44b93814e87c39858
+    m_Address: Assets/RawResources/Atlas/AtlasItem/1000001.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee2fe2e641254174d9355815507b6d71
+    m_Address: Assets/RawResources/Atlas/AtlasItem/1000004.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7387003494b6fa34c92530a05c5ee228
+    m_Address: Assets/RawResources/Atlas/AtlasItem/1000003.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a011c4a4aa39e649bfa75fba465f05c
+    m_Address: Assets/RawResources/Atlas/AtlasItem/1000005.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a8a3a9e6802daa43b51659c1483e06e
+    m_Address: Assets/RawResources/Atlas/AtlasItem/1000008.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9869822bcd7f7e4db0c6a830a9f2b34
+    m_Address: Assets/RawResources/Atlas/AtlasItem/1000026.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b452e00edaab2b94c8ddef3dde9af43d
+    m_Address: Assets/RawResources/Atlas/AtlasItem/1000028.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c4fdc17af5e2d24f93bcc0887e51c4f
+    m_Address: Assets/RawResources/Atlas/AtlasItem/1000027.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89aad83f059e9084fa82e743c999d259
+    m_Address: Assets/RawResources/Atlas/AtlasItem/6000001.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 19ec42505a3220e4db8a1e7bacb7f013
+    m_Address: Assets/RawResources/Atlas/AtlasItem/6000007.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3679f7d567722af49b516d8cfad9104c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 463c4a3aac82d024ebc35464909419e7, type: 2}
+    - {fileID: 11400000, guid: 706cd42641ec2664382b1aa7d89947f9, type: 2}

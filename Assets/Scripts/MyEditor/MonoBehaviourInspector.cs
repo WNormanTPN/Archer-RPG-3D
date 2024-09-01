@@ -64,10 +64,12 @@ namespace MyEditor
                 if (firstGroupAttribute != null)
                 {
                     temporaryGroupProperties[0].Value.Add(iterator.Copy());
+                    prevGroupName = "first";
                 }
                 else if (lastGroupAttribute != null)
                 {
                     lastGroup.Value.Add(iterator.Copy());
+                    prevGroupName = "last";
                 }
                 else if (nonGroupAttribute != null)
                 {
@@ -92,15 +94,29 @@ namespace MyEditor
                 }
                 else
                 {
-                    AddToLastGroup(iterator.Copy(), prevGroupName, ref temporaryGroupProperties);
+                    AddToLastGroup(iterator.Copy(), prevGroupName, ref temporaryGroupProperties, ref lastGroup);
                 }
             }
             temporaryGroupProperties.Add(lastGroup);
             groupProperties = temporaryGroupProperties;
         }
         
-        private void AddToLastGroup(SerializedProperty property, string groupName, ref List<KeyValuePair<string, List<SerializedProperty>>> groupProperties)
+        private void AddToLastGroup(SerializedProperty property,
+            string groupName,
+            ref List<KeyValuePair<string,
+                List<SerializedProperty>>> groupProperties,
+            ref KeyValuePair<string, List<SerializedProperty>> lastGroup)
         {
+            if (groupName == "first")
+            {
+                groupProperties[0].Value.Add(property);
+                return;
+            }
+            if (groupName == "last")
+            {
+                lastGroup.Value.Add(property);
+                return;
+            }
             for (int i = groupProperties.Count - 1; i >= 0; i--)
             {
                 if (groupProperties[i].Key == groupName)

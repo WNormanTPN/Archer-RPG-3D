@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Config;
 using Newtonsoft.Json;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace Entity
 {
@@ -22,6 +18,21 @@ namespace Entity
         public Dictionary<string, float> attributes;
         public List<int> exclusions;
         
+        public static SkillCollection skillCollection
+        {
+            get
+            {
+                if (_skillCollection == null)
+                {
+                    _skillCollection = ConfigDataManager.Instance.GetConfigData<SkillCollection>();
+                }
+
+                return _skillCollection;
+            }
+            private set => _skillCollection = value;
+        }
+        private static SkillCollection _skillCollection;
+        
         
         public Skill()
         {
@@ -32,7 +43,7 @@ namespace Entity
 
         public Skill(int skillID)
         {
-            var data = ConfigDataManager.Instance.GetConfigData<SkillCollection>().Skills[skillID.ToString()];
+            var data = skillCollection.Skills[skillID.ToString()];
             this.skillID = data.skillID;
             name = data.name;
             skillIcon = data.skillIcon;

@@ -1,5 +1,7 @@
 using System.Collections;
+using Config;
 using MyEditor;
+using UI;
 using UnityEngine;
 
 namespace Entity.Player
@@ -8,14 +10,24 @@ namespace Entity.Player
     {
         [InspectorGroup("Attack Settings")]
         public GameObject damageFX;                           // Reference to the damage effect
+
+        [LastGroup] 
+        public int level = 0;
+        public int expPerLevel = 100;
+
+        protected int curExp { get; private set; }
+        protected PlayerLevelUpManager levelUpManager;
         
+        private int playerMaxLevel = 0;
         private MyInput input;                                // Reference to the MyInput script
         private readonly string idleAnimation = "Idle";
         private readonly string attackAnimation = "Attack_bow";
         
         protected override void Start()
         {
+            levelUpManager = FindObjectOfType<PlayerLevelUpManager>();
             base.Start();
+            
             if (input == null)
             {
                 input = new MyInput();
@@ -70,7 +82,47 @@ namespace Entity.Player
             base.TakeDamage(damage);
             StartCoroutine(PlayDamageEffect());
         }
+
+        protected override void LoadInitData()
+        {
+            base.LoadInitData();
+            CalculateMaxLevel();
+            AddExp(characterInitData.exp);
+        }
         
+        private void CalculateMaxLevel()
+        {
+            var skillsConfig = ConfigDataManager.Instance.GetConfigData<SkillCollection>();
+            foreach (var skill in skillsConfig.Skills)
+            {
+                playerMaxLevel += skill.Value.maxStacks;
+            }
+            playerMaxLevel -= characterInitData.skillIds.Count;
+        }
+        
+        public void AddExp(int exp)
+        {
+            curExp += exp;
+            if (curExp >= expPerLevel && level < playerMaxLevel)
+            {
+                levelUpManager.StartLevelUpProcess();
+                LevelUp();
+                curExp -= expPerLevel;
+            }
+            if (level >= playerMaxLevel)
+            {
+                curExp = expPerLevel;
+            }
+        }
+        
+        protected void LevelUp()
+        {
+            level++;
+            var healthIncrease = (int) (maxHealth * 0.1f);
+            maxHealth += healthIncrease;
+            curHealth += healthIncrease;
+        }
+
         private IEnumerator PlayDamageEffect()
         {
             damageFX.SetActive(true);

@@ -47,7 +47,7 @@ namespace Entity
         }
         [Range(0, 720)]public float rotationSpeed = 720f;     // Speed of the character rotation in degrees per second
         
-        [NonGroup]
+        [FirstGroup]
         [SerializeField] private Weapon _weapon;
         public Weapon weapon
         {
@@ -58,8 +58,8 @@ namespace Entity
                 _weapon.owner = gameObject;
             }
         }                             // Reference to the weapon
-        public SkillCollection skills;                        // List of skills the character has
         public List<Effect> effects;
+        [HideInInspector] public SkillCollection skills;                        // List of skills the character has
         
         [LastGroup]
         public CharacterData characterInitData;               // Initial data of the character
@@ -256,7 +256,7 @@ namespace Entity
             AddSkill(skill);
             foreach (var exclusion in skill.exclusions)
             {
-                var exclusionSkill = ConfigDataManager.Instance.GetConfigData<SkillCollection>().Skills[exclusion.ToString()];
+                var exclusionSkill = Skill.skillCollection.Skills[exclusion.ToString()];
                 AddOrRemoveSkillAttributes(exclusionSkill, true);
             }
         }
@@ -265,6 +265,7 @@ namespace Entity
         {
             skill = skills.AddSkill(skill);
             AddOrRemoveSkillAttributes(skill, false);
+            if (skill.effectIDs == null) return;
             foreach (var effectID in skill.effectIDs)
             {
                 AddEffect(effectID);

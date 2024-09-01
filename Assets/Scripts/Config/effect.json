@@ -1,12 +1,11 @@
 ﻿{
-  "1": {"effectID": 1, "name": "Flame", "changeValue": {"baseAttackMultiplier": -0.1}, "duration": 10, "effect": "TX_buff_zhuoshao"},
-  "2": {"effectID": 2, "name": "Poison", "changeValue": {"maxHpMultiplier": -0.01}, "duration": 5, "effect": "TX_buff_du"},
-  "3": {"effectID": 3, "name": "Heal HP", "changeValue": {"maxHpMultiplier": 0.3}, "duration": 3, "effect": "TX_buff_jiaxue"},
-  "5": {"effectID": 5, "name": "Slow", "changeValue": null, "duration": 5, "effect": "TX_buff_jiansu"},
-  "6": {"effectID": 6, "name": "Rage", "changeValue": null, "duration": 10, "effect": null},
-  "20": {"effectID": 20, "name": "Stun 5s", "changeValue": null, "duration": 5, "effect": "TX_buff_touyun"},
-  "30": {"effectID": 30, "name": "Invincible 2s", "changeValue": null, "duration": 2, "effect": "ShieldBlue"},
-  "100001": {"effectID": 100001, "name": "Area Poison Main Buff", "changeValue": null, "duration": 5, "effect": null},
-  "100002": {"effectID": 100002, "name": "Area Poison Target DeBuff", "changeValue": null, "duration": 5, "effect": "SoulMissileGreen"},
-  "100003": {"effectID": 100003, "name": "Life Drain", "changeValue": null, "duration": 5, "effect": null}
+  "1": {"effectID": 1, "name": "Flame", "changeValue": {"attackDamage_mul": 0.5}, "duration": 10, "effect": "TX_buff_zhuoshao"},
+  "2": {"effectID": 2, "name": "Poison", "changeValue": {"curHP_add": -5}, "duration": 5, "effect": "TX_buff_du"},
+  "3": {"effectID": 3, "name": "Heal HP", "changeValue": {"curHP_add": 5}, "duration": 5, "effect": "TX_buff_jiaxue"},
+  "5": {"effectID": 5, "name": "Slow", "changeValue": {"speed_mul": 0.5}, "duration": 5, "effect": "TX_buff_jiansu"},
+  "6": {"effectID": 6, "name": "Rage", "changeValue": {"attackDamage_mul": 1.2, "attackSpeed_mul": 1.2, "moveSpeed_mul": 1.2}, "duration": 10, "effect": "Assets/RawResources/Effect/SpinZoneOrange.prefab"},
+  "20": {"effectID": 20, "name": "Stun", "changeValue": {"moveSpeed_mul":0}, "duration": 1, "effect": "TX_buff_touyun"},
+  "30": {"effectID": 30, "name": "Invincible", "changeValue": {"maxHP_mul": 9999}, "duration": 2, "effect": "ShieldBlue"},
+  "101": {"effectID": 101, "name": "Attack Boost", "changeValue": {"attackDamage_add": 5}, "duration": -1, "effect": null},
+  "102": {"effectID": 102, "name": "Attack Speed Boost", "changeValue": {"attackSpeed_add": 0.25}, "duration": -1, "effect": null}
 }

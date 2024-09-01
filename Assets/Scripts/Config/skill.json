@@ -7,6 +7,6 @@
   "5009": {"skillID": 5009, "name": "Bullet Eject", "skillIcon": "1000028", "effects": null, "max":1, "attributes": {"bulletEject": 1}, "exclusions":[5010]},
   "5010": {"skillID": 5010, "name": "Penetration", "skillIcon": "1000026", "effects": null, "max":1, "attributes": {"throughEnemy": 1}, "exclusions":[5009]},
   "5011": {"skillID": 5011, "name": "Headshot", "skillIcon": "1000027", "effects": null, "max":1, "attributes": {"headShot": 0.3}, "exclusions":[]},
-  "5012": {"skillID": 5012, "name": "Attack Boost", "skillIcon": "6000001", "effects": null, "max":5, "attributes": {"attackAdd": 5}, "exclusions":[]},
-  "5028": {"skillID": 5028, "name": "Attack Speed Boost", "skillIcon": "6000007", "effects": null, "max":5, "attributes": {"attackSpeedAdd": 0.25}, "exclusions":[]}
+  "5012": {"skillID": 5012, "name": "Attack Boost", "skillIcon": "6000001", "effects": [101], "max":5, "attributes": {}, "exclusions":[]},
+  "5028": {"skillID": 5028, "name": "Attack Speed Boost", "skillIcon": "6000007", "effects": [102], "max":5, "attributes": {}, "exclusions":[]}
 }

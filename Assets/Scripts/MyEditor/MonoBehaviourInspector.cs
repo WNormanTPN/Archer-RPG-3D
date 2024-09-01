@@ -143,12 +143,17 @@ namespace MyEditor
 
                 if (isFoldedOut)
                 {
-                    foreach (var property in group.Value)
+                    for (int i = 0; i < group.Value.Count; i++)
                     {
+                        var property = group.Value[i];
+
+                        // Skip if the property is no longer valid
+                        if (property == null)
+                            continue;
+
                         if (property.propertyType == SerializedPropertyType.ArraySize)
                             continue;
 
-                        // Check if the property is part of a nested structure
                         if (IsPartOfNested(property.propertyPath))
                         {
                             if (!drawnNestedPaths.Contains(property.propertyPath))
@@ -174,12 +179,12 @@ namespace MyEditor
                                         }
                                         var isDrawn = showWhenFoldoutStates[groupName].Key;
                                         var isFolded = showWhenFoldoutStates[groupName].Value;
-                                        
+
                                         if (!isDrawn)
                                         {
                                             showWhenFoldoutStates[groupName] = new KeyValuePair<bool, bool>(true, EditorGUILayout.Foldout(isFolded, groupName));
                                         }
-                                        
+
                                         if (isFolded)
                                         {
                                             EditorGUI.indentLevel++;
@@ -208,6 +213,8 @@ namespace MyEditor
 
             serializedObject.ApplyModifiedProperties();
         }
+
+
 
         private void ResetShowWhenFoldoutStates()
         {

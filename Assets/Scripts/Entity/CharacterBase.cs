@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Config;
@@ -6,34 +7,11 @@ using MyEditor;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace Entity
 {
-    [Serializable]
-    public class CharacterData
-    {
-        [JsonProperty("charID")]
-        public int id;
-    
-        [JsonProperty("charName")]
-        public string name;
-    
-        public float scale = 1;
-    
-        [JsonProperty("weaponID")]
-        public int weaponId;
-    
-        [JsonProperty("skills")]
-        public List<int> skillIds;
-    
-        public int exp;
-    
-        [JsonProperty("key")]
-        public string prefabKey;
-    }
-
-    
     [Serializable]
     public class CharacterDataCollection : IConfigCollection
     {
@@ -59,8 +37,15 @@ namespace Entity
     public abstract class CharacterBase : MonoBehaviour, ICharacter
     {
         [InspectorGroup("Character Movement")]
-        [Range(0, 10)] public float moveSpeed = 5f;           // Speed of the character movement
-        [Range(0, 720)] public float rotationSpeed = 720f;    // Speed of the character rotation in degrees per second
+        [Range(0, 10)] 
+        [SerializeField]
+        private float _moveSpeed = 5f;                        // Speed of the character movement
+        public float moveSpeed
+        {
+            get => (_moveSpeed + moveSpeed_add) * moveSpeed_mul;
+            set => _moveSpeed = value;
+        }
+        [Range(0, 720)]public float rotationSpeed = 720f;     // Speed of the character rotation in degrees per second
         
         [NonGroup]
         [SerializeField] private Weapon _weapon;
@@ -80,25 +65,62 @@ namespace Entity
         public CharacterData characterInitData;               // Initial data of the character
     
         [InspectorGroup("Attack Settings")]
-        [Range(0, 1000)]public int maxHealth = 100;           // Health of the character
-        [Range(0, 1000)] public int curHealth = 100;          // Current health of the character
-        [Range(0, 10)] public float attackSpeed = 1f;         // Speed of the character attack per second
+        [Range(0, 1000)]
+        [SerializeField]
+        private int _maxHealth = 100;                         // Health of the character
+        public int maxHealth
+        {
+            get => (maxHealth_add + _maxHealth * maxHealth_mul);
+            set => _maxHealth = value;
+        }
+        [Range(0, 1000)]
+        [SerializeField]
+        private int _curHealth = 100;                         // Current health of the character
+        public int curHealth
+        {
+            get => Mathf.Max(curHealth_add + _curHealth * curHealth_mul, maxHealth);
+            set => _curHealth = value;
+        }
+        [Range(0, 10)]
+        [SerializeField]
+        private float _attackSpeed = 1f;                      // Speed of the character attack per second
+        public float attackSpeed
+        {
+            get => (attackSpeed_add + _attackSpeed) * attackSpeed_mul;
+            set => _attackSpeed = value;
+        }
         [Range(0, 1000)] public float attackDamage = 10f;     // Damage dealt by the character
-        [FormerlySerializedAs("attackPoint")] public Transform forwardAttackPoint;                         // Point where the attack will be executed
+        
+        [FormerlySerializedAs("attackPoint")] 
+        public Transform forwardAttackPoint;                  // Point where the attack will be executed
+
+        #region Properties
         
         protected Animator animator;                          // Reference to the Animator component
         protected float velocity;                             // Current velocity of the character
         protected Rigidbody rb;                               // Reference to the Rigidbody component
         protected AttackConfig attackConfig;                  // Configuration of the attack
-        protected float addedAttackSpeed = 0;                 // Added attack speed from skills
-        protected float addedAttackDamage = 0;                // Added attack damage from skills
         protected Transform backwardAttackPoint;              // Point where the backward attack will be executed
         protected Transform leftsideAttackPoint;              // Point where the left attack will be executed
         protected Transform rightsideAttackPoint;             // Point where the right attack will be executed
+        
+        protected float moveSpeed_add = 0;                    // Added move speed from skills and effects
+        protected float moveSpeed_mul = 1;                    // Multiplied move speed from skills and effects
+        protected int curHealth_add = 0;                    // Added health from skills and effects
+        protected int curHealth_mul = 1;                    // Multiplied health from skills and effects
+        protected int maxHealth_add = 0;                    // Added max health from skills and effects
+        protected int maxHealth_mul = 1;                    // Multiplied max health from skills and effects
+        protected float attackSpeed_add = 0;                 // Added attack speed from skills and effects
+        protected float attackSpeed_mul = 1;                 // Multiplied attack speed from skills and effects
+        protected float attackDamage_add = 0;                // Added attack damage from skills and effects
+        protected float attackDamage_mul = 1;                // Multiplied attack damage from skills and effects
+        
         protected readonly string speedParameter = "Speed";
         protected readonly string attackSpeedParameter = "AttackSpeed";
         protected readonly string takeDamageParameter = "Damage";
         protected readonly string dieParameter = "Death";
+        
+        #endregion
         
 
         protected virtual void Awake()
@@ -111,6 +133,8 @@ namespace Entity
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
             attackConfig = new AttackConfig();
+            skills = new SkillCollection();
+            effects = new List<Effect>();
             curHealth = maxHealth;
             attackConfig.damage = attackDamage;
             if (forwardAttackPoint)
@@ -204,30 +228,180 @@ namespace Entity
         
         protected virtual void LoadInitData()
         {
+            if (characterInitData == null)
+            {
+                Debug.LogError("characterInitData chưa được khởi tạo!");
+                return;
+            }
+    
             SetScale(characterInitData.scale);
+
             if (characterInitData.weaponId != 0 && weapon?.weaponID != characterInitData.weaponId)
             {
                 weapon = new Weapon(characterInitData.weaponId);
             }
-            if (characterInitData.skillIds is { Count: > 0 })
+
+            if (characterInitData.skillIds != null && characterInitData.skillIds.Count > 0)
             {
-                foreach (var skillId in characterInitData.skillIds)
+                foreach (var skillID in characterInitData.skillIds)
                 {
-                    var skill = new Skill(skillId);
-                    AddSkill(skill);
-                    foreach (var exclusion in skill.exclusions)
-                    {
-                        var exclusionSkill = ConfigDataManager.Instance.GetConfigData<SkillCollection>().Skills[exclusion.ToString()];
-                        AddOrRemoveSkillAttributes(exclusionSkill, true);
-                    }
+                    AddSkill(skillID);
                 }
             }
         }
         
-        protected virtual void AddSkill(Skill skill)
+        public virtual void AddSkill(int skillID)
+        {
+            var skill = new Skill(skillID);
+            AddSkill(skill);
+            foreach (var exclusion in skill.exclusions)
+            {
+                var exclusionSkill = ConfigDataManager.Instance.GetConfigData<SkillCollection>().Skills[exclusion.ToString()];
+                AddOrRemoveSkillAttributes(exclusionSkill, true);
+            }
+        }
+        
+        public virtual void AddSkill(Skill skill)
         {
             skill = skills.AddSkill(skill);
             AddOrRemoveSkillAttributes(skill, false);
+            foreach (var effectID in skill.effectIDs)
+            {
+                AddEffect(effectID);
+            }
+        }
+        
+        public virtual void AddEffect(int effectID)
+        {
+            var effect = new Effect(effectID);
+            AddEffect(effect);
+        }
+        
+        public virtual void AddEffect(Effect effect)
+        {
+            effects.Add(effect);
+
+            foreach (var kvp in effect.effectValues)
+            {
+                var key = kvp.Key;
+                var value = kvp.Value;
+                StartCoroutine(ApplyEffectValueCoroutine(key, value, effect.duration));
+            }
+    
+            if (effect.duration > 0)
+            {
+                StartCoroutine(RemoveEffectAfterDuration(effect));
+            }
+        }
+
+        private IEnumerator RemoveEffectAfterDuration(Effect effect)
+        {
+            yield return new WaitForSeconds(effect.duration);
+            if (this && gameObject.activeInHierarchy)
+            {
+                effects.Remove(effect);
+            }
+        }
+
+
+        private IEnumerator ApplyEffectValueCoroutine(string key, float value, int duration)
+        {
+            switch (key)
+            {
+                case "moveSpeed_add":
+                    moveSpeed_add += value;
+                    if (duration != -1)
+                    {
+                        yield return new WaitForSeconds(duration);
+                        moveSpeed_add -= value;
+                    }
+                    break;
+                
+                case "moveSpeed_mul":
+                    moveSpeed_mul += value;
+                    if (duration != -1)
+                    {
+                        yield return new WaitForSeconds(duration);
+                        moveSpeed_mul -= value;
+                    }
+                    break;
+                
+                case "curHealth_add":
+                    curHealth_add += (int) value;
+                    curHealth = Mathf.Min(curHealth, maxHealth);
+                    if (duration != -1)
+                    {
+                        yield return new WaitForSeconds(duration);
+                        curHealth_add -= (int) value;
+                        curHealth = Mathf.Min(curHealth, maxHealth);
+                    }
+                    break;
+                
+                case "maxHealth_add":
+                    maxHealth_add += (int) value;
+                    curHealth += (int) value;
+                    if (duration != -1)
+                    {
+                        yield return new WaitForSeconds(duration);
+                        curHealth -= (int) value;
+                        maxHealth_add -= (int) value;
+                        curHealth = Mathf.Min(curHealth, maxHealth);
+                    }
+                    break;
+                
+                case "maxHealth_mul":
+                    int oldMaxHealth = maxHealth;
+                    maxHealth_mul += (int) value;
+                    int healthDifference = maxHealth - oldMaxHealth;
+                    curHealth += healthDifference;
+                    curHealth = Mathf.Min(curHealth, maxHealth);
+
+                    if (duration != -1)
+                    {
+                        yield return new WaitForSeconds(duration);
+                        maxHealth_mul -= (int) value;
+                        healthDifference = oldMaxHealth - maxHealth;
+                        curHealth -= healthDifference;
+                        curHealth = Mathf.Min(curHealth, maxHealth);
+                    }
+                    break;
+                
+                case "attackSpeed_add":
+                    attackSpeed_add += value;
+                    if (duration != -1)
+                    {
+                        yield return new WaitForSeconds(duration);
+                        attackSpeed_add -= value;
+                    }
+                    break;
+                
+                case "attackSpeed_mul":
+                    attackSpeed_mul += value;
+                    if (duration != -1)
+                    {
+                        yield return new WaitForSeconds(duration);
+                        attackSpeed_mul -= value;
+                    }
+                    break;
+                
+                case "attackDamage_add":
+                    attackDamage_add += value;
+                    if (duration != -1)
+                    {
+                        yield return new WaitForSeconds(duration);
+                        attackDamage_add -= value;
+                    }
+                    break;
+                
+                case "attackDamage_mul":
+                    attackDamage_mul += value;
+                    if (duration != -1)
+                    {
+                        yield return new WaitForSeconds(duration);
+                        attackDamage_mul -= value;
+                    }
+                    break;
+            }
         }
 
         private void AddOrRemoveSkillAttributes(Skill skill, bool isRemove)
@@ -263,32 +437,22 @@ namespace Entity
                         attackConfig.headshot = isRemove ? 0 : value;
                         break;
                     case "attackAdd":
-                        attackSpeed -= addedAttackSpeed;
-                        addedAttackSpeed = isRemove ? 0 : value;
-                        attackSpeed += addedAttackSpeed;
+                        attackSpeed -= attackSpeed_add;
+                        attackSpeed_add = isRemove ? 0 : value;
+                        attackSpeed += attackSpeed_add;
                         break;
                     case "attackSpeedAdd":
-                        attackDamage -= addedAttackDamage;
-                        addedAttackDamage = isRemove ? 0 : value;
-                        attackDamage += addedAttackDamage;
+                        attackDamage -= attackDamage_add;
+                        attackDamage_add = isRemove ? 0 : value;
+                        attackDamage += attackDamage_add;
                         break;
                 }
             }
         }
 
-        private void OnDrawGizmosSelected()
+        protected void OnDestroy()
         {
-            if (forwardAttackPoint && backwardAttackPoint && leftsideAttackPoint && rightsideAttackPoint)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawRay(forwardAttackPoint.position, forwardAttackPoint.forward);
-                Gizmos.color = Color.green;
-                Gizmos.DrawRay(backwardAttackPoint.position, backwardAttackPoint.forward);
-                Gizmos.color = Color.blue;
-                Gizmos.DrawRay(leftsideAttackPoint.position, leftsideAttackPoint.forward);
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawRay(rightsideAttackPoint.position, rightsideAttackPoint.forward);
-            }
+            StopAllCoroutines();
         }
     }
 }

@@ -100,8 +100,9 @@ namespace Entity.Attack
                 Destroy(gameObject, lifeTime);
             }
             bulletMovement = GetComponent<BulletMovement>();
-            reboundWall = bulletMovement is StraightMovement && reboundWall;
-            bulletEject = bulletMovement is StraightMovement && bulletEject;
+            reboundWall = bulletMovement is StraightMovement && (reboundWall || bulletMovement.config.wallRebound);
+            bulletEject = bulletMovement is StraightMovement && (bulletEject || bulletMovement.config.eject);
+            throughEnemy = throughEnemy || bulletMovement.config.penetration;
             if (bulletMovement?.attackLogics != null)
             {
                 foreach (var logic in bulletMovement.attackLogics)

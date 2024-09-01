@@ -146,85 +146,92 @@ namespace MyEditor
         {
             serializedObject.Update();
 
-            foreach (var group in groupProperties)
+            try
             {
-                bool isFoldedOut = !string.IsNullOrEmpty(group.Key) && foldoutStates.ContainsKey(group.Key) ? foldoutStates[group.Key] : true;
-
-                if (!string.IsNullOrEmpty(group.Key))
+                foreach (var group in groupProperties)
                 {
-                    isFoldedOut = EditorGUILayout.Foldout(isFoldedOut, group.Key);
-                    foldoutStates[group.Key] = isFoldedOut;
-                    EditorGUI.indentLevel++;
-                }
+                    bool isFoldedOut = !string.IsNullOrEmpty(group.Key) && foldoutStates.ContainsKey(group.Key) ? foldoutStates[group.Key] : true;
 
-                if (isFoldedOut)
-                {
-                    for (int i = 0; i < group.Value.Count; i++)
+                    if (!string.IsNullOrEmpty(group.Key))
                     {
-                        var property = group.Value[i];
+                        isFoldedOut = EditorGUILayout.Foldout(isFoldedOut, group.Key);
+                        foldoutStates[group.Key] = isFoldedOut;
+                        EditorGUI.indentLevel++;
+                    }
 
-                        // Skip if the property is no longer valid
-                        if (property == null)
-                            continue;
-
-                        if (property.propertyType == SerializedPropertyType.ArraySize)
-                            continue;
-
-                        if (IsPartOfNested(property.propertyPath))
+                    if (isFoldedOut)
+                    {
+                        for (int i = 0; i < group.Value.Count; i++)
                         {
-                            if (!drawnNestedPaths.Contains(property.propertyPath))
+                            var property = group.Value[i];
+
+                            // Skip if the property is no longer valid
+                            if (property == null)
+                                continue;
+
+                            if (property.propertyType == SerializedPropertyType.ArraySize)
+                                continue;
+
+                            if (IsPartOfNested(property.propertyPath))
                             {
-                                drawnNestedPaths.Add(property.propertyPath);
-                                EditorGUILayout.PropertyField(property, true);
-                            }
-                        }
-                        else
-                        {
-                            var showWhenAttribute = property.GetAttribute<ShowWhenAttribute>();
-                            if (showWhenAttribute != null)
-                            {
-                                var targetProperty = serializedObject.FindProperty(showWhenAttribute.property);
-                                if (targetProperty != null && IsConditionMet(targetProperty, showWhenAttribute.equal))
+                                if (!drawnNestedPaths.Contains(property.propertyPath))
                                 {
-                                    if (showWhenAttribute.groupName != string.Empty)
-                                    {
-                                        string groupName = showWhenAttribute.groupName;
-                                        if (!showWhenFoldoutStates.ContainsKey(groupName))
-                                        {
-                                            showWhenFoldoutStates[groupName] = new KeyValuePair<bool, bool>(true, EditorGUILayout.Foldout(false, groupName));
-                                        }
-                                        var isDrawn = showWhenFoldoutStates[groupName].Key;
-                                        var isFolded = showWhenFoldoutStates[groupName].Value;
-
-                                        if (!isDrawn)
-                                        {
-                                            showWhenFoldoutStates[groupName] = new KeyValuePair<bool, bool>(true, EditorGUILayout.Foldout(isFolded, groupName));
-                                        }
-
-                                        if (isFolded)
-                                        {
-                                            EditorGUI.indentLevel++;
-                                            EditorGUILayout.PropertyField(property, true);
-                                            EditorGUI.indentLevel--;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        EditorGUILayout.PropertyField(property, true);
-                                    }
+                                    drawnNestedPaths.Add(property.propertyPath);
+                                    EditorGUILayout.PropertyField(property, true);
                                 }
                             }
                             else
                             {
-                                EditorGUILayout.PropertyField(property, true);
+                                var showWhenAttribute = property.GetAttribute<ShowWhenAttribute>();
+                                if (showWhenAttribute != null)
+                                {
+                                    var targetProperty = serializedObject.FindProperty(showWhenAttribute.property);
+                                    if (targetProperty != null && IsConditionMet(targetProperty, showWhenAttribute.equal))
+                                    {
+                                        if (showWhenAttribute.groupName != string.Empty)
+                                        {
+                                            string groupName = showWhenAttribute.groupName;
+                                            if (!showWhenFoldoutStates.ContainsKey(groupName))
+                                            {
+                                                showWhenFoldoutStates[groupName] = new KeyValuePair<bool, bool>(true, EditorGUILayout.Foldout(false, groupName));
+                                            }
+                                            var isDrawn = showWhenFoldoutStates[groupName].Key;
+                                            var isFolded = showWhenFoldoutStates[groupName].Value;
+
+                                            if (!isDrawn)
+                                            {
+                                                showWhenFoldoutStates[groupName] = new KeyValuePair<bool, bool>(true, EditorGUILayout.Foldout(isFolded, groupName));
+                                            }
+
+                                            if (isFolded)
+                                            {
+                                                EditorGUI.indentLevel++;
+                                                EditorGUILayout.PropertyField(property, true);
+                                                EditorGUI.indentLevel--;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            EditorGUILayout.PropertyField(property, true);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    EditorGUILayout.PropertyField(property, true);
+                                }
                             }
                         }
                     }
-                }
 
-                ResetShowWhenFoldoutStates();
-                if (!string.IsNullOrEmpty(group.Key))
-                    EditorGUI.indentLevel--;
+                    ResetShowWhenFoldoutStates();
+                    if (!string.IsNullOrEmpty(group.Key))
+                        EditorGUI.indentLevel--;
+                }
+            }
+            catch (Exception _)
+            {
+                // ignored
             }
 
             serializedObject.ApplyModifiedProperties();

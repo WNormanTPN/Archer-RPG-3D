@@ -31,7 +31,7 @@ namespace UI
                 SceneItem sceneItemComponent = sceneItem.GetComponent<SceneItem>();
                 if (sceneItemComponent != null)
                 {
-                    var isLimitedMap = mapMode == mapCollection.EndlessMode;
+                    var isLimitedMap = mapMode == mapCollection.DefaultMode;
                     sceneItemComponent.SetMapData(map, isLimitedMap);
                 }
             }

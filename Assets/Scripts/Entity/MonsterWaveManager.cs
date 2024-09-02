@@ -29,9 +29,10 @@ namespace Entity
             objectPool = GameObject.FindGameObjectWithTag("ObjectPool").GetComponent<ObjectPool>();
             mapViewDistance = PlayerPrefs.GetInt("ViewDistance");
             monsterPrefabs = new Dictionary<int, GameObject>();
+            Start();
         }
 
-        private void Start()
+        void Start()
         {
             mapGenerator = GameObject.FindGameObjectWithTag("MapGenerator").GetComponent<MapGenerator>();
             monsterDatas = ConfigDataManager.Instance.GetConfigData<CharacterDataCollection>();
@@ -57,7 +58,6 @@ namespace Entity
             Vector2Int spawnRangeZ = new Vector2Int(-mapViewDistance, mapViewDistance);
             foreach (var waveData in waveDatas)
             {
-                yield return new WaitForSeconds(waveData.nextTime);
                 if (!mapGenerator.isLimitedMap)
                 {
                     var playerPosition = new Vector2Int((int)player.transform.position.x, (int)player.transform.position.z);
@@ -78,6 +78,7 @@ namespace Entity
                         monsterObject.SetActive(true);
                     }
                 }
+                yield return new WaitForSeconds(waveData.nextTime);
             }
         }
         

@@ -15,6 +15,9 @@ namespace Entity.Player
         public int level = 0;
         public int expPerLevel = 100;
 
+        [InspectorGroup("Character Movement")] 
+        public GameObject footDustPrefab;
+
         protected int curExp { get; private set; }
         protected PlayerLevelUpManager levelUpManager;
         
@@ -22,9 +25,12 @@ namespace Entity.Player
         private MyInput input;                                // Reference to the MyInput script
         private readonly string idleAnimation = "Idle";
         private readonly string attackAnimation = "Attack_bow";
+        private AudioSource walkingSound;
+        private GameObject footDust;
         
         protected override void Start()
         {
+            walkingSound = GetComponent<AudioSource>();
             levelUpManager = FindObjectOfType<PlayerLevelUpManager>();
             base.Start();
             
@@ -45,9 +51,11 @@ namespace Entity.Player
             {
                 StopMove();
                 StartAttackAnim();
+                StopWalkingFX();
             }
             else
             {
+                PlayWalkingFX();
                 StopAttack();
                 Move(movement);
                 Rotate(movement);
@@ -90,6 +98,23 @@ namespace Entity.Player
             AddExp(characterInitData.exp);
         }
         
+        private void PlayWalkingFX()
+        {
+            if (!walkingSound.isPlaying)
+                walkingSound.Play();
+
+            if (!footDust)
+            {
+                footDust = Instantiate(footDustPrefab, transform.position, Quaternion.identity);
+                Destroy(footDust, 0.5f);
+            }
+        }
+        
+        private void StopWalkingFX()
+        {
+            walkingSound.Stop();
+        }
+        
         private void CalculateMaxLevel()
         {
             var skillsConfig = Skill.skillCollection;
@@ -127,7 +152,7 @@ namespace Entity.Player
         private IEnumerator PlayDamageEffect()
         {
             damageFX.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.5f);
             damageFX.SetActive(false);
         }
         

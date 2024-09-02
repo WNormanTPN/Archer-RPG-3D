@@ -133,7 +133,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: afaa5e50193589145b3cc1d5c84cf5e8
-    m_Address: Assets/RawResources/Effect/MagicSwordHitRed.prefab
+    m_Address: Assets/RawResources/Effect/ArrowColide.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

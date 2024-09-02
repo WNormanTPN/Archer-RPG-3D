@@ -175,6 +175,7 @@ namespace Entity.Attack
                 StopAllCoroutines();
                 if (attachToCollidedObject)
                 {
+                    PlayDestroyFX();
                     AttachToCollidedObject(collider);
                 }
                 else

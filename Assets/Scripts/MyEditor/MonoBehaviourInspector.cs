@@ -229,7 +229,7 @@ namespace MyEditor
                         EditorGUI.indentLevel--;
                 }
             }
-            catch (Exception _)
+            catch (Exception)
             {
                 // ignored
             }

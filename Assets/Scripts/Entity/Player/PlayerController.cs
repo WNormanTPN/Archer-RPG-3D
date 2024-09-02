@@ -39,7 +39,7 @@ namespace Entity.Player
         {
             // Handle input and set animation parameters
             Vector2 inputDirection = input.Player.Move.ReadValue<Vector2>();
-
+        
             Vector3 movement = new Vector3(inputDirection.x, 0, inputDirection.y).normalized;
             if (movement == Vector3.zero)
             {
@@ -52,7 +52,7 @@ namespace Entity.Player
                 Move(movement);
                 Rotate(movement);
             }
-
+        
             // Update animator parameters
             animator.SetFloat(speedParameter, movement.magnitude);
         }
@@ -92,7 +92,7 @@ namespace Entity.Player
         
         private void CalculateMaxLevel()
         {
-            var skillsConfig = ConfigDataManager.Instance.GetConfigData<SkillCollection>();
+            var skillsConfig = Skill.skillCollection;
             foreach (var skill in skillsConfig.Skills)
             {
                 playerMaxLevel += skill.Value.maxStacks;
@@ -103,9 +103,8 @@ namespace Entity.Player
         public void AddExp(int exp)
         {
             curExp += exp;
-            if (curExp >= expPerLevel && level < playerMaxLevel)
+            while (curExp >= expPerLevel && level < playerMaxLevel)
             {
-                levelUpManager.StartLevelUpProcess();
                 LevelUp();
                 curExp -= expPerLevel;
             }
@@ -118,7 +117,9 @@ namespace Entity.Player
         protected void LevelUp()
         {
             level++;
-            var healthIncrease = (int) (maxHealth * 0.1f);
+            levelUpManager.StartLevelUpProcess();
+            
+            var healthIncrease = (int) (maxHealth * 0.1f * level);
             maxHealth += healthIncrease;
             curHealth += healthIncrease;
         }

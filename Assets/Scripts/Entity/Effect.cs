@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Config;
 using Newtonsoft.Json;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Entity
@@ -29,7 +30,7 @@ namespace Entity
             {
                 if (_effectCollection == null)
                 {
-                    _effectCollection = ConfigDataManager.Instance.GetConfigData<EffectCollection>();
+                    _effectCollection = new EffectCollection(ConfigDataManager.Instance.GetConfigData<EffectCollection>());
                 }
 
                 return _effectCollection;
@@ -46,12 +47,28 @@ namespace Entity
         
         public Effect(int id)
         {
-            var data = ConfigDataManager.Instance.GetConfigData<EffectCollection>().Effects[id.ToString()];
+            var data = effectCollection.Effects[id.ToString()].DeepCopy();
             this.id = data.id;
             name = data.name;
-            effectValues = data.effectValues?.ToDictionary(entry => entry.Key, entry => entry.Value);
+            effectValues = data.effectValues;
             duration = data.duration;
             prefabKey = data.prefabKey;
+        }
+        
+        public Effect(Effect effect)
+        {
+            var copied = effect.DeepCopy();
+            id = copied.id;
+            name = copied.name;
+            effectValues = effect.effectValues;
+            duration = copied.duration;
+            prefabKey = copied.prefabKey;
+        }
+        
+        public Effect DeepCopy()
+        {
+            string serializedObject = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<Effect>(serializedObject);
         }
     }
     
@@ -70,10 +87,22 @@ namespace Entity
         {
             this.Effects = Effects;
         }
+        
+        public EffectCollection(EffectCollection collection)
+        {
+            var copied = collection.DeepCopy();
+            Effects = copied.Effects;
+        }
 
         public void FromJson(string json)
         {
             Effects = JsonConvert.DeserializeObject<Dictionary<string, Effect>>(json);
+        }
+        
+        public EffectCollection DeepCopy()
+        {
+            string serializedObject = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<EffectCollection>(serializedObject);
         }
     }
 }

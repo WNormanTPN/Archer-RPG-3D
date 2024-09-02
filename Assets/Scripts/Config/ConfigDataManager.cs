@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Entity;
+using Entity.Player;
 using Evironment.MapGenerator;
 using Newtonsoft.Json;
 using UI;
@@ -35,7 +37,7 @@ namespace Config
         public static ConfigDataManager Instance { get; private set; }
 
         private static TaskCompletionSource<bool> loadDataCompletionSource;
-
+        
         private void Awake()
         {
             if (Instance == null)
@@ -43,7 +45,7 @@ namespace Config
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
                 loadDataCompletionSource = new TaskCompletionSource<bool>();
-                _ = LoadAllDataAsync(); // Trigger async loading
+                LoadAllDataAsync(); // Trigger async loading
             }
             else
             {

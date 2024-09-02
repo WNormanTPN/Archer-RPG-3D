@@ -27,6 +27,11 @@ namespace UI
         public IEnumerator ShowSkillChoiceCoroutine(Skill skill, System.Action<int> onChoice)
         {
             ClearListeners();
+            if (skill == null)
+            {
+                this.gameObject.SetActive(false);
+                yield break;
+            }
             var skillTexture = Addressables.LoadAssetAsync<Texture2D>(skill.skillIcon);
             skillTexture.WaitForCompletion();
         

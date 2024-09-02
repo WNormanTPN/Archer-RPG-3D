@@ -2,12 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Config;
 using Entity;
 using Entity.Player;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI
 {
@@ -16,128 +13,141 @@ namespace UI
         public GameObject skillChoicePanel;
         
         private PlayerController playerController;
-        private Dictionary<string, Skill> remaningSkills;
+        private SkillCollection remaningSkills;
         private int remaningSkillCount;
         private List<SkillChoiceButton> skillChoiceButtons;
-        
+        int needChoice = 0;
+
         private void CalculateRemainingSkills()
         {
-            remaningSkills = ConfigDataManager.Instance.GetConfigData<SkillCollection>().Skills
-                .ToDictionary(entry => entry.Key, entry => entry.Value);
-
-            if (playerController.characterInitData?.skillIds == null) return;
-            var curSkillIDs = playerController.characterInitData.skillIds;
+            remaningSkills = new SkillCollection(Skill.skillCollection);
             remaningSkillCount = 0;
+            var curSkills = playerController.skills.Skills;
             
-            foreach (var skillID in curSkillIDs)
+            foreach (var curSkill in curSkills.Values)
             {
-                var curSkill = remaningSkills[skillID.ToString()];
                 if (curSkill.currentStacks < curSkill.maxStacks)
                 {
-                    curSkill.currentStacks++;
-                    remaningSkills[skillID.ToString()] = curSkill;
+                    remaningSkills.Skills[curSkill.skillID.ToString()].currentStacks = curSkill.currentStacks;
                 }
                 if (curSkill.currentStacks == curSkill.maxStacks)
                 {
-                    remaningSkills.Remove(skillID.ToString());
+                    remaningSkills.Skills.Remove(curSkill.skillID.ToString());
                 }
+                
+                // foreach (var exclusion in curSkill.exclusions)
+                // {
+                //     if (remaningSkills.Skills.ContainsKey(exclusion.ToString()))
+                //     {
+                //         remaningSkills.Skills.Remove(exclusion.ToString());
+                //     }
+                // }
             }
             
-            foreach (var skill in remaningSkills)
+            foreach (var skill in remaningSkills.Skills.Values)
             {
-                remaningSkillCount += skill.Value.maxStacks - skill.Value.currentStacks;
+                remaningSkillCount += skill.maxStacks - skill.currentStacks;
             }
         }
 
         public void StartLevelUpProcess()
         {
+            if (needChoice == 0)
+            {
+                needChoice++;
+                StartLevelupProcessHelper();
+            }
+            else
+            {
+                needChoice++;
+            }
+        }
+        
+        private void StartLevelupProcessHelper()
+        {
             StartCoroutine(LevelUpCoroutine((result) =>
             {
+                if (result == -1) return;
                 playerController.AddSkill(result);
+                needChoice--;
+                
+                if (needChoice > 0)
+                {
+                    StartLevelupProcessHelper();
+                }
             }));
         }
 
-        public void Test()
-        {
-            Debug.Log("Test");
-        }
         
         public IEnumerator LevelUpCoroutine(Action<int> onComplete)
         {
-            if (playerController == null)
+            if (!playerController)
                 playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
-            if (skillChoiceButtons == null)
+            if (skillChoiceButtons == null || skillChoiceButtons.Count == 0)
                 skillChoiceButtons = skillChoicePanel.GetComponentsInChildren<SkillChoiceButton>().ToList();
 
-            if (remaningSkills == null)
-            {
-                CalculateRemainingSkills();
-            }
-            else if (remaningSkillCount == 0)
+
+            CalculateRemainingSkills();
+            if (remaningSkillCount == 0)
             {
                 onComplete?.Invoke(-1);
                 yield break;
             }
-
-            CalculateRemainingSkills();
+            
             var randomSkillIDs = GetRandomSkillIDs(3);
             skillChoicePanel.SetActive(true);
             int choicedSkillID = -1;
-
+            
             // Clear previous listeners to avoid issues
             foreach (var button in skillChoiceButtons)
             {
                 button.ClearListeners();
             }
 
+            for (int i = 0; i < skillChoiceButtons.Count; i++)
+            {
+                skillChoiceButtons[i].gameObject.SetActive(true);
+            }
+            
             for (var i = 0; i < skillChoiceButtons.Count; i++)
             {
-                var skill = remaningSkills[randomSkillIDs[i].ToString()];
-
+                if (randomSkillIDs.Count <= i)
+                {
+                    StartCoroutine(skillChoiceButtons[i].ShowSkillChoiceCoroutine(null, skillID =>
+                    {
+                        choicedSkillID = skillID;
+                        skillChoicePanel.SetActive(false);
+                        onComplete.Invoke(choicedSkillID);
+                    }));
+                    continue;
+                }
+                var skill = new Skill(remaningSkills.Skills[randomSkillIDs[i].ToString()]);
+                
                 StartCoroutine(skillChoiceButtons[i].ShowSkillChoiceCoroutine(skill, skillID =>
                 {
                     choicedSkillID = skillID;
-                    ChooseSkill(choicedSkillID);
                     skillChoicePanel.SetActive(false);
                     onComplete.Invoke(choicedSkillID);
                 }));
             }
         }
-
-        private void ChooseSkill(int skillID)
-        {
-            var skill = remaningSkills[skillID.ToString()];
-            skill.currentStacks++;
-            remaningSkillCount--;
-            if (skill.currentStacks == skill.maxStacks)
-            {
-                remaningSkills.Remove(skillID.ToString());
-            }
-            else
-            {
-                remaningSkills[skillID.ToString()] = skill;
-            }
-        }
         
         private List<int> GetRandomSkillIDs(int n)
         {
-            var tempRemainingSkills = new Dictionary<string, Skill>(remaningSkills);
+            var tempRemainingSkills = new SkillCollection(remaningSkills);
             var randomSkillIDs = new List<int>();
             var random = new System.Random();
             for (var i = 0; i < n; i++)
             {
-                var randomIndex = random.Next(0, tempRemainingSkills.Count);
-                var randomSkill = tempRemainingSkills.ElementAt(randomIndex).Value;
+                if (tempRemainingSkills.Skills.Count == 0) break;
+                var randomIndex = random.Next(0, tempRemainingSkills.Skills.Count);
+                var randomSkill = tempRemainingSkills.Skills.ElementAt(randomIndex).Value;
+                randomSkill.currentStacks++;
                 randomSkillIDs.Add(randomSkill.skillID);
                 if (randomSkill.currentStacks == randomSkill.maxStacks)
                 {
-                    tempRemainingSkills.Remove(randomSkill.skillID.ToString());
-                }
-                else
-                {
-                    randomSkill.currentStacks++;
-                    tempRemainingSkills[randomSkill.skillID.ToString()] = randomSkill;
+                    tempRemainingSkills.Skills.Remove(randomSkill.skillID.ToString());
                 }
             }
             return randomSkillIDs;

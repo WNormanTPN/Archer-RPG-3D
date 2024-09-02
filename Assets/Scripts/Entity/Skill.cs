@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Config;
 using Newtonsoft.Json;
+using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Entity
 {
@@ -24,7 +26,7 @@ namespace Entity
             {
                 if (_skillCollection == null)
                 {
-                    _skillCollection = ConfigDataManager.Instance.GetConfigData<SkillCollection>();
+                    _skillCollection = new SkillCollection(ConfigDataManager.Instance.GetConfigData<SkillCollection>());
                 }
 
                 return _skillCollection;
@@ -43,14 +45,33 @@ namespace Entity
 
         public Skill(int skillID)
         {
-            var data = skillCollection.Skills[skillID.ToString()];
+            var data = skillCollection.Skills[skillID.ToString()].DeepCopy();
             this.skillID = data.skillID;
             name = data.name;
             skillIcon = data.skillIcon;
-            effectIDs = data.effectIDs?.ToList();
+            effectIDs = data.effectIDs;
             maxStacks = data.maxStacks;
-            attributes = data.attributes?.ToDictionary(entry => entry.Key, entry => entry.Value);;
-            exclusions = data.exclusions?.ToList();
+            attributes = data.attributes;
+            exclusions = data.exclusions;
+        }
+        
+        public Skill(Skill skill)
+        {
+            var copied = skill.DeepCopy();
+            skillID = copied.skillID;
+            name = copied.name;
+            skillIcon = copied.skillIcon;
+            effectIDs = copied.effectIDs;
+            maxStacks = copied.maxStacks;
+            currentStacks = copied.currentStacks;
+            attributes = copied.attributes;
+            exclusions =copied.exclusions;
+        }
+        
+        public Skill DeepCopy()
+        {
+            string serializedObject = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<Skill>(serializedObject);
         }
     }
     
@@ -69,6 +90,12 @@ namespace Entity
         {
             this.Skills = Skills;
         }
+        
+        public SkillCollection(SkillCollection skillCollection)
+        {
+            var copied = skillCollection.DeepCopy();
+            Skills = copied.Skills;
+        }
 
         public void FromJson(string json)
         {
@@ -82,25 +109,17 @@ namespace Entity
                 var curSkill = Skills[skill.skillID.ToString()];
                 if (curSkill.currentStacks < curSkill.maxStacks)
                 {
-                    List<KeyValuePair<string, float>> attributesToAdd = new List<KeyValuePair<string, float>>();
-
                     foreach (KeyValuePair<string, float> kvp in skill.attributes)
-                    {
-                        attributesToAdd.Add(kvp);
-                    }
-
-                    foreach (var kvp in attributesToAdd)
                     {
                         curSkill.attributes[kvp.Key] += kvp.Value;
                     }
-
+            
                     curSkill.currentStacks++;
-
                     RemoveAllExclusions(skill);
                 }
                 return curSkill;
             }
-
+            
             Skills[skill.skillID.ToString()] = skill;
             skill.currentStacks++;
             RemoveAllExclusions(skill);
@@ -122,6 +141,12 @@ namespace Entity
             {
                 Skills.Remove(key);
             }
+        }
+        
+        public SkillCollection DeepCopy()
+        {
+            string serializedObject = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<SkillCollection>(serializedObject);
         }
     }
 }

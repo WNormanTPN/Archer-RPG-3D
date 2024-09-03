@@ -855,18 +855,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 348388b637a487c4d99b3b02c04a37bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  _moveSpeed: 5
   rotationSpeed: 720
-  weapon:
+  _weapon:
     weaponID: 0
     ballistic: 0
-    bulletLogic:
-      logic: 
+    attackLogics: []
     distance: 0
     speed: 0
-    destroyEffectKey: 
-    bulletPrefabKey: 
-  skills: []
+    owner: {fileID: 0}
   effects: []
   characterInitData:
     id: 0
@@ -876,11 +873,11 @@ MonoBehaviour:
     skillIds: 
     exp: 0
     prefabKey: 
-  maxHealth: 100
-  curHealth: 100
-  attackSpeed: 0.5
+  _maxHealth: 100
+  _curHealth: 100
+  _attackSpeed: 1
   attackDamage: 10
-  attackPoint: {fileID: 6563319465556445261}
+  forwardAttackPoint: {fileID: 6563319465556445261}
   player: {fileID: 0}
   moveDuration: 1.5
   rotateDuration: 1
@@ -889,7 +886,7 @@ MonoBehaviour:
   rangeForAttack: 5
   attackCooldown: 2
   lineRenderer: {fileID: 1596139180802800107, guid: 7a28303471512ba4993ebdc0c78500d4, type: 3}
-  lineRendererWidth: 1
+  lineRendererWidth: 2.5
 --- !u!136 &1652416519902787928
 CapsuleCollider:
   m_ObjectHideFlags: 0

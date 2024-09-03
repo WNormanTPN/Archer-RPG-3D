@@ -137,7 +137,7 @@ namespace Entity
             effects = new List<Effect>();
             curHealth = maxHealth;
             attackConfig.damage = attackDamage;
-            if (forwardAttackPoint)
+            if (forwardAttackPoint && !backwardAttackPoint)
             {
                 CalculateAttackPoints();
                 attackConfig.forwardAttackPoint = forwardAttackPoint;
@@ -225,13 +225,13 @@ namespace Entity
             rightsideAttackPoint = GameObject.Instantiate(forwardAttackPoint, transform);
             direction = Quaternion.Euler(0, 180, 0) * direction;
             backwardAttackPoint.position = transform.position + direction;
-            backwardAttackPoint.rotation = Quaternion.Euler(0, 180, 0);
+            backwardAttackPoint.rotation = forwardAttackPoint.rotation * Quaternion.Euler(0, 180, 0);
             direction = Quaternion.Euler(0, 90, 0) * direction;
             leftsideAttackPoint.position = transform.position + direction;
-            leftsideAttackPoint.rotation = Quaternion.Euler(0, -90, 0);
+            leftsideAttackPoint.rotation = forwardAttackPoint.rotation * Quaternion.Euler(0, -90, 0);
             direction = Quaternion.Euler(0, -180, 0) * direction;
             rightsideAttackPoint.position = transform.position + direction;
-            rightsideAttackPoint.rotation = Quaternion.Euler(0, 90, 0);
+            rightsideAttackPoint.rotation = forwardAttackPoint.rotation * Quaternion.Euler(0, 90, 0);
         }
         
         protected virtual void LoadInitData()
@@ -476,7 +476,22 @@ namespace Entity
             }
         }
 
-        protected void OnDestroy()
+        private void OnDrawGizmosSelected()
+        {
+            if (forwardAttackPoint && backwardAttackPoint && leftsideAttackPoint && rightsideAttackPoint)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawRay(forwardAttackPoint.position, forwardAttackPoint.forward);
+                Gizmos.color = Color.green;
+                Gizmos.DrawRay(backwardAttackPoint.position, backwardAttackPoint.forward);
+                Gizmos.color = Color.blue;
+                Gizmos.DrawRay(leftsideAttackPoint.position, leftsideAttackPoint.forward);
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawRay(rightsideAttackPoint.position, rightsideAttackPoint.forward);
+            }
+        }
+
+        protected virtual void OnDestroy()
         {
             StopAllCoroutines();
         }

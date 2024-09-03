@@ -140,6 +140,13 @@ namespace Entity
                         }
 
                         break;
+                    case Ballistic.BulletStraightWithTrajectory:
+                        foreach (var bulletInstance in bulletInstances)
+                        {
+                            bulletInstance.AddComponent<StraightMovement>().Init(speed, distance, attackLogics, config);
+                        }
+                        
+                        break;
                     case Ballistic.BulletCurve:
                         foreach (var bulletInstance in bulletInstances)
                         {
@@ -211,17 +218,28 @@ namespace Entity
         
         private void InstantiateBulletsHelper(ref List<GameObject> bulletInstances, Transform attackPoint, int bulletCount)
         {
+            var directions = CalculateDirectionOfBullets(attackPoint, bulletCount);
+            for (int i = 0; i < bulletCount; i++)
+            {
+                var bullet = Object.Instantiate(bulletPrefab);
+                bullet.transform.position = attackPoint.position;
+                bullet.transform.rotation = Quaternion.LookRotation(directions[i]);
+                bulletInstances.Add(bullet);
+            }
+        }
+        
+        public List<Vector3> CalculateDirectionOfBullets(Transform attackPoint, int bulletCount)
+        {
+            List<Vector3> directions = new List<Vector3>();
             var forward = attackPoint.forward;
             for (int i = 0; i < bulletCount; i++)
             {
                 float angle = (i - (bulletCount - 1) / 2f) * bulletSpreadAngle;
                 Quaternion rotation = Quaternion.Euler(0, angle, 0);
-                var bullet = Object.Instantiate(bulletPrefab);
-                bullet.transform.position = attackPoint.position;
                 Vector3 bulletDirection = rotation * forward;
-                bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
-                bulletInstances.Add(bullet);
+                directions.Add(bulletDirection);
             }
+            return directions;
         }
         
         private AttackLogic GetAttackLogic(string logic)
@@ -298,10 +316,11 @@ namespace Entity
     public enum Ballistic
     {
         BulletStraight = 0,
-        BulletCurve = 1,
-        BulletParabola = 2,
-        BulletChase = 3,
-        BulletRound = 4,
-        MeleeAttack = 5,
+        BulletStraightWithTrajectory = 1,
+        BulletCurve = 2,
+        BulletParabola = 3,
+        BulletChase = 4,
+        BulletRound = 5,
+        MeleeAttack = 6,
     }
 }

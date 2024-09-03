@@ -33,6 +33,7 @@ namespace Entity.Player
             walkingSound = GetComponent<AudioSource>();
             levelUpManager = FindObjectOfType<PlayerLevelUpManager>();
             base.Start();
+            SetUpCharacter(characterInitData);
             
             if (input == null)
             {

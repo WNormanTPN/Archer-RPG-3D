@@ -159,6 +159,7 @@ namespace Entity.Attack
                     if (attachToCollidedObject)
                     {
                         AttachToCollidedObject(collider);
+                        Destroy(gameObject, 5f);
                     }
                     else
                     {

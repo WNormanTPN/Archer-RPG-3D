@@ -885,7 +885,7 @@ MonoBehaviour:
   attackAnimation: Attack_bow
   rangeForAttack: 5
   attackCooldown: 2
-  lineRenderer: {fileID: 1596139180802800107, guid: 7a28303471512ba4993ebdc0c78500d4, type: 3}
+  lineRendererPrefab: {fileID: 1596139180802800107, guid: 7a28303471512ba4993ebdc0c78500d4, type: 3}
   lineRendererWidth: 2.5
 --- !u!136 &1652416519902787928
 CapsuleCollider:

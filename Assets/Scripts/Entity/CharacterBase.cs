@@ -137,7 +137,7 @@ namespace Entity
             effects = new List<Effect>();
             curHealth = maxHealth;
             attackConfig.damage = attackDamage;
-            if (forwardAttackPoint && !backwardAttackPoint)
+            if (forwardAttackPoint)
             {
                 CalculateAttackPoints();
                 attackConfig.forwardAttackPoint = forwardAttackPoint;
@@ -152,7 +152,7 @@ namespace Entity
         public virtual void SetUpCharacter(CharacterData data)
         {
             characterInitData = data;
-            Start();
+            LoadInitData();
         }
         
         public virtual void Move(Vector3 direction)

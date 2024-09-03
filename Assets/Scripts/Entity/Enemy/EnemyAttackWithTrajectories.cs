@@ -61,7 +61,6 @@ namespace Entity.Enemy
 
         void UpdateTrajectoryLines()
         {
-            var directions = weapon.CalculateDirectionOfBullets(forwardAttackPoint, attackConfig.forwardBulletCount);
             int lineIndex = 0;
 
             // Update forward trajectory lines

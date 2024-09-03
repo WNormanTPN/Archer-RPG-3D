@@ -49,7 +49,7 @@ namespace Entity
         }
         public GameObject owner;
 
-        private MonoBehaviour ownerMono;
+        private CharacterBase characterBase;
         private GameObject bulletPrefab;
         private GameObject destroyFX;
         private float bulletSpreadAngle = 90 / 5f;
@@ -110,11 +110,11 @@ namespace Entity
             }
             else
             {
-                if (ownerMono == null)
+                if (characterBase == null)
                 {
-                    ownerMono = owner.GetComponent<CharacterBase>();
+                    characterBase = owner.GetComponent<CharacterBase>();
                 }
-                ownerMono.StartCoroutine(DoAttackCoroutine(config));
+                characterBase?.StartCoroutine(DoAttackCoroutine(config));
             }
         }
         

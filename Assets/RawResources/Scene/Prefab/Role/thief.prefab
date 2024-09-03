@@ -746,7 +746,7 @@ MonoBehaviour:
     prefabKey: 
   _maxHealth: 100
   _curHealth: 100
-  _attackSpeed: 1
+  _attackSpeed: 2
   attackDamage: 10
   forwardAttackPoint: {fileID: 8227067831097381751}
   damageFX: {fileID: 4692719035723405784}

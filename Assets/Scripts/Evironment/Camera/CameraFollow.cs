@@ -30,7 +30,14 @@ namespace Environment.Camera
             }
             else
             {
-                target = GameObject.FindGameObjectWithTag("Player").transform;
+                try
+                {
+                    target = GameObject.FindGameObjectWithTag("Player").transform;
+                }
+                catch (System.Exception)
+                {
+                    // ignored
+                }
             }
         }
     }

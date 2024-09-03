@@ -119,7 +119,7 @@ namespace Entity.Enemy
         {
             base.SetUpCharacter(data);
             attackDamage *= waveAttack;
-            maxHealth = (int) (maxHealth * waveMaxHP);
+            maxHealth = Mathf.RoundToInt(maxHealth * waveMaxHP);
         }
 
         public override void Move(Vector3 direction) // Move forward towards the player

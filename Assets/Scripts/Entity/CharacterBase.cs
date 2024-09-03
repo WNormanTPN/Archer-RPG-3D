@@ -70,7 +70,7 @@ namespace Entity
         private int _maxHealth = 100;                         // Health of the character
         public int maxHealth
         {
-            get => (maxHealth_add + _maxHealth * maxHealth_mul);
+            get => (maxHealth_add + _maxHealth) * maxHealth_mul;
             set => _maxHealth = value;
         }
         [Range(0, 1000)]
@@ -78,7 +78,7 @@ namespace Entity
         private int _curHealth = 100;                         // Current health of the character
         public int curHealth
         {
-            get => Mathf.Max(curHealth_add + _curHealth * curHealth_mul, maxHealth);
+            get => Mathf.Min((curHealth_add + _curHealth) * curHealth_mul, maxHealth);
             set => _curHealth = value;
         }
         [Range(0, 10)]
@@ -196,11 +196,14 @@ namespace Entity
         
         public virtual void TakeDamage(float damage)
         {
-            curHealth -= (int) damage;
-            animator.SetTrigger(takeDamageParameter);
+            curHealth -= Mathf.RoundToInt(damage);
             if (curHealth <= 0)
             {
                 Die();
+            }
+            else
+            {
+                animator.SetTrigger(takeDamageParameter);
             }
         }
         

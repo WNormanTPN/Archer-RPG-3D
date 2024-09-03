@@ -112,7 +112,7 @@ namespace Entity
             {
                 if (ownerMono == null)
                 {
-                    ownerMono = owner.GetComponent<MonoBehaviour>();
+                    ownerMono = owner.GetComponent<CharacterBase>();
                 }
                 ownerMono.StartCoroutine(DoAttackCoroutine(config));
             }

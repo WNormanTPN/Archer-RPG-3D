@@ -149,6 +149,11 @@ namespace Entity
             LoadInitData();
         }
         
+        public virtual void SetUpCharacter(CharacterData data)
+        {
+            characterInitData = data;
+            Start();
+        }
         
         public virtual void Move(Vector3 direction)
         {
@@ -407,6 +412,23 @@ namespace Entity
 
         private void AddOrRemoveSkillAttributes(Skill skill, bool isRemove)
         {
+            if (skill == null)
+            {
+                Debug.LogError("Skill is null!");
+                return;
+            }
+
+            if (skill.attributes == null)
+            {
+                Debug.LogError("Skill attributes are null!");
+                return;
+            }
+
+            if (attackConfig == null)
+            {
+                Debug.LogError("AttackConfig is null!");
+                return;
+            }
             foreach (var kvp in skill.attributes)
             {
                 var key = kvp.Key;

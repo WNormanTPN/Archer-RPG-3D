@@ -115,6 +115,13 @@ namespace Entity.Enemy
             }
         }
 
+        public void SetUpCharacter(CharacterData data, float waveAttack, float waveMaxHP)
+        {
+            base.SetUpCharacter(data);
+            attackDamage *= waveAttack;
+            maxHealth = (int) (maxHealth * waveMaxHP);
+        }
+
         public override void Move(Vector3 direction) // Move forward towards the player
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName(attackAnimation)) return;

@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Config;
+using Entity.Enemy;
 using Evironment.MapGenerator;
 using Generic;
 using Newtonsoft.Json;
@@ -18,7 +20,7 @@ namespace Entity
         private List<WaveData> waveDatas;
         private ObjectPool objectPool;
         private int mapViewDistance;
-        private Dictionary<int, GameObject> monsterPrefabs;
+        private Dictionary<string, GameObject> monsterPrefabs;
         private CharacterDataCollection monsterDatas;
         private MapGenerator mapGenerator;
         
@@ -28,28 +30,39 @@ namespace Entity
             waveDatas = GetWaveData();
             objectPool = GameObject.FindGameObjectWithTag("ObjectPool").GetComponent<ObjectPool>();
             mapViewDistance = PlayerPrefs.GetInt("ViewDistance");
-            monsterPrefabs = new Dictionary<int, GameObject>();
-            Start();
-        }
-
-        void Start()
-        {
+            monsterPrefabs = new Dictionary<string, GameObject>();
             mapGenerator = GameObject.FindGameObjectWithTag("MapGenerator").GetComponent<MapGenerator>();
             monsterDatas = ConfigDataManager.Instance.GetConfigData<CharacterDataCollection>();
-            LoadAllNeededAssets();
+
+            // Start the asynchronous setup
+            SetUp();
+        }
+
+        async void SetUp()
+        {
+            // Load all needed assets
+            List<Task<GameObject>> tasks = LoadAllNeededAssets();
+
+            // Await the completion of all tasks
+            await Task.WhenAll(tasks);
+
             StartCoroutine(SetUpWave());
         }
-        
-        void LoadAllNeededAssets()
+
+
+        List<Task<GameObject>> LoadAllNeededAssets()
         {
+            List<Task<GameObject>> tasks = new();
             foreach (var waveData in waveDatas)
             {
                 foreach (var monster in waveData.monsters)
                 {
-                    var monsterId = monster[0];
-                    LoadMonsterPrefab(monsterId);
+                    var monsterId = monster.Key;
+                    var task = LoadMonsterPrefab(monsterId);
+                    if (task != null) tasks.Add(task);
                 }
             }
+            return tasks;
         }
 
         IEnumerator SetUpWave()
@@ -66,14 +79,15 @@ namespace Entity
                 }
                 foreach (var monster in waveData.monsters)
                 {
-                    var monsterId = monster[0];
-                    var monsterCount = monster[1];
+                    var monsterId = monster.Key;
+                    var monsterCount = monster.Value;
                     for (int i = 0; i < monsterCount; i++)
                     {
                         var monsterData = GetMonsterData(monsterId);
                         var monsterPrefab = GetMonsterPrefab(monsterId);
                         var monsterObject = objectPool.GetObject(monsterPrefab);
                         var spawnPosition = new Vector3(Random.Range(spawnRangeX.x, spawnRangeX.y), 0, Random.Range(spawnRangeZ.x, spawnRangeZ.y));
+                        monsterObject.GetComponent<EnemyController>().SetUpCharacter(monsterData, waveData.attack, waveData.maxHP);
                         monsterObject.transform.position = spawnPosition;
                         monsterObject.SetActive(true);
                     }
@@ -82,9 +96,9 @@ namespace Entity
             }
         }
         
-        void LoadMonsterPrefab(int monsterId)
+        Task<GameObject> LoadMonsterPrefab(string monsterId)
         {
-            if (monsterPrefabs.ContainsKey(monsterId)) return;
+            if (monsterPrefabs.ContainsKey(monsterId)) return null;
             monsterPrefabs.Add(monsterId, null);
             var monsterData = GetMonsterData(monsterId);
             var loadAssetAsync = Addressables.LoadAssetAsync<GameObject>(monsterData.prefabKey);
@@ -92,16 +106,17 @@ namespace Entity
             {
                 monsterPrefabs[monsterId] = handle.Result;
             };
+            return loadAssetAsync.Task;
         }
         
-        GameObject GetMonsterPrefab(int monsterId)
+        GameObject GetMonsterPrefab(string monsterId)
         {
             return monsterPrefabs[monsterId];
         }
         
-        CharacterData GetMonsterData(int monsterId)
+        CharacterData GetMonsterData(string monsterId)
         {
-            return monsterDatas.CharacterDatas[monsterId.ToString()];
+            return monsterDatas.CharacterDatas[monsterId];
         }
         
         List<WaveData> GetWaveData()
@@ -119,7 +134,7 @@ namespace Entity
         public int nextTime;
         public float attack;
         public float maxHP;
-        public List<List<int>> monsters;
+        public Dictionary<string, int> monsters;
     }
     
     [Serializable]

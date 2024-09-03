@@ -627,7 +627,7 @@ AudioSource:
   m_GameObject: {fileID: 162160}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 650588626551778580, guid: d0b330f10e63a184aa4cd312fc366022, type: 2}
   m_audioClip: {fileID: 8300000, guid: 6cd726a4b86d134459a7ce02ea3d7393, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -751,7 +751,7 @@ MonoBehaviour:
   forwardAttackPoint: {fileID: 8227067831097381751}
   damageFX: {fileID: 4692719035723405784}
   level: 0
-  expPerLevel: 100
+  expPerLevel: 10
   footDustPrefab: {fileID: 187952, guid: 2afaffa6dac79a94a8e28867754381c1, type: 3}
 --- !u!1 &162646
 GameObject:

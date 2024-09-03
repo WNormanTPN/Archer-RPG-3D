@@ -17,6 +17,7 @@ namespace UI
         private Vector2 targetPosition;      // Target position for snapping
         private bool isSnapping = false;     // Flag to check if currently snapping
         private Transform[] buttonPos;       // Array of button transform in the button list
+        private AudioSource audioSource;
 
         void Start()
         {
@@ -34,6 +35,7 @@ namespace UI
             {
                 buttonPos[i] = buttonList.transform.GetChild(i);
             }
+            audioSource = imageFlag.GetComponent<AudioSource>();
         }
 
         void Update()
@@ -51,6 +53,7 @@ namespace UI
             targetPosition = GetNearestItemPosition();
             int index = System.Array.IndexOf(itemsPos, targetPosition);
             imageFlag.transform.DOMoveX(buttonPos[index].position.x, 0.5f);
+            audioSource.Play();
         }
         
         public void OnBeginDrag(PointerEventData eventData)

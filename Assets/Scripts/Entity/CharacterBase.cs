@@ -130,7 +130,6 @@ namespace Entity
 
         protected virtual void Start()
         {
-            Debug.Log(gameObject.name + " started");
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
             attackConfig = new AttackConfig();
@@ -235,12 +234,6 @@ namespace Entity
         
         protected virtual void LoadInitData()
         {
-            if (characterInitData == null)
-            {
-                Debug.LogError("characterInitData chưa được khởi tạo!");
-                return;
-            }
-    
             SetScale(characterInitData.scale);
 
             if (characterInitData.weaponId != 0 && weapon?.weaponID != characterInitData.weaponId)

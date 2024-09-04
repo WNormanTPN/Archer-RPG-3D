@@ -51,7 +51,7 @@ namespace Entity.Enemy
 
             for (int i = 0; i < totalLineRenderers; i++)
             {
-                var lineRendererInstance = objectPool.GetObject(lineRendererPrefab);
+                var lineRendererInstance = objectPool.GetObject(lineRendererPrefab, transform.parent);
                 var lineRendererComponent = lineRendererInstance.GetComponent<LineRenderer>();
                 lineRendererComponent.startWidth = lineRendererWidth;
                 lineRendererComponent.endWidth = lineRendererWidth;

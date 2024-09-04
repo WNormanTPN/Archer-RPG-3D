@@ -1,6 +1,6 @@
 {
     "101": [
-        {"waveID": 10101, "waveGroup": 101, "nextTime": 25, "attack": 0.25, "maxHP": 0.1, "monsters": {"101": 3}},
+        {"waveID": 10101, "waveGroup": 101, "nextTime": 25, "attack": 0.25, "maxHP": 0.2, "monsters": {"101": 3}},
         {"waveID": 10102, "waveGroup": 101, "nextTime": 22, "attack": 0.25, "maxHP": 0.1, "monsters": {"203": 2}},
         {"waveID": 10103, "waveGroup": 101, "nextTime": 20, "attack": 0.25, "maxHP": 0.1, "monsters": {"201": 1, "203": 2}},
         {"waveID": 10104, "waveGroup": 101, "nextTime": 12, "attack": 0.25, "maxHP": 0.1, "monsters": {"302": 3}},

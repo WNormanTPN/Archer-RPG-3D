@@ -7,6 +7,7 @@ using Entity.Enemy;
 using Evironment.MapGenerator;
 using Generic;
 using Newtonsoft.Json;
+using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
@@ -16,6 +17,7 @@ namespace Entity
     public class MonsterWaveManager : MonoBehaviour
     {
         public GameObject player;                       // Assign your player prefab in the Inspector
+        public Transform entitiesParent;                // Parent for all entities
         
         private List<WaveData> waveDatas;
         private ObjectPool objectPool;
@@ -85,7 +87,7 @@ namespace Entity
                     {
                         var monsterData = GetMonsterData(monsterId);
                         var monsterPrefab = GetMonsterPrefab(monsterId);
-                        var monsterObject = objectPool.GetObject(monsterPrefab);
+                        var monsterObject = objectPool.GetObject(monsterPrefab, entitiesParent);
                         var spawnPosition = new Vector3(Random.Range(spawnRangeX.x, spawnRangeX.y), 0, Random.Range(spawnRangeZ.x, spawnRangeZ.y));
                         monsterObject.GetComponent<EnemyController>().SetUpCharacter(monsterData, waveData.attack, waveData.maxHP);
                         monsterObject.transform.position = spawnPosition;

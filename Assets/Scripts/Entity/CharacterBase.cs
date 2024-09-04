@@ -5,6 +5,7 @@ using System.Linq;
 using Config;
 using MyEditor;
 using Newtonsoft.Json;
+using UI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -109,19 +110,21 @@ namespace Entity
         
         protected float moveSpeed_add = 0;                    // Added move speed from skills and effects
         protected float moveSpeed_mul = 1;                    // Multiplied move speed from skills and effects
-        protected int curHealth_add = 0;                    // Added health from skills and effects
-        protected int curHealth_mul = 1;                    // Multiplied health from skills and effects
-        protected int maxHealth_add = 0;                    // Added max health from skills and effects
-        protected int maxHealth_mul = 1;                    // Multiplied max health from skills and effects
-        protected float attackSpeed_add = 0;                 // Added attack speed from skills and effects
-        protected float attackSpeed_mul = 1;                 // Multiplied attack speed from skills and effects
-        protected float attackDamage_add = 0;                // Added attack damage from skills and effects
-        protected float attackDamage_mul = 1;                // Multiplied attack damage from skills and effects
+        protected int curHealth_add = 0;                      // Added health from skills and effects
+        protected int curHealth_mul = 1;                      // Multiplied health from skills and effects
+        protected int maxHealth_add = 0;                      // Added max health from skills and effects
+        protected int maxHealth_mul = 1;                      // Multiplied max health from skills and effects
+        protected float attackSpeed_add = 0;                  // Added attack speed from skills and effects
+        protected float attackSpeed_mul = 1;                  // Multiplied attack speed from skills and effects
+        protected float attackDamage_add = 0;                 // Added attack damage from skills and effects
+        protected float attackDamage_mul = 1;                 // Multiplied attack damage from skills and effects
         
         protected readonly string speedParameter = "Speed";
         protected readonly string attackSpeedParameter = "AttackSpeed";
         protected readonly string takeDamageParameter = "Damage";
         protected readonly string dieParameter = "Death";
+        
+        private HealthBarManager healthBarManager;            // Reference to the health bar manager
         
         #endregion
         
@@ -138,6 +141,7 @@ namespace Entity
             attackConfig = new AttackConfig();
             skills = new SkillCollection();
             effects = new List<Effect>();
+            healthBarManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<HealthBarManager>();
             curHealth = maxHealth;
             attackConfig.damage = attackDamage;
             if (forwardAttackPoint)
@@ -201,6 +205,7 @@ namespace Entity
         public virtual void TakeDamage(float damage)
         {
             curHealth -= Mathf.RoundToInt(damage);
+            healthBarManager.RegisterTarget(transform);
             if (curHealth <= 0)
             {
                 Die();

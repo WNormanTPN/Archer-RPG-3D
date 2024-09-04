@@ -82,7 +82,7 @@ namespace Entity.Enemy
                 RaycastHit[] hits = new RaycastHit[10];
                 int size = Physics.RaycastNonAlloc(ray, hits, weapon.distance);
 
-                for (int j = size - 1; j >= 0; j--)
+                for (int j = 0; j < size; j++)
                 {
                     var hit = hits[j];
                     if (hit.collider?.gameObject.layer != LayerMask.NameToLayer("Enemy"))

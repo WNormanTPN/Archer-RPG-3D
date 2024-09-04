@@ -9,6 +9,7 @@ TagManager:
   - MapGenerator
   - Obstacle
   - GameManager
+  - PlayerHpBar
   layers:
   - Default
   - TransparentFX

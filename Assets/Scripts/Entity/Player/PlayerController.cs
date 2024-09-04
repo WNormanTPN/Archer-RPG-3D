@@ -3,6 +3,8 @@ using Config;
 using MyEditor;
 using UI;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Slider = UnityEngine.UI.Slider;
 
 namespace Entity.Player
 {
@@ -27,11 +29,13 @@ namespace Entity.Player
         private readonly string attackAnimation = "Attack_bow";
         private AudioSource walkingSound;
         private GameObject footDust;
+        private Slider healthBar;
         
         protected override void Start()
         {
             walkingSound = GetComponent<AudioSource>();
             levelUpManager = FindObjectOfType<PlayerLevelUpManager>();
+            healthBar = GameObject.FindGameObjectWithTag("PlayerHpBar").GetComponentInChildren<Slider>();
             base.Start();
             SetUpCharacter(characterInitData);
             
@@ -89,6 +93,8 @@ namespace Entity.Player
         public override void TakeDamage(float damage)
         {
             base.TakeDamage(damage);
+            if (healthBar)
+                healthBar.value = (float)curHealth / maxHealth;
             StartCoroutine(PlayDamageEffect());
         }
 

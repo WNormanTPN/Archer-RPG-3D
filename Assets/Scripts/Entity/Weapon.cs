@@ -110,7 +110,7 @@ namespace Entity
             }
             else
             {
-                if (characterBase == null)
+                if (characterBase == null && owner)
                 {
                     characterBase = owner.GetComponent<CharacterBase>();
                 }

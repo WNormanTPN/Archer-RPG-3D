@@ -50,7 +50,7 @@ namespace Entity.Enemy
                     // Within attack range, stop moving and attack
                     StopMove();
                     if (canRotate) LockOnPlayer();
-                    if (!isAttacking && attackTimer >= attackCooldown)
+                    if (!isAttacking && attackTimer >= attackCooldown && attackConfig != null)
                     {
                         StartCoroutine(PerformAttack());
                     }

@@ -46,16 +46,19 @@ namespace Entity
             set => _moveSpeed = value;
         }
         [Range(0, 720)]public float rotationSpeed = 720f;     // Speed of the character rotation in degrees per second
-        
-        [FirstGroup]
-        [SerializeField] private Weapon _weapon;
+
+        [FirstGroup] [SerializeField] private Weapon _weapon;
+
         public Weapon weapon
         {
             get => _weapon;
             set
             {
-                _weapon = value;
-                _weapon.owner = gameObject;
+                if (value != null)
+                {
+                    _weapon = value;
+                    _weapon.owner = gameObject;
+                }
             }
         }                             // Reference to the weapon
         public List<Effect> effects;
@@ -145,11 +148,14 @@ namespace Entity
                 attackConfig.leftsideAttackPoint = leftsideAttackPoint;
                 attackConfig.rightsideAttackPoint = rightsideAttackPoint;
             }
+            
+            SetUpCharacter(characterInitData);
         }
         
         public virtual void SetUpCharacter(CharacterData data)
         {
             characterInitData = data;
+            ClearCharacterData();
             LoadInitData();
         }
         
@@ -218,9 +224,12 @@ namespace Entity
         private void CalculateAttackPoints()
         {
             var direction = forwardAttackPoint.position - transform.position;
-            backwardAttackPoint = GameObject.Instantiate(forwardAttackPoint, transform);
-            leftsideAttackPoint = GameObject.Instantiate(forwardAttackPoint, transform);
-            rightsideAttackPoint = GameObject.Instantiate(forwardAttackPoint, transform);
+            backwardAttackPoint = new GameObject("backwardAttackPoint").transform;
+            leftsideAttackPoint = new GameObject("leftsideAttackPoint").transform;
+            rightsideAttackPoint = new GameObject("rightsideAttackPoint").transform;
+            backwardAttackPoint.SetParent(transform);
+            leftsideAttackPoint.SetParent(transform);
+            rightsideAttackPoint.SetParent(transform);
             direction = Quaternion.Euler(0, 180, 0) * direction;
             backwardAttackPoint.position = transform.position + direction;
             backwardAttackPoint.rotation = forwardAttackPoint.rotation * Quaternion.Euler(0, 180, 0);
@@ -230,6 +239,16 @@ namespace Entity
             direction = Quaternion.Euler(0, -180, 0) * direction;
             rightsideAttackPoint.position = transform.position + direction;
             rightsideAttackPoint.rotation = forwardAttackPoint.rotation * Quaternion.Euler(0, 90, 0);
+        }
+
+        protected virtual void ClearCharacterData()
+        {
+            weapon = null;
+            foreach (KeyValuePair<string, Skill> skill in skills.Skills)
+            {
+                AddOrRemoveSkillAttributes(skill.Value, true);
+            }
+            skills.Skills.Clear();
         }
         
         protected virtual void LoadInitData()

@@ -146,11 +146,25 @@ namespace Entity.Attack
             {
                 // Get the enemy's ICharacter component in collider or its parent
                 var enemy = collider.GetComponentInParent<ICharacter>();
-                enemy.TakeDamage(bulletMovement.config.damage);
+                var headshot = bulletMovement.config.headshot;
+                var random = UnityEngine.Random.Range(0f, 1);
+                
+                if (headshot > 0 && random <= headshot)
+                {
+                    enemy.TakeDamage(bulletMovement.config.damage * 2);
+                }
+                else
+                {
+                    enemy.TakeDamage(bulletMovement.config.damage);
+                }
                 
                 if (bulletEject)
                 {
                     Reflect();
+                }
+                else if (throughEnemy)
+                {
+                    PlayDestroyFX();
                 }
                 else if (isCollideWithObstacle)
                 {
@@ -178,6 +192,7 @@ namespace Entity.Attack
                 {
                     PlayDestroyFX();
                     AttachToCollidedObject(collider);
+                    Destroy(gameObject, 5f);
                 }
                 else
                 {

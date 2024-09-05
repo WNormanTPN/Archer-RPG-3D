@@ -165,6 +165,12 @@ namespace Entity.Enemy
             animator.SetBool(attackAnimation, false);
         }
 
+        public override void Die()
+        {
+            MonsterWaveManager.monsters.Remove(gameObject);
+            base.Die();
+        }
+
         void SetAnimationAttackSpeed()
         {
             float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;

@@ -12,6 +12,7 @@ namespace Entity.Player
     {
         [InspectorGroup("Attack Settings")]
         public GameObject damageFX;                           // Reference to the damage effect
+        [Range(0, 180)] public int autoTargetAngle = 45;      // Angle to automatically target the enemy 
 
         [LastGroup] 
         public int level = 0;
@@ -25,11 +26,13 @@ namespace Entity.Player
         
         private int playerMaxLevel = 0;
         private MyInput input;                                // Reference to the MyInput script
-        private readonly string idleAnimation = "Idle";
-        private readonly string attackAnimation = "Attack_bow";
         private AudioSource walkingSound;
         private GameObject footDust;
         private Slider healthBar;
+        private GameObject target;
+        
+        private readonly string idleAnimation = "Idle";
+        private readonly string attackAnimation = "Attack_bow";
         
         protected override void Start()
         {
@@ -55,6 +58,7 @@ namespace Entity.Player
             if (movement == Vector3.zero)
             {
                 StopMove();
+                AutoTargetEnemy();
                 StartAttackAnim();
                 StopWalkingFX();
             }
@@ -103,6 +107,33 @@ namespace Entity.Player
             base.LoadInitData();
             CalculateMaxLevel();
             AddExp(characterInitData.exp);
+        }
+        
+        protected virtual void AutoTargetEnemy()
+        {
+            // Check all enemies in weapon distance and angle, then target the closest one
+            var minDistance = Mathf.Infinity;
+            foreach (var enemy in MonsterWaveManager.monsters)
+            {
+                var direction = enemy.transform.position - transform.position;
+                var angle = Vector3.Angle(direction, transform.forward);
+                if (angle < autoTargetAngle && direction.magnitude < minDistance)
+                {
+                    minDistance = direction.magnitude;
+                    target = enemy;
+                }
+            }
+            LockOnTarget();
+        }
+        
+        protected virtual void LockOnTarget()
+        {
+            if (target == null) return;
+            Vector3 directionToTarget = target.transform.position - transform.position;
+            directionToTarget.y = 0;
+            directionToTarget.Normalize();
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+            transform.rotation = targetRotation;
         }
         
         private void PlayWalkingFX()

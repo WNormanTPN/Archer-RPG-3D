@@ -19,6 +19,8 @@ namespace Entity
         public GameObject player;                       // Assign your player prefab in the Inspector
         public Transform entitiesParent;                // Parent for all entities
         
+        public static List<GameObject> monsters;        // List of alive monsters
+        
         private List<WaveData> waveDatas;
         private ObjectPool objectPool;
         private int mapViewDistance;
@@ -29,6 +31,7 @@ namespace Entity
         void Awake()
         {
             player = Instantiate(player);
+            monsters = new List<GameObject>();
             waveDatas = GetWaveData();
             objectPool = GameObject.FindGameObjectWithTag("ObjectPool").GetComponent<ObjectPool>();
             mapViewDistance = PlayerPrefs.GetInt("ViewDistance");
@@ -92,6 +95,7 @@ namespace Entity
                         monsterObject.GetComponent<EnemyController>().SetUpCharacter(monsterData, waveData.attack, waveData.maxHP);
                         monsterObject.transform.position = spawnPosition;
                         monsterObject.SetActive(true);
+                        monsters.Add(monsterObject);
                     }
                 }
                 yield return new WaitForSeconds(waveData.nextTime);

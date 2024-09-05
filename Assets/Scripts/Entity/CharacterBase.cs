@@ -479,6 +479,7 @@ namespace Entity
             }
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             if (forwardAttackPoint && backwardAttackPoint && leftsideAttackPoint && rightsideAttackPoint)
@@ -493,6 +494,7 @@ namespace Entity
                 Gizmos.DrawRay(rightsideAttackPoint.position, rightsideAttackPoint.forward);
             }
         }
+#endif
 
         protected virtual void OnDestroy()
         {

@@ -18,7 +18,7 @@ namespace UI
 
         void Start()
         {
-            mapCollection = ConfigDataManager.Instance.GetConfigData<MapDataCollection>();
+            mapCollection = MapDataCollection.mapDataCollection;
             CreateMapUI(mapCollection.DefaultMode, defaultModeContent);
             CreateMapUI(mapCollection.EndlessMode, endlessModeContent);
         }
@@ -53,6 +53,20 @@ namespace UI
     {
         public List<MapData> DefaultMode;
         public List<MapData> EndlessMode;
+        public static MapDataCollection mapDataCollection
+        {
+            get
+            {
+                if (_mapDataCollection == null)
+                {
+                    _mapDataCollection = new MapDataCollection(ConfigDataManager.Instance.GetConfigData<MapDataCollection>());
+                }
+
+                return _mapDataCollection;
+            }
+            private set => _mapDataCollection = value;
+        }
+        private static MapDataCollection _mapDataCollection;
         
         public MapDataCollection() {}
 
@@ -63,11 +77,24 @@ namespace UI
             EndlessMode = endlessMode;
         }
 
+        public MapDataCollection(MapDataCollection data)
+        {
+            var copied = data.DeepCopy();
+            DefaultMode = copied.DefaultMode;
+            EndlessMode = copied.EndlessMode;
+        }
+
         public void FromJson(string json)
         {
             var data = JsonConvert.DeserializeObject<MapDataCollection>(json);
             DefaultMode = data.DefaultMode;
             EndlessMode = data.EndlessMode;
+        }
+        
+        public MapDataCollection DeepCopy()
+        {
+            string serializedObject = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<MapDataCollection>(serializedObject);
         }
     }
 

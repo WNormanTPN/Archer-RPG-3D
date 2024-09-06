@@ -64,7 +64,7 @@ namespace Entity
 
         public Weapon(int id)
         {
-            var data = ConfigDataManager.Instance.GetConfigData<WeaponCollection>().Weapons[id.ToString()];
+            var data = WeaponCollection.weaponCollection.Weapons[id.ToString()];
             weaponID = data.weaponID;
             ballistic = data.ballistic;
             attackLogics = data.attackLogics?.ToList();
@@ -287,6 +287,20 @@ namespace Entity
     public class WeaponCollection : IConfigCollection
     {
         public Dictionary<string, Weapon> Weapons;
+        public static WeaponCollection weaponCollection
+        {
+            get
+            {
+                if (_weaponCollection == null)
+                {
+                    _weaponCollection = new WeaponCollection(ConfigDataManager.Instance.GetConfigData<WeaponCollection>());
+                }
+
+                return _weaponCollection;
+            }
+            private set => _weaponCollection = value;
+        }
+        private static WeaponCollection _weaponCollection;
 
         public WeaponCollection()
         {
@@ -299,9 +313,21 @@ namespace Entity
             this.Weapons = Weapons;
         }
 
+        public WeaponCollection(WeaponCollection data)
+        {
+            var copied = data.DeepCopy();
+            Weapons = copied.Weapons;
+        }
+
         public void FromJson(string json)
         {
             Weapons = JsonConvert.DeserializeObject<Dictionary<string, Weapon>>(json);
+        }
+        
+        public WeaponCollection DeepCopy()
+        {
+            string serializedObject = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<WeaponCollection>(serializedObject);
         }
     }
 

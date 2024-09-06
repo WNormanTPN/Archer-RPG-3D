@@ -17,6 +17,20 @@ namespace Entity
     public class CharacterDataCollection : IConfigCollection
     {
         public Dictionary<string, CharacterData> CharacterDatas;
+        public static CharacterDataCollection characterDataCollection
+        {
+            get
+            {
+                if (_characterDataCollection == null)
+                {
+                    _characterDataCollection = new CharacterDataCollection(ConfigDataManager.Instance.GetConfigData<CharacterDataCollection>());
+                }
+
+                return _characterDataCollection;
+            }
+            private set => _characterDataCollection = value;
+        }
+        private static CharacterDataCollection _characterDataCollection;
 
         public CharacterDataCollection()
         {
@@ -28,10 +42,22 @@ namespace Entity
         {
             this.CharacterDatas = CharacterDatas;
         }
+        
+        public CharacterDataCollection(CharacterDataCollection data)
+        {
+            var copied = data.DeepCopy();
+            CharacterDatas = copied.CharacterDatas;
+        }
 
         public void FromJson(string json)
         {
             CharacterDatas = JsonConvert.DeserializeObject<Dictionary<string, CharacterData>>(json);
+        }
+        
+        public CharacterDataCollection DeepCopy()
+        {
+            string serializedObject = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<CharacterDataCollection>(serializedObject);
         }
     }
     

@@ -52,6 +52,7 @@ namespace Entity.Enemy
                     if (canRotate) LockOnPlayer();
                     if (!isAttacking && attackTimer >= attackCooldown && attackConfig != null)
                     {
+                        if (curHealth <= 0) return;
                         StartCoroutine(PerformAttack());
                     }
                 }

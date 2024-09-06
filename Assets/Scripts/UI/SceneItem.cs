@@ -32,7 +32,7 @@ namespace UI
             mapDetailId = mapData.mapDetailId;
             monsterWaveGroup = mapData.monsterWaveGroup;
             this.isLimitedMap = isLimitedMap;
-            mapDetail = ConfigDataManager.Instance.GetConfigData<MapDetailDataCollection>().mapDetails[mapDetailId.ToString()];
+            mapDetail = MapDetailDataCollection.mapDetailDataCollection.MapDetails[mapDetailId.ToString()];
         }
         
         public void LoadLevel()

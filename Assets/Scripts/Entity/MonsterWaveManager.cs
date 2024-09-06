@@ -21,7 +21,7 @@ namespace Entity
         
         public static List<GameObject> monsters;        // List of alive monsters
         
-        private List<WaveData> waveDatas;
+        private Dictionary<string, WaveData> waveDatas;
         private ObjectPool objectPool;
         private int mapViewDistance;
         private Dictionary<string, GameObject> monsterPrefabs;
@@ -37,7 +37,7 @@ namespace Entity
             mapViewDistance = PlayerPrefs.GetInt("ViewDistance");
             monsterPrefabs = new Dictionary<string, GameObject>();
             mapGenerator = GameObject.FindGameObjectWithTag("MapGenerator").GetComponent<MapGenerator>();
-            monsterDatas = ConfigDataManager.Instance.GetConfigData<CharacterDataCollection>();
+            monsterDatas = CharacterDataCollection.characterDataCollection;
 
             // Start the asynchronous setup
             SetUp();
@@ -60,7 +60,7 @@ namespace Entity
             List<Task<GameObject>> tasks = new();
             foreach (var waveData in waveDatas)
             {
-                foreach (var monster in waveData.monsters)
+                foreach (var monster in waveData.Value.monsters)
                 {
                     var monsterId = monster.Key;
                     var task = LoadMonsterPrefab(monsterId);
@@ -82,7 +82,7 @@ namespace Entity
                     spawnRangeX += Vector2Int.one * playerPosition.x;
                     spawnRangeZ += Vector2Int.one * playerPosition.y;
                 }
-                foreach (var monster in waveData.monsters)
+                foreach (var monster in waveData.Value.monsters)
                 {
                     var monsterId = monster.Key;
                     var monsterCount = monster.Value;
@@ -91,14 +91,19 @@ namespace Entity
                         var monsterData = GetMonsterData(monsterId);
                         var monsterPrefab = GetMonsterPrefab(monsterId);
                         var monsterObject = objectPool.GetObject(monsterPrefab, entitiesParent);
-                        var spawnPosition = new Vector3(Random.Range(spawnRangeX.x, spawnRangeX.y), 0, Random.Range(spawnRangeZ.x, spawnRangeZ.y));
-                        monsterObject.GetComponent<EnemyController>().SetUpCharacter(monsterData, waveData.attack, waveData.maxHP);
+                        var spawnPosition = new Vector3(
+                            Random.Range(spawnRangeX.x, spawnRangeX.y),
+                            0,
+                            Random.Range(spawnRangeZ.x, spawnRangeZ.y)
+                            );
+                        monsterObject.GetComponent<EnemyController>()
+                            .SetUpCharacter(monsterData, waveData.Value.attack, waveData.Value.maxHP);
                         monsterObject.transform.position = spawnPosition;
                         monsterObject.SetActive(true);
                         monsters.Add(monsterObject);
                     }
                 }
-                yield return new WaitForSeconds(waveData.nextTime);
+                yield return new WaitForSeconds(waveData.Value.nextTime);
             }
         }
         
@@ -125,10 +130,10 @@ namespace Entity
             return monsterDatas.CharacterDatas[monsterId];
         }
         
-        List<WaveData> GetWaveData()
+        Dictionary<string, WaveData> GetWaveData()
         {
             var waveId = PlayerPrefs.GetInt("MonsterWaveGroup");
-            return ConfigDataManager.Instance.GetConfigData<WaveDataCollection>().WaveDatas[waveId.ToString()];
+            return WaveDataCollection.waveDataCollection.WaveDatas[waveId.ToString()];
         }
     }
     
@@ -146,22 +151,48 @@ namespace Entity
     [Serializable]
     public class WaveDataCollection : IConfigCollection
     {
-        public Dictionary<string, List<WaveData>> WaveDatas;
+        public Dictionary<string, Dictionary<string, WaveData>> WaveDatas;
+        public static WaveDataCollection waveDataCollection
+        {
+            get
+            {
+                if (_waveDataCollection == null)
+                {
+                    _waveDataCollection = new WaveDataCollection(ConfigDataManager.Instance.GetConfigData<WaveDataCollection>());
+                }
+
+                return _waveDataCollection;
+            }
+            private set => _waveDataCollection = value;
+        }
+        private static WaveDataCollection _waveDataCollection;
 
         public WaveDataCollection()
         {
-            WaveDatas = new Dictionary<string, List<WaveData>>();
+            WaveDatas = new Dictionary<string, Dictionary<string, WaveData>>();
         }
         
         [JsonConstructor]
-        public WaveDataCollection(Dictionary<string, List<WaveData>> waveDatas)
+        public WaveDataCollection(Dictionary<string, Dictionary<string, WaveData>> waveDatas)
         {
             this.WaveDatas = waveDatas;
         }
 
+        public WaveDataCollection(WaveDataCollection data)
+        {
+            var copied = data.DeepCopy();
+            WaveDatas = copied.WaveDatas;
+        }
+
         public void FromJson(string json)
         {
-            WaveDatas = JsonConvert.DeserializeObject<Dictionary<string, List<WaveData>>>(json);
+            WaveDatas = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, WaveData>>>(json);
+        }
+        
+        public WaveDataCollection DeepCopy()
+        {
+            string serializedObject = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<WaveDataCollection>(serializedObject);
         }
     }
 }

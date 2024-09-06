@@ -12,7 +12,7 @@ namespace Evironment.MapGenerator
     [Serializable]
     public class MapDetail
     {
-        public int mapDetailId;
+        public int detailId;
         public int viewDistance;
         public int unloadDistance;
         public int tileSpacing;
@@ -23,21 +23,56 @@ namespace Evironment.MapGenerator
     [Serializable]
     public class MapDetailDataCollection : IConfigCollection
     {
-        public Dictionary<string, MapDetail> mapDetails;
-        
+        public Dictionary<string, MapDetail> MapDetails;
+        public static MapDetailDataCollection mapDetailDataCollection
+        {
+            get
+            {
+                if (_mapDetailDataCollection == null)
+                {
+                    _mapDetailDataCollection = new MapDetailDataCollection(ConfigDataManager.Instance.GetConfigData<MapDetailDataCollection>());
+                }
+
+                return _mapDetailDataCollection;
+            }
+            private set => _mapDetailDataCollection = value;
+        }
+        private static MapDetailDataCollection _mapDetailDataCollection;
+    
         public MapDetailDataCollection() {}
 
         [JsonConstructor]
         public MapDetailDataCollection(Dictionary<string, MapDetail> mapDetails)
         {
-            this.mapDetails = mapDetails;
+            this.MapDetails = mapDetails;
+        }
+
+        public MapDetailDataCollection(MapDetailDataCollection data)
+        {
+            var copied = data.DeepCopy();
+            MapDetails = copied.MapDetails;
         }
 
         public void FromJson(string json)
         {
-            mapDetails = JsonConvert.DeserializeObject<Dictionary<string, MapDetail>>(json);
+            try
+            {
+                MapDetails = JsonConvert.DeserializeObject<Dictionary<string, MapDetail>>(json);
+            }
+            catch (JsonException ex)
+            {
+                Debug.LogError($"Failed to deserialize MapDetailDataCollection: {ex.Message}");
+            }
         }
+        
+        public MapDetailDataCollection DeepCopy()
+        {
+            string serializedObject = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<MapDetailDataCollection>(serializedObject);
+        }
+
     }
+
 
 
     

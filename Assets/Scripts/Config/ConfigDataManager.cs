@@ -1,29 +1,26 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Entity;
-using Entity.Player;
 using Evironment.MapGenerator;
-using Newtonsoft.Json;
+using Firebase;
+using Firebase.Database;
+using Firebase.Extensions;
 using UI;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Config
 {
     public class ConfigDataManager : MonoBehaviour
     {
-        [Serializable]
-        public struct ConfigFile
-        {
-            public TextAsset file;
-            public ConfigType type;
-        }
-
-        public List<ConfigFile> configFiles;
-
+        public bool active = false;
+        [SerializeField] private GameObject loadingSlider;
+        [SerializeField] private string mainMenuSceneKey;
         private Dictionary<Type, object> cachedData = new Dictionary<Type, object>();
-        private static readonly Dictionary<ConfigType, Type> configTypeMap = new Dictionary<ConfigType, Type>
+        public static readonly Dictionary<ConfigType, Type> configTypeMap = new Dictionary<ConfigType, Type>
         {
             { ConfigType.Character, typeof(CharacterDataCollection) },
             { ConfigType.Effect, typeof(EffectCollection) },
@@ -36,61 +33,128 @@ namespace Config
 
         public static ConfigDataManager Instance { get; private set; }
 
-        private static TaskCompletionSource<bool> loadDataCompletionSource;
-        
-        private void Awake()
+        private DatabaseReference databaseReference;
+        private Slider slider;
+
+        private void Start()
         {
             if (Instance == null)
             {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
-                loadDataCompletionSource = new TaskCompletionSource<bool>();
-                LoadAllDataAsync(); // Trigger async loading
+                if (active)
+                {
+                    slider = loadingSlider.GetComponent<Slider>();
+                    InitializeFirebase();
+                }
             }
             else
             {
                 Destroy(gameObject);
             }
         }
-
-        private Task LoadAllDataAsync()
+        
+        private void Update()
         {
-            foreach (var config in configFiles)
+            if (slider)
             {
-                var json = config.file.text;
-                var configType = config.type;
-                var type = configTypeMap[configType];
-
-                // Create an instance dynamically
-                if (Activator.CreateInstance(type) is IConfigCollection collection)
+                if (slider.value < 1)
                 {
-                    // Deserialize and cache the data
-                    collection.FromJson(json);
-                    cachedData[type] = collection;
+                    if (cachedData.Count == configTypeMap.Count)
+                    {
+                        slider.value += Time.deltaTime;
+                    }
+                    slider.value += 0.1f * Time.deltaTime;
+                }
+                else
+                {
+                    if (cachedData.Count < configTypeMap.Count)
+                    {
+                        slider.value = 0.8f;
+                    }
+                    else
+                    {
+                        Addressables.LoadSceneAsync(mainMenuSceneKey, LoadSceneMode.Single);
+                        slider = null;
+                    }
                 }
             }
+        }
 
-            // Mark data loading as complete
-            loadDataCompletionSource.SetResult(true);
-            return Task.CompletedTask;
+        private void InitializeFirebase()
+        {
+            FirebaseApp.CheckAndFixDependenciesAsync()
+                .ContinueWithOnMainThread(task => {
+                if (task.Result == DependencyStatus.Available)
+                {
+                    databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+                    if (databaseReference == null)
+                    {
+                        return;
+                    }
+                    Debug.Log("Firebase initialized.");
+                    LoadAllData(); // Trigger async loading
+                }
+                else
+                {
+                    Debug.LogError($"Failed to initialize Firebase: {task.Result}");
+                }
+            });
+        }
+
+
+        private void LoadAllData()
+        {
+            foreach (var configType in configTypeMap.Keys)
+            {
+                var path = GetFirebasePathForType(configType);
+                var type = configTypeMap[configType];
+                
+                var databaseRef = databaseReference.Child(path);
+                
+                if (configType != ConfigType.Map)
+                    databaseRef = databaseRef.Child(path);
+
+                databaseRef.GetValueAsync().ContinueWithOnMainThread((task) =>
+                {
+                    if (task.IsCompleted)
+                    {
+                        var json = task.Result.GetRawJsonValue();
+                        var collection = Activator.CreateInstance(type) as IConfigCollection;
+                        collection.FromJson(json);
+                        cachedData[type] = collection;
+                    }
+                    else
+                    {
+                        Debug.LogError($"Failed to load data for type: {type}");
+                    }
+                });
+            }
+        }
+
+        private string GetFirebasePathForType(ConfigType configType)
+        {
+            if (configType == ConfigType.Character) return "CharacterDatas";
+            if (configType == ConfigType.Effect) return "Effects";
+            if (configType == ConfigType.Map) return "Maps";
+            if (configType == ConfigType.MapDetail) return "MapDetails";
+            if (configType == ConfigType.MonsterWave) return "WaveDatas";
+            if (configType == ConfigType.Skill) return "Skills";
+            if (configType == ConfigType.Weapon) return "Weapons";
+            return "unknown";
         }
 
         public T GetConfigData<T>() where T : class
         {
-            // Wait until data loading is complete
-            loadDataCompletionSource.Task.Wait();
-            
-            var type = typeof(T);
-            if (cachedData.TryGetValue(type, out var data))
+            if (cachedData.ContainsKey(typeof(T)))
             {
-                return data as T;
+                return cachedData[typeof(T)] as T;
             }
-            Debug.LogError($"No data found for type: {type}");
             return null;
         }
+
     }
 
-    [Flags]
     public enum ConfigType
     {
         Character,
@@ -101,7 +165,7 @@ namespace Config
         Skill,
         Weapon
     }
-    
+
     public interface IConfigCollection
     {
         void FromJson(string json);

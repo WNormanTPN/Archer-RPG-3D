@@ -112,7 +112,9 @@ namespace Entity.Enemy
             }
             else
             {
-                player = GameObject.FindGameObjectWithTag("Player").transform;
+                var playerObject = GameObject.FindGameObjectWithTag("Player");
+                if (playerObject)
+                    player = playerObject.transform;
             }
         }
 
@@ -169,6 +171,7 @@ namespace Entity.Enemy
         public override void Die()
         {
             MonsterWaveManager.monsters.Remove(gameObject);
+            MonsterWaveManager.killCount++;
             base.Die();
         }
 

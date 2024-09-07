@@ -53,7 +53,7 @@ public class Joystick : OnScreenControl, IPointerDownHandler, IDragHandler, IPoi
     protected virtual void Start()
     {
         if (SystemInfo.deviceType != DeviceType.Handheld)
-            handle.gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
         HandleRange = handleRange;
         DeadZone = deadZone;
         baseRect = GetComponent<RectTransform>();

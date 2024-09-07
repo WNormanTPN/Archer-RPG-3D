@@ -21,6 +21,11 @@ namespace UI
 
         void Start()
         {
+            Invoke("Init", 1);
+        }
+
+        void Init()
+        {
             content = scrollRect.content;
             var items = new RectTransform[content.childCount];
             itemsPos = new Vector2[items.Length];
@@ -40,7 +45,7 @@ namespace UI
 
         void Update()
         {
-            if (isSnapping)
+            if (isSnapping && content)
             {
                 SnapToNearestItem();
             }
@@ -100,6 +105,7 @@ namespace UI
         // New method to set the target index from outside
         public void SetTargetIndex(int index)
         {
+            if (!content) return;
             if (index >= 0 && index < itemsPos.Length)
             {
                 targetPosition = itemsPos[index];

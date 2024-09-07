@@ -7,7 +7,6 @@ using Entity.Enemy;
 using Evironment.MapGenerator;
 using Generic;
 using Newtonsoft.Json;
-using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
@@ -18,8 +17,12 @@ namespace Entity
     {
         public GameObject player;                       // Assign your player prefab in the Inspector
         public Transform entitiesParent;                // Parent for all entities
-        
         public static List<GameObject> monsters;        // List of alive monsters
+        [HideInInspector] public static int killCount;  // Number of killed monsters
+        
+        [HideInInspector]
+        public int totalWave;
+        public int currentWave;
         
         private Dictionary<string, WaveData> waveDatas;
         private ObjectPool objectPool;
@@ -38,6 +41,9 @@ namespace Entity
             monsterPrefabs = new Dictionary<string, GameObject>();
             mapGenerator = GameObject.FindGameObjectWithTag("MapGenerator").GetComponent<MapGenerator>();
             monsterDatas = CharacterDataCollection.characterDataCollection;
+            
+            currentWave = 0;
+            totalWave = waveDatas.Count;
 
             // Start the asynchronous setup
             SetUp();
@@ -76,6 +82,7 @@ namespace Entity
             Vector2Int spawnRangeZ = new Vector2Int(-mapViewDistance, mapViewDistance);
             foreach (var waveData in waveDatas)
             {
+                currentWave++;
                 if (!mapGenerator.isLimitedMap)
                 {
                     var playerPosition = new Vector2Int((int)player.transform.position.x, (int)player.transform.position.z);

@@ -1,5 +1,6 @@
 using System.Collections;
 using Entity.Attack;
+using Entity.Player;
 using MyEditor;
 using UnityEngine;
 
@@ -28,6 +29,7 @@ namespace Entity.Enemy
         private float attackTimer;                // Timer for attack cooldown
         private bool canRotate = true;
         private bool canMove = true;
+        private PlayerController playerController;
         
         
         
@@ -114,7 +116,10 @@ namespace Entity.Enemy
             {
                 var playerObject = GameObject.FindGameObjectWithTag("Player");
                 if (playerObject)
+                {
                     player = playerObject.transform;
+                    playerController = playerObject.GetComponent<PlayerController>();
+                }
             }
         }
 
@@ -172,6 +177,7 @@ namespace Entity.Enemy
         {
             MonsterWaveManager.monsters.Remove(gameObject);
             MonsterWaveManager.killCount++;
+            playerController.AddExp(characterInitData.exp);
             base.Die();
         }
 

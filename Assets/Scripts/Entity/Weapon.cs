@@ -56,6 +56,7 @@ namespace Entity
         
         private string _destroyFXKey;
         private string _bulletPrefabKey;
+        private MeleeAttack meleeAttack;
 
         public Weapon()
         {
@@ -98,6 +99,14 @@ namespace Entity
                 GameObject bulletInstance = bulletPrefab? Object.Instantiate(bulletPrefab) : null;
                 if (GetAttackLogic("DashBegin") != null)
                     DoDashAttack(config, bulletInstance);
+                if (attackLogics.Count == 0)
+                {
+                    if (!meleeAttack)
+                    {
+                        meleeAttack = owner.AddComponent<MeleeAttack>();
+                    }
+                    meleeAttack.StartAttack(config, bulletInstance);
+                }
             }
         }
 
@@ -182,7 +191,13 @@ namespace Entity
         
         public void TriggerEndAttack(AttackConfig config)
         {
-            return;
+            if (ballistic == Ballistic.MeleeAttack)
+            {
+                if (attackLogics.Count == 0)
+                {
+                    meleeAttack.EndAttack();
+                }
+            }
         }
         
         private void DoDashAttack(AttackConfig config, GameObject bulletInstance = null)
